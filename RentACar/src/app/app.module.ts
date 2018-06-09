@@ -1,0 +1,71 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientXsrfModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/demo.interceptor';
+
+import { AppComponent } from './app.component';
+import { MainpageComponent } from './mainpage/mainpage.component';
+import { HeaderComponent } from './header/header.component';
+import { CarlistitemComponent } from './carlistitem/carlistitem.component';
+import { CarlistComponent } from './carlist/carlist.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AddvehicleComponent } from './addvehicle/addvehicle.component';
+
+
+const Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+   },
+  {
+    path: 'home',
+    component: MainpageComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MainpageComponent,
+    HeaderComponent,
+    CarlistitemComponent,
+    CarlistComponent,
+    LoginComponent,
+    RegisterComponent,
+    AddvehicleComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(Routes),
+    HttpModule,
+    HttpClientModule,
+    HttpClientXsrfModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

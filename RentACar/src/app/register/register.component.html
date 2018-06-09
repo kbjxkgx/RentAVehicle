@@ -1,0 +1,43 @@
+
+<div class="container">
+    <h1 class="well">Registration Form</h1>
+		<div class="col-lg-12 well">
+			<div class="row">
+				<form #f="ngForm" (ngSubmit)="register(f.value, f)">
+					<div class="col-sm-12">	
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>Full Name</label>
+								<input type="text" name='FullName' placeholder="Enter Full Name Here.." class="form-control" ngModel>
+							</div>	
+							<div class="col-sm-4 form-group">
+								<label>Last Name</label>
+								<input type="text" name='LastName' placeholder="Enter Last Name Here.." class="form-control" ngModel>
+							</div>	
+							<div class="col-sm-4 form-group">
+								<label>BirthDay</label>
+								<input type="date" name='BirthDay' placeholder="Enter BirthDay Here.." class="form-control" ngModel>
+							</div>		
+						</div>				 	
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label>Email Address</label>
+								<input type="text" name='Email' placeholder="Enter Email Address Here.." class="form-control" ngModel>
+							</div>
+						</div>	
+						<div class="row">
+								<div class="col-sm-6 form-group">
+									<label>Password</label>
+									<input type="password" name='Password' placeholder="Enter Password Address Here.." class="form-control" ngModel>
+								</div>
+								<div class="col-sm-6 form-group">
+									<label>Confirm Password</label>
+									<input type="password" name='ConfirmPassword' placeholder="Enter Password Address Here.." class="form-control" ngModel>
+								</div>
+							</div>
+						<button type="submit" class="btn btn-lg btn-info">Submit</button>					
+					</div>
+				</form> 
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,22 @@
+<header class="header-user-dropdown">
+    <div class="header-limiter">
+      <h1><a href="#">Rent A<span> Vehicle</span></a></h1>
+      <nav>
+        <a href="#" [routerLink]="['/addvehicle']">Add Vehicle</a>
+        <a href="#">Surveys</a>
+        <a href="#">Reports</a>
+        <a href="#">Roles <span class="header-new-feature">new</span></a>
+      </nav>
+        <div class="header-user-menu">
+            <img src="../../assets/icon.jpg" alt="User Image"/>
+            <ul>
+              <li><a href="#">Settings</a></li>
+              <li><a href="#">Payments</a></li>
+              <li><a href="#" class="highlight" [routerLink]="['/logout']">Logout</a></li>
+              <li><a href="#" class="highlight" [routerLink]="['/login']">Login</a></li>
+              <li><a href="#" class="highlight" [routerLink]="['/register']">Register</a></li>
+            </ul>
+        </div>
+      
+    </div>
+  </header>

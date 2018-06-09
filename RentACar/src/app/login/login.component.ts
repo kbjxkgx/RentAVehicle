@@ -3,6 +3,8 @@ import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
 
+// izmjenio sam ovo
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

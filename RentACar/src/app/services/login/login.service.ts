@@ -25,7 +25,7 @@ export class LoginService {
     return Observable.throw(errorMessage);
   }
 
-   login(username: string, password: string): void {
+   login(username: string, password: string): boolean {
     let headers = new HttpHeaders();
     headers = headers.append('Content-type', 'application/x-www-form-urlencoded');
     let parameters = '';
@@ -56,11 +56,14 @@ export class LoginService {
 
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('role', role);
+          return true;
         },
         err => {
           console.log('Error occured');
+          return false;
         }
       );
     }
+    return false;
   }
 }

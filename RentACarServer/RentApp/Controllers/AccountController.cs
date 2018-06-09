@@ -332,7 +332,7 @@ namespace RentApp.Controllers
             }
             catch (DbEntityValidationException e)
             {
-                
+                return BadRequest(ModelState);
             }
             UserManager.AddToRole(user.Id, "AppUser");
             if (!result.Succeeded)

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
-
-// izmjenio sam ovo
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ import { LoginService } from '../services/login/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,5 +24,11 @@ export class LoginComponent implements OnInit {
     console.log(product);
     this.loginService.login(product.username, product.password);
     form.reset();
+
+    if(localStorage.getItem("role")=='Manager')
+    {
+      this.router.navigate(['/admin']);
+    }
+
   }
 }

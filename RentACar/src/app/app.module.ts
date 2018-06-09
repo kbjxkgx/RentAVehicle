@@ -17,6 +17,10 @@ import { CarlistComponent } from './carlist/carlist.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AddvehicleComponent } from './addvehicle/addvehicle.component';
+import { AdminComponent } from './admin/admin.component';
+import { ManagerComponent } from './manager/manager.component';
+import { ServicelistComponent } from './servicelist/servicelist.component';
+import { ServicelistitemComponent } from './servicelistitem/servicelistitem.component';
 
 
 const Routes = [
@@ -29,6 +33,14 @@ const Routes = [
     path: 'home',
     component: MainpageComponent,
   },
+  {
+    path: 'admin',
+    component: AdminComponent,
+  },
+  {
+    path: 'manager',
+    component: ManagerComponent,
+  },  
   {
     path: 'login',
     component: LoginComponent
@@ -48,7 +60,11 @@ const Routes = [
     CarlistComponent,
     LoginComponent,
     RegisterComponent,
-    AddvehicleComponent
+    AddvehicleComponent,
+    AdminComponent,
+    ManagerComponent,
+    ServicelistComponent,
+    ServicelistitemComponent
   ],
   imports: [
     BrowserModule,

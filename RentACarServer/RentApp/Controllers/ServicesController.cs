@@ -8,12 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using RentApp.Helper;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
+    [RequireHttps]
     public class ServicesController : ApiController
     {
         private IUnitOfWork db;

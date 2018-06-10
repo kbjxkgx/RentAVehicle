@@ -21,6 +21,7 @@ import { AdminComponent } from './admin/admin.component';
 import { ManagerComponent } from './manager/manager.component';
 import { ServicelistComponent } from './servicelist/servicelist.component';
 import { ServicelistitemComponent } from './servicelistitem/servicelistitem.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 
 const Routes = [
@@ -40,7 +41,7 @@ const Routes = [
   {
     path: 'manager',
     component: ManagerComponent,
-  },  
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -48,6 +49,10 @@ const Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'verifyaccount',
+    component: VerifyAccountComponent
   }
 ];
 
@@ -64,7 +69,8 @@ const Routes = [
     AdminComponent,
     ManagerComponent,
     ServicelistComponent,
-    ServicelistitemComponent
+    ServicelistitemComponent,
+    VerifyAccountComponent
   ],
   imports: [
     BrowserModule,

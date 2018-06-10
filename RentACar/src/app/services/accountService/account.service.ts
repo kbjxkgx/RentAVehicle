@@ -4,6 +4,8 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RegisterModel } from '../../models/registerModel';
 import { Observable } from 'rxjs/Observable';
+import {NgForm} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { MethodResult } from '../models/methodResult.model';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';

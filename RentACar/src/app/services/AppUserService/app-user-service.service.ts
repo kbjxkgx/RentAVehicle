@@ -29,4 +29,18 @@ export class AppUserService {
     return this.httpClient.get('http://localhost:51680/api/AppUser');
   }
 
+  uploadIdPhoto(fileToUpload: File, Id: string): Observable<any> {
+    let _formData = new FormData();
+    _formData.append('Id', Id);
+    _formData.append('MyFile', fileToUpload);
+    let body = _formData;
+    let headers = new Headers();
+    let options = new RequestOptions({
+        headers: headers
+    });
+    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body, options)
+      .map((response: Response) => <string>response.json())
+      .subscribe((data) => this.message = data);
+  }
+
 }

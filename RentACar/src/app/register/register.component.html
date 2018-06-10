@@ -3,7 +3,7 @@
     <h1 class="well">Registration Form</h1>
 		<div class="col-lg-12 well">
 			<div class="row">
-				<form #f="ngForm" (ngSubmit)="register(f.value, f)">
+				<form #f="ngForm" (ngSubmit)="register(f.value, f)" enctype='multipart/form-data'>
 					<div class="col-sm-12">	
 						<div class="row">
 							<div class="col-sm-4 form-group">
@@ -34,8 +34,8 @@
 									<label>Confirm Password</label>
 									<input type="password" name='ConfirmPassword' placeholder="Enter Password Address Here.." class="form-control" ngModel>
 								</div>
-							</div>
-						<button type="submit" class="btn btn-lg btn-info">Submit</button>					
+						</div>	
+						<button type="submit" class="btn btn-lg btn-info">Register</button>					
 					</div>
 				</form> 
 			</div>

@@ -1,16 +1,23 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Helper;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
+    [RequireHttps]
+    //[RoutePrefix("api/AppUser")]
     public class AppUserController : ApiController
     {
         private IUnitOfWork db;
@@ -20,7 +27,7 @@ namespace RentApp.Controllers
             db = context;
         }
 
-        // GET: api/Services
+        // GET: api/AppUsers
         public IEnumerable<AppUser> GetAppUsers()
         {
             return db.AppUsers.GetAll();
@@ -30,13 +37,51 @@ namespace RentApp.Controllers
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult GetAppUser(int id)
         {
-            Branch branch = db.Branches.Get(id);
-            if (branch == null)
+            AppUser appUser = db.AppUsers.Get(id);
+            if (appUser == null)
             {
                 return NotFound();
             }
 
-            return Ok(branch);
+            return Ok(appUser);
+        }
+
+        //GET: api/Services/5
+        [Route("api/AppUser/VerifyUser")]
+        [HttpPost]
+        [ResponseType(typeof(AppUser))]
+        public async Task<HttpResponseMessage> VerifyAppUser()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+            
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+            
+            try
+            {
+                await Request.Content.ReadAsMultipartAsync(provider);
+                string userId = provider.FormData.GetValues("Id")[0];
+                int Id = Int32.Parse(userId);
+                AppUser user = db.AppUsers.Get(Id);
+                MultipartFileData file = provider.FileData[0];
+                string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");
+                destinationFilePath += userId + ".jpg";
+                if (File.Exists(destinationFilePath))
+                {
+                    File.Delete(destinationFilePath);
+                }
+                File.Copy(file.LocalFileName, destinationFilePath);
+                File.Delete(file.LocalFileName);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+
         }
 
         // PUT: api/Services/5

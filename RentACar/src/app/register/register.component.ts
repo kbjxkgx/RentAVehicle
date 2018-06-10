@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/accountService/account.service';
+import { AppUserService } from '../services/AppUserService/app-user-service.service';
 import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterModel } from '../models/registerModel';
+import { ElementRef} from '@angular/core';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,16 +12,19 @@ import { RegisterModel } from '../models/registerModel';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private appUserService: AppUserService) { }
 
   ngOnInit() {
   }
 
   register(account: any, form: NgForm) {
     this.accountService.register(account)
-      .subscribe(
-        error => {
-          console.log(error);
-        });
+        .subscribe(
+          data => {
+            console.log('registration succeded...');
+          },
+          error => {
+            console.log(error);
+          });
   }
 }

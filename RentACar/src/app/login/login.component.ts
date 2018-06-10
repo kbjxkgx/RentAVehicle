@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
+import { CommunicationService } from '../services/communicationService/communication.service';
+import { Observable } from 'rxjs/Observable';
+
 import {
   Router,
   ActivatedRoute
@@ -15,20 +18,14 @@ import {
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private data: CommunicationService) { }
 
   ngOnInit() {
   }
 
   loginSubmit(product: any, form: NgForm) {
     console.log(product);
-    this.loginService.login(product.username, product.password);
-    form.reset();
-
-    if(localStorage.getItem("role")=='Admin')
-    {
-      this.router.navigate(['/admin']);
-    }
-
+    const x = this.loginService.login(product.username, product.password);
+        form.reset();
   }
 }

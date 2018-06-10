@@ -3,6 +3,7 @@ import {
   Router,
   ActivatedRoute
 } from '@angular/router';
+import { CommunicationService } from '../services/communicationservice/communication.service';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +11,18 @@ import {
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  private showUserMenu: boolean=true;
-  private showAdmin: boolean=false;
-  private showManager: boolean=false;
-  
-  constructor( private router: Router) { }
+   public isLoggedIn: boolean;
+   public isUser: boolean;
+   public isAdmin: boolean;
+   public isManager: boolean;
+   public notificationExists: boolean;
+  constructor( private router: Router, private data: CommunicationService) { }
 
   ngOnInit() {
+    this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
+    this.data.isLoggedInMessage.subscribe(message => this.isLoggedIn = message);
+    this.data.isManagerMessage.subscribe(message => this.isManager = message);
+    this.data.isUserMessage.subscribe(message => this.isUser = message);
   }
 
   Logout(): void {

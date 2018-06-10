@@ -3,17 +3,23 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommunicationService } from '../communicationService/communication.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: Http, private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router, private data: CommunicationService) { }
 
   private parseData(res: Response) {
     return res.json() || [];
@@ -25,7 +31,7 @@ export class LoginService {
     return Observable.throw(errorMessage);
   }
 
-   login(username: string, password: string): boolean {
+  login(username: string, password: string) {
     let headers = new HttpHeaders();
     headers = headers.append('Content-type', 'application/x-www-form-urlencoded');
     let parameters = '';
@@ -37,7 +43,6 @@ export class LoginService {
     if (!localStorage.jwt) {
        const x = this.httpClient.post('http://localhost:51680/oauth/token',
        parameters, {'headers': headers}) as Observable<any>;
-
       x.subscribe(
         res => {
           console.log(res.access_token);
@@ -56,14 +61,37 @@ export class LoginService {
 
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('role', role);
-          return true;
+
+          this.data.changeIsLoggedIn(true);
+          // let role = localStorage.getItem("role");
+          if (localStorage.getItem("role")=='Admin')
+          {
+            this.data.changeIsAdmin(true);
+            this.data.changeIsManager(false);
+            this.data.changeIsUser(false);
+            this.router.navigate(['/admin']);
+          } else if (localStorage.getItem("role")=='Manager')
+          {
+            this.data.changeIsAdmin(false);
+            this.data.changeIsManager(true);
+            this.data.changeIsUser(false);
+            this.router.navigate(['/manager']);
+          } else if (localStorage.getItem("role")=='AppUser')
+          {
+            this.data.changeIsAdmin(false);
+            this.data.changeIsManager(false);
+            this.data.changeIsUser(true);
+            this.router.navigate(['/home']);
+          }
+
+          return;
         },
         err => {
           console.log('Error occured');
-          return false;
+          return;
         }
       );
     }
-    return false;
+    return;
   }
 }

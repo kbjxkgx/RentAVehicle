@@ -6,7 +6,6 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./servicelistitem.component.css']
 })
 export class ServicelistitemComponent implements OnInit {
-  
   @Input() service: any;
   constructor() { }
 

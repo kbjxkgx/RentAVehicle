@@ -34,13 +34,13 @@ export class AppUserService {
     _formData.append('Id', Id);
     _formData.append('MyFile', fileToUpload);
     let body = _formData;
-    let headers = new Headers();
-    let options = new RequestOptions({
-        headers: headers
-    });
-    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body, options)
-      .map((response: Response) => <string>response.json())
-      .subscribe((data) => this.message = data);
+    // let headers = new Headers();
+    // let options = new RequestOptions({
+    //     headers: headers
+    // });
+    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body);
+      // .map((response: Response) => <string>response.json())
+      // .subscribe((data) => this.message = data);
   }
 
 }

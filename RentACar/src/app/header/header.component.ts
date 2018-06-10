@@ -11,6 +11,10 @@ import {
 })
 export class HeaderComponent implements OnInit {
 
+  private showUserMenu: boolean=true;
+  private showAdmin: boolean=false;
+  private showManager: boolean=false;
+  
   constructor( private router: Router) { }
 
   ngOnInit() {

@@ -2,9 +2,14 @@
     <div class="header-limiter">
       <h1><a href="#">Rent A<span> Vehicle</span></a></h1>
       <nav>
-        <a href="#" [routerLink]="['/addvehicle']">Add Vehicle</a>
-        <a href="#">Surveys</a>
-        <a href="#">Reports</a>
+        <a href="#" *ngIf="showUserMenu" [routerLink]="['/addvehicle']">Home</a>
+        <a href="#" *ngIf="showAdmin" [routerLink]="['/addvehicle']">Services</a>
+        <a href="#" *ngIf="showAdmin" [routerLink]="['/addvehicle']">Managers</a>
+        <a href="#" *ngIf="showAdmin" [routerLink]="['/addvehicle']">Users</a>
+        <a href="#" *ngIf="showAdmin" [routerLink]="['/addvehicle']">Notifications</a>
+        <a href="#" *ngIf="showManager" [routerLink]="['/addvehicle']">Services</a>
+        <a href="#" *ngIf="showAdmin" [routerLink]="['/addvehicle']">Add Service</a>
+        <a href="#" *ngIf="showManager" [routerLink]="['/addvehicle']">Vehicles</a>
         <a href="#">Roles <span class="header-new-feature">new</span></a>
       </nav>
         <div class="header-user-menu">

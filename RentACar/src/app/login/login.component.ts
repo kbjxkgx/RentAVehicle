@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(product.username, product.password);
     form.reset();
 
-    if(localStorage.getItem("role")=='Manager')
+    if(localStorage.getItem("role")=='Admin')
     {
       this.router.navigate(['/admin']);
     }

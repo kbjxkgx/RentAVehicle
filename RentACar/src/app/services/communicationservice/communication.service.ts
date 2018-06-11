@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/behaviorsubject';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommunicationService {
 
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
@@ -11,7 +9,7 @@ export class CommunicationService {
   private isUserSource = new BehaviorSubject<boolean>(false);
   private isAdminSource = new BehaviorSubject<boolean>(false);
   private isManagerSource = new BehaviorSubject<boolean>(false);
-  
+
   isLoggedInMessage = this.isLoggedInSource.asObservable();
   isConfirmedMessage = this.isConfirmedSource.asObservable();
   isUserMessage = this.isUserSource.asObservable();

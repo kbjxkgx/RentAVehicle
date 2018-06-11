@@ -2,6 +2,6 @@ export class VehicleModel {
     Model: string;
     Manufacturer: string;
     YearOfProduction: string;
-    Description: Date;
+    Description: string;
     Type: string;
 }

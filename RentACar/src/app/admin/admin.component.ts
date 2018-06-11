@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   }
 
   getServices() {
-    this.servicesService.getServices()
+    this.servicesService.getUnconfirmedServices()
       .subscribe(
         data => {
           this.services = data;

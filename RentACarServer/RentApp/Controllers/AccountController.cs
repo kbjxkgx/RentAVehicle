@@ -324,7 +324,7 @@ namespace RentApp.Controllers
             }
             AppUser appUser = new AppUser() { FullName = model.FullName, Birthday = DateTime.Now, LastName = model.LastName };
             var user = new RAIdentityUser() {Id=model.Email, UserName = model.Email, Email = model.Email, AppUser = appUser, PasswordHash = RAIdentityUser.HashPassword(model.Password) };
-
+            
             IdentityResult result = null;
             try
             {
@@ -334,7 +334,15 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            UserManager.AddToRole(user.Id, "AppUser");
+            if (model.IsManager)
+            {
+                UserManager.AddToRole(user.Id, "Manager");
+            }
+            else
+            {
+                UserManager.AddToRole(user.Id, "AppUser");
+            }
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);

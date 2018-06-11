@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
-import { CommunicationService } from '../services/communicationService/communication.service';
+import { CommunicationService } from '../services/communicationservice/communication.service';
 import { Observable } from 'rxjs/Observable';
 
 import {

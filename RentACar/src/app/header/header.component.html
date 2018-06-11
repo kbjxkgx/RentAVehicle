@@ -10,14 +10,14 @@
         <a href="#" *ngIf="isManager" [routerLink]="['/services']">Services</a>
         <a href="#" *ngIf="isManager" [routerLink]="['/addvehicle']">Add Service</a>
         <a href="#" *ngIf="isManager" [routerLink]="['/vehicles']">Vehicles</a>
-        <a href="#">Roles <span class="header-new-feature">new</span></a>
       </nav>
         <div class="header-user-menu">
             <img src="../../assets/icon.jpg" alt="User Image"/>
             <ul>
-              <li><a href="#" class="highlight" *ngIf="isLoggedIn" [routerLink]="['/logout']">Logout {{isLoggedIn}}</a></li>
-              <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/login']">Login {{isLoggedIn}}</a></li>
-              <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/register']">Register {{isLoggedIn}}</a></li>
+              <li><a href="#" class="highlight" *ngIf="isLoggedIn" [routerLink]="['/verifyaccount']">Verify account </a></li>              
+              <li><a href="#" class="highlight" *ngIf="isLoggedIn" (click)='Logout()' [routerLink]="['/home']">Logout </a></li>
+              <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/login']">Login </a></li>
+              <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/register']">Register </a></li>
             </ul>
         </div>
     </div>

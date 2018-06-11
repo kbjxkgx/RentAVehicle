@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CommunicationService } from '../communicationService/communication.service';
+import { CommunicationService } from '../communicationservice/communication.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';

@@ -46,4 +46,10 @@ export class AccountService {
       // .map(this.parseData)
       // .catch(this.handleError);
   }
+
+  logout() {
+    let _formData = new FormData();
+    let body = _formData;
+    return this.httpClient.post('https://localhost:44313/api/Account/Logout', body);
+  }
 }

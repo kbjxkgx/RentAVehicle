@@ -5,6 +5,11 @@ import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterModel } from '../models/registerModel';
 import { ElementRef} from '@angular/core';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,7 +17,7 @@ import { ElementRef} from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private accountService: AccountService, private appUserService: AppUserService) { }
+  constructor(private accountService: AccountService, private appUserService: AppUserService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,5 +31,7 @@ export class RegisterComponent implements OnInit {
           error => {
             console.log(error);
           });
+    form.reset();
+    this.router.navigate(['/login']);
   }
 }

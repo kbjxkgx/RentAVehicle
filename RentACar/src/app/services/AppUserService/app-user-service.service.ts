@@ -39,8 +39,30 @@ export class AppUserService {
     //     headers: headers
     // });
     return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body);
-      // .map((response: Response) => <string>response.json())
-      // .subscribe((data) => this.message = data);
+      // x.subscribe(
+    //   res => {
+    //     console.log('getManagers succeded');
+    //     return res;
+    //   },
+    //   err => {
+    //     console.log('Error occured');
+    //     return;
+    //   }
+    // );
+  }
+
+  getManagers(): any {
+    return this.httpClient.get('https://localhost:44313/api/AppUsers/getManagers') as Observable<any>;
+    // x.subscribe(
+    //   res => {
+    //     console.log('getManagers succeded');
+    //     return res;
+    //   },
+    //   err => {
+    //     console.log('Error occured');
+    //     return;
+    //   }
+    // );
   }
 
 }

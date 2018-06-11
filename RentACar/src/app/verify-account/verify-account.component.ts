@@ -3,6 +3,8 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
 import { AppUserService } from '../services/AppUserService/app-user-service.service';
+import { Observable } from 'rxjs/Observable';
+
 @Component({
   selector: 'app-verify-account',
   templateUrl: './verify-account.component.html',
@@ -18,7 +20,18 @@ export class VerifyAccountComponent implements OnInit {
 
   onSubmit(): void {
     if (this.myFile) {
-      this.appUserService.uploadIdPhoto(this.myFile, this.Id);
+      this.Id = 'nemanjaciric@gmail.com';
+      const x = this.appUserService.uploadIdPhoto(this.myFile, this.Id) as Observable<any>;
+      x.subscribe(
+        res => {
+          console.log('uploadIdPhoto succeded');
+          return res;
+        },
+        err => {
+          console.log('uploadIdPhoto failed');
+          return;
+        }
+      );
     }
 }
 

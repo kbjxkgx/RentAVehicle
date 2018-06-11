@@ -22,6 +22,9 @@ import { ManagerComponent } from './manager/manager.component';
 import { ServicelistComponent } from './servicelist/servicelist.component';
 import { ServicelistitemComponent } from './servicelistitem/servicelistitem.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { CommunicationService } from './services/communicationservice/communication.service';
+import { ManagerlistComponent } from './managerlist/managerlist.component';
+import { ManagerlistitemComponent } from './managerlistitem/managerlistitem.component';
 
 
 const Routes = [
@@ -41,6 +44,10 @@ const Routes = [
   {
     path: 'manager',
     component: ManagerComponent,
+  },
+  {
+    path: 'managers',
+    component: ManagerlistComponent,
   },
   {
     path: 'login',
@@ -70,7 +77,9 @@ const Routes = [
     ManagerComponent,
     ServicelistComponent,
     ServicelistitemComponent,
-    VerifyAccountComponent
+    VerifyAccountComponent,
+    ManagerlistComponent,
+    ManagerlistitemComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +91,7 @@ const Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    CommunicationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

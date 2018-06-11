@@ -1,4 +1,5 @@
-﻿using RentApp.Helper;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using RentApp.Helper;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
@@ -21,9 +22,11 @@ namespace RentApp.Controllers
     public class AppUserController : ApiController
     {
         private IUnitOfWork db;
+        public ApplicationUserManager UserManager { get; private set; }
 
-        public AppUserController(IUnitOfWork context)
+        public AppUserController(IUnitOfWork context, ApplicationUserManager userManager)
         {
+            UserManager = userManager;
             db = context;
         }
 
@@ -32,6 +35,25 @@ namespace RentApp.Controllers
         {
             return db.AppUsers.GetAll();
         }
+
+        [HttpGet]
+        [Route("api/AppUsers/getManagers")]
+        public IEnumerable<AppUser> GetManagers()
+        {
+            List<AppUser> users = new List<AppUser>();
+            foreach (RAIdentityUser user in UserManager.Users)
+            {
+                foreach (var userRole in user.Roles)
+                {
+                    if (userRole.RoleId == "a3807ce4-b4b3-4475-a951-9038944daab6")
+                    {
+                        users.Add(db.AppUsers.Get(user.AppUserId));
+                    }
+                }
+            }
+            return users;
+        }
+
 
         // GET: api/Services/5
         [ResponseType(typeof(AppUser))]
@@ -64,17 +86,20 @@ namespace RentApp.Controllers
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
                 string userId = provider.FormData.GetValues("Id")[0];
-                int Id = Int32.Parse(userId);
-                AppUser user = db.AppUsers.Get(Id);
+                RAIdentityUser RAUser = await UserManager.FindByIdAsync(userId);
+                AppUser user = db.AppUsers.Get(RAUser.AppUserId);
                 MultipartFileData file = provider.FileData[0];
                 string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");
-                destinationFilePath += userId + ".jpg";
+                destinationFilePath += user.Id + ".jpg";
                 if (File.Exists(destinationFilePath))
                 {
                     File.Delete(destinationFilePath);
                 }
                 File.Copy(file.LocalFileName, destinationFilePath);
                 File.Delete(file.LocalFileName);
+                user.PicturePath = @"/Content/Images/UserIdPhotos/"+ user.Id + ".jpg";
+                db.AppUsers.Update(user);
+                db.Complete();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (System.Exception e)

@@ -47,9 +47,8 @@ namespace RentApp.Models
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "BirthDay")]
-        [DataType(DataType.DateTime)]
-        public DateTime BirthDay { get; set; }
+        [Display(Name = "IsManager")]
+        public bool IsManager { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]

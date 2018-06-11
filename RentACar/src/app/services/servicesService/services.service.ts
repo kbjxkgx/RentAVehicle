@@ -31,10 +31,28 @@ export class ServicesService {
       // .catch(this.handleError);
   }
 
+  getUnconfirmedServices(): Observable<any> {
+    return this.httpClient.get('https://localhost:44313/api/Services/UnconfirmedServices');
+  }
+
   addService(service: ServiceModel): Observable<any> {
     return this.httpClient.post('https://localhost:44313/api/Services', service);
       // .map(this.parseData)
       // .catch(this.handleError);
+  }
+
+  ConfirmService(service: ServiceModel) {
+    let url = '';
+    url = url.concat('https://localhost:44313/api/Services/');
+    url = url.concat(service.Id.toString());
+    const x = this.httpClient.put(url, service) as Observable<any>;
+    x.subscribe(
+      res => {
+          console.log('Confirm service succeded');
+      },
+      error => {
+        console.log('Confirm service failed');
+      });
   }
 
 

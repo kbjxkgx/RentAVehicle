@@ -276,6 +276,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Controllers\VehicleImageController.cs" />
+    <Compile Include="Controllers\VehicleTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +296,10 @@
     <Compile Include="Migrations\201806070749080_UpdatedTables.cs" />
     <Compile Include="Migrations\201806070749080_UpdatedTables.Designer.cs">
       <DependentUpon>201806070749080_UpdatedTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806121957358_UpdateTables2.cs" />
+    <Compile Include="Migrations\201806121957358_UpdateTables2.Designer.cs">
+      <DependentUpon>201806121957358_UpdateTables2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -412,6 +417,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\VehicleImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -438,6 +444,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806070749080_UpdatedTables.resx">
       <DependentUpon>201806070749080_UpdatedTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121957358_UpdateTables2.resx">
+      <DependentUpon>201806121957358_UpdateTables2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

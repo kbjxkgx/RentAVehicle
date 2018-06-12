@@ -1,5 +1,6 @@
 ﻿using RentApp.Helper;
 using RentApp.Models.Entities;
+using RentApp.Persistance.Repository;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,8 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Vehicle> GetVehicles()
         {
-            return db.Vehicles.GetAll();
+            List<Vehicle> list = (db.Vehicles as VehicleRepository).GetAll().ToList();
+            return (db.Vehicles as VehicleRepository).GetAll().ToList();
         }
 
         // GET: api/Services/5
@@ -106,43 +108,7 @@ namespace RentApp.Controllers
         }
 
 
-        [Route("api/Vehicle/AddVehicle")]
-        [HttpPost]
-        [ResponseType(typeof(AppUser))]
-        public async Task<HttpResponseMessage> AddVehicle(Vehicle vehicle)
-        {
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            var provider = new MultipartFormDataStreamProvider(root);
-
-            //try
-            //{
-            //    await Request.Content.ReadAsMultipartAsync(provider);
-            //    string userId = provider.FormData.GetValues("Id")[0];
-            //    MultipartFileData file = provider.FileData[0];
-            //    string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");
-            //    destinationFilePath += user.Id + ".jpg";
-            //    if (File.Exists(destinationFilePath))
-            //    {
-            //        File.Delete(destinationFilePath);
-            //    }
-            //    File.Copy(file.LocalFileName, destinationFilePath);
-            //    File.Delete(file.LocalFileName);
-            //    user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
-            //    db.AppUsers.Update(user);
-            //    db.Complete();
-            //    return Request.CreateResponse(HttpStatusCode.OK);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-            //}
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
+        
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Vehicle))]

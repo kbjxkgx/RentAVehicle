@@ -35,6 +35,10 @@ export class ServicesService {
     return this.httpClient.get('https://localhost:44313/api/Services/UnconfirmedServices');
   }
 
+  getConfirmedServices(): Observable<any> {
+    return this.httpClient.get('https://localhost:44313/api/Services/ConfirmedServices');
+  }
+
   addService(service: ServiceModel): Observable<any> {
     return this.httpClient.post('https://localhost:44313/api/Services', service);
       // .map(this.parseData)

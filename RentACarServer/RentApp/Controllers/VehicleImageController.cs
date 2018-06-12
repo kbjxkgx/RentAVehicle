@@ -1,4 +1,5 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Helper;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
+    [RequireHttps]
     public class VehicleImageController : ApiController
     {
         private IUnitOfWork db;
@@ -92,22 +94,29 @@ namespace RentApp.Controllers
             try
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
-                string vehicleId = provider.FormData.GetValues("vehicleId")[0];
+                int vehicleId = Int32.Parse(provider.FormData.GetValues("vehicleId")[0]);
                 //MultipartFileData file = provider.FileData[0];
-                
+                int i = 0;
+                string destinationFolderPath = HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/" + vehicleId);
+                if (!Directory.Exists(destinationFolderPath))
+                {
+                    Directory.CreateDirectory(destinationFolderPath);
+                }
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    
-                    string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/" + vehicleId);
-                    if (!Directory.Exists(destinationFilePath))
-                    {
-                        Directory.CreateDirectory(destinationFilePath);
-                    }
-                    destinationFilePath += vehicleId + ".jpg";
+                    string destinationFilePath = destinationFolderPath+ "/"+ i + ".jpg";
                     if (File.Exists(destinationFilePath))
                     {
                         File.Delete(destinationFilePath);
                     }
+                    File.Copy(file.LocalFileName, destinationFilePath);
+                    File.Delete(file.LocalFileName);
+                    VehicleImage image = new VehicleImage();
+                    image.VehicleImageVehicleId = vehicleId; 
+                    image.ImagePath = @"http://localhost:51680/Content/Images/VehicleImages/" + i + ".jpg";
+                    db.VehicleImages.Add(image);
+                    db.Complete();
+                    i++;
                 }
             }
             catch (System.Exception e)

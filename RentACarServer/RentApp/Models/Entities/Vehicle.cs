@@ -22,6 +22,8 @@ namespace RentApp.Models.Entities
         public List<Item> Items { get; set; }
         public List<VehicleImage> Images { get; set; }
         public List<Reservation> Reservations { get; set; }
+        [ForeignKey("Type")]
+        public int TypeId { get; set; }
         public VehicleType Type { get; set; }
 
         [ForeignKey("VehicleService")]

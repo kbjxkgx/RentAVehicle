@@ -75,6 +75,10 @@ const Routes = [
   {
     path: 'addvehicle',
     component: AddvehicleComponent,
+  },
+  {
+    path: 'vehicles',
+    component: MainpageComponent,
   }
 ];
 

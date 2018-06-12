@@ -30,12 +30,19 @@ namespace RentApp.Controllers
         {
             return db.Services.GetAll();
         }
+
         [HttpGet]
         [Route("api/Services/UnconfirmedServices")]
         public IEnumerable<Service> GetUnconfirmedServices()
         {
-            List< Service > lis = db.Services.GetAll().Where(service => service.IsConfirmed == false).ToList();
             return db.Services.GetAll().Where(service => service.IsConfirmed == false);
+        }
+
+        [HttpGet]
+        [Route("api/Services/ConfirmedServices")]
+        public IEnumerable<Service> GetConfirmedServices()
+        {
+            return db.Services.GetAll().Where(service => service.IsConfirmed == true);
         }
 
         // GET: api/Services/5

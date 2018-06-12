@@ -12,7 +12,10 @@ namespace RentApp.Persistance.Repository
         public VehicleRepository(DbContext context) : base(context)
         {
         }
-
+        public IEnumerable<Vehicle> GetAll()
+        {
+            return context.Set<Vehicle>().Include("Images").ToList();
+        }
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

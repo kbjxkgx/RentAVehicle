@@ -4,6 +4,7 @@ import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommunicationService } from '../communicationservice/communication.service';
+import { AppUserService } from '../AppUserService/app-user-service.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -19,7 +20,8 @@ import {
 })
 export class LoginService {
 
-  constructor(private httpClient: HttpClient, private router: Router, private data: CommunicationService) { }
+  constructor(private httpClient: HttpClient, private router: Router, private data: CommunicationService,
+     private appUserService: AppUserService) { }
 
   private parseData(res: Response) {
     return res.json() || [];
@@ -61,7 +63,23 @@ export class LoginService {
 
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('role', role);
-
+          let user: any;
+          localStorage.setItem('username', username);
+          
+          //const x = this.appUserService.getUserByUsername(username);
+          // x.subscribe(
+          //     res => {
+          //       console.log('getUserByUsername succeded');
+          //       user = res;
+          //       localStorage.setItem('user', user);
+          //       localStorage.setItem('username', username);
+          //     },
+          //     err => {
+          //       console.log('getUserByUsername failed');
+          //       return;
+          //     }
+          //   );
+            
           this.data.changeIsLoggedIn(true);
           // let role = localStorage.getItem("role");
           if (localStorage.getItem("role")=='Admin')

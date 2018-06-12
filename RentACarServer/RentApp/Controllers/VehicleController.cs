@@ -7,6 +7,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -101,6 +103,45 @@ namespace RentApp.Controllers
             db.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
+        }
+
+
+        [Route("api/Vehicle/AddVehicle")]
+        [HttpPost]
+        [ResponseType(typeof(AppUser))]
+        public async Task<HttpResponseMessage> AddVehicle(Vehicle vehicle)
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+
+            //try
+            //{
+            //    await Request.Content.ReadAsMultipartAsync(provider);
+            //    string userId = provider.FormData.GetValues("Id")[0];
+            //    MultipartFileData file = provider.FileData[0];
+            //    string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");
+            //    destinationFilePath += user.Id + ".jpg";
+            //    if (File.Exists(destinationFilePath))
+            //    {
+            //        File.Delete(destinationFilePath);
+            //    }
+            //    File.Copy(file.LocalFileName, destinationFilePath);
+            //    File.Delete(file.LocalFileName);
+            //    user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
+            //    db.AppUsers.Update(user);
+            //    db.Complete();
+            //    return Request.CreateResponse(HttpStatusCode.OK);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            //}
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // DELETE: api/Services/5

@@ -3,18 +3,18 @@
       <h1><a href="#">Rent A<span> Vehicle</span></a></h1>
       <nav>
         <a href="#" *ngIf="!isLoggedIn||isUser" [routerLink]="['/home']">Home</a>
-        <a href="#" *ngIf="isAdmin" [routerLink]="['/addvehicle']">Services</a>
+        <a href="#" [routerLink]="['/servicelist']">Services</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/managers']">Managers</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/users']">Users</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/notifications']">Notifications<span class="header-new-feature" *ngIf="notificationExists">new</span></a>
-        <a href="#" *ngIf="isManager" [routerLink]="['/services']">Services</a>
-        <a href="#" *ngIf="isManager" [routerLink]="['/addvehicle']">Add Service</a>
+        <a href="#" *ngIf="isManager" [routerLink]="['/addservice']">Add Service</a>
+        <a href="#" *ngIf="isManager" [routerLink]="['/addvehicle']">Add Vehicle</a>
         <a href="#" *ngIf="isManager" [routerLink]="['/vehicles']">Vehicles</a>
       </nav>
         <div class="header-user-menu">
             <img src="../../assets/icon.jpg" alt="User Image"/>
             <ul>
-              <li><a href="#" class="highlight" *ngIf="isLoggedIn" [routerLink]="['/verifyaccount']">Verify account </a></li>              
+              <li><a href="#" class="highlight" *ngIf="isLoggedIn&&!isAdmin" [routerLink]="['/verifyaccount']">Verify account </a></li>              
               <li><a href="#" class="highlight" *ngIf="isLoggedIn" (click)='Logout()' [routerLink]="['/home']">Logout </a></li>
               <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/login']">Login </a></li>
               <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/register']">Register </a></li>

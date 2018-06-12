@@ -33,10 +33,18 @@ export class VehicleService {
   }
 
   addVehicle(vehicle: VehicleModel): Observable<any> {
+    vehicle.VehicleServiceId = 2;
     return this.httpClient.post('https://localhost:44313/api/Vehicle', vehicle);
       // .map(this.parseData)
       // .catch(this.handleError);
   }
 
-
+  addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {
+    let _formData = new FormData();
+    for (let file of filesToUpload) {
+      _formData.append(file.name, file);
+    }
+    let body = _formData;
+    return this.httpClient.post('https://localhost:44313/api/Vehicle/AddVehicle', body);
+  }
 }

@@ -20,7 +20,7 @@ export class VerifyAccountComponent implements OnInit {
 
   onSubmit(): void {
     if (this.myFile) {
-      this.Id = 'nemanjaciric@gmail.com';
+      this.Id = localStorage.getItem('username');
       const x = this.appUserService.uploadIdPhoto(this.myFile, this.Id) as Observable<any>;
       x.subscribe(
         res => {

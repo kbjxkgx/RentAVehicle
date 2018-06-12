@@ -3,7 +3,7 @@ export class ServiceModel {
     Name: string;
     Email: string;
     IsConfirmed: boolean;
-    Description: Date;
+    Description: string;
     LogoImagePath: string;
     ServiceManagerId: string;
 }

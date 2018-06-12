@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
+import { AppUserModel } from '../../models/appUserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -39,16 +41,6 @@ export class AppUserService {
     //     headers: headers
     // });
     return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body);
-      // x.subscribe(
-    //   res => {
-    //     console.log('getManagers succeded');
-    //     return res;
-    //   },
-    //   err => {
-    //     console.log('Error occured');
-    //     return;
-    //   }
-    // );
   }
 
   getManagers(): any {
@@ -63,6 +55,65 @@ export class AppUserService {
     //     return;
     //   }
     // );
+  }
+
+  getUserByUsername(Username: string): any {
+    let params = new HttpParams().set('Username', localStorage.getItem('username'));
+
+    return this.httpClient.get('https://localhost:44313/api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
+    // x.subscribe(
+    //   res => {
+    //     console.log('getManagers succeded');
+    //     return res;
+    //   },
+    //   err => {
+    //     console.log('Error occured');
+    //     return;
+    //   }
+    // );
+  }
+
+  ConfirmManager(user: AppUserModel): any {
+    let url = '';
+    url = url.concat('https://localhost:44313/api/AppUser/');
+    url = url.concat(user.Id.toString());
+    const x = this.httpClient.put(url, user) as Observable<any>;
+
+    x.subscribe(
+      res => {
+        console.log('getManagers succeded');
+        user.IsManagerAllowed = !user.IsManagerAllowed;
+        return res;
+      },
+      err => {
+        console.log('Error occured');
+        return;
+      }
+    );
+  }
+
+  getUnconfirmedUsers() {
+    return this.httpClient.get('https://localhost:44313/api/AppUsers/UnconfirmedUsers') as Observable<any>;
+  }
+
+  ConfirmUser(user: AppUserModel) {
+    let url = '';
+    url = url.concat('https://localhost:44313/api/AppUser/');
+    url = url.concat(user.Id.toString());
+    user.IsUserConfirmed = true;
+    const x = this.httpClient.put(url, user) as Observable<any>;
+
+    x.subscribe(
+      res => {
+        console.log('getManagers succeded');
+        return res;
+      },
+      err => {
+        console.log('Error occured');
+        user.IsUserConfirmed = false;
+        return;
+      }
+    );
   }
 
 }

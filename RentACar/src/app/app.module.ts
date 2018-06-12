@@ -25,6 +25,9 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
 import { CommunicationService } from './services/communicationservice/communication.service';
 import { ManagerlistComponent } from './managerlist/managerlist.component';
 import { ManagerlistitemComponent } from './managerlistitem/managerlistitem.component';
+import { UserlistComponent } from './userlist/userlist.component';
+import { UserlistitemComponent } from './userlistitem/userlistitem.component';
+import { AddServiceComponent } from './add-service/add-service.component';
 
 
 const Routes = [
@@ -60,6 +63,18 @@ const Routes = [
   {
     path: 'verifyaccount',
     component: VerifyAccountComponent
+  },
+  {
+    path: 'users',
+    component: UserlistComponent,
+  },
+  {
+    path: 'servicelist',
+    component: ServicelistComponent,
+  },
+  {
+    path: 'addvehicle',
+    component: AddvehicleComponent,
   }
 ];
 
@@ -79,7 +94,10 @@ const Routes = [
     ServicelistitemComponent,
     VerifyAccountComponent,
     ManagerlistComponent,
-    ManagerlistitemComponent
+    ManagerlistitemComponent,
+    UserlistComponent,
+    UserlistitemComponent,
+    AddServiceComponent
   ],
   imports: [
     BrowserModule,

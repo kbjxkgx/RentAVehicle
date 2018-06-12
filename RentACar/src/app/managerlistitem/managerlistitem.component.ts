@@ -8,9 +8,13 @@ import { AppUserService } from '../services/AppUserService/app-user-service.serv
 })
 export class ManagerlistitemComponent implements OnInit {
   @Input() manager: any;
-  constructor() { }
+  constructor(private appUserService: AppUserService) { }
 
   ngOnInit() {
+  }
+
+  ConfirmManager() {
+    this.appUserService.ConfirmManager(this.manager);
   }
 
 }

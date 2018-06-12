@@ -50,6 +50,7 @@ export class AccountService {
   logout() {
     let _formData = new FormData();
     let body = _formData;
+    localStorage.removeItem('username');
     return this.httpClient.post('https://localhost:44313/api/Account/Logout', body);
   }
 }

@@ -37,6 +37,13 @@ namespace RentApp.Controllers
         }
 
         [HttpGet]
+        [Route("api/AppUsers/UnconfirmedUsers")]
+        public IEnumerable<AppUser> UnconfirmedUsers()
+        {
+            return db.AppUsers.GetAll().Where(user=>user.IsUserConfirmed==false);
+        }
+
+        [HttpGet]
         [Route("api/AppUsers/getManagers")]
         public IEnumerable<AppUser> GetManagers()
         {
@@ -68,6 +75,25 @@ namespace RentApp.Controllers
             return Ok(appUser);
         }
 
+        // GET: api/Services/5
+        [HttpGet]
+        [Route("api/AppUser/GetAppUserByUsername")]
+        [ResponseType(typeof(AppUser))]
+        public async Task<HttpResponseMessage> GetAppUserByUsername(string Username)
+        {
+            try
+            {
+                RAIdentityUser RAUser = await UserManager.FindByIdAsync(Username);
+                AppUser user = db.AppUsers.Get(RAUser.AppUserId);
+                return Request.CreateResponse(HttpStatusCode.OK, user);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+
+        }
+
         //GET: api/Services/5
         [Route("api/AppUser/VerifyUser")]
         [HttpPost]
@@ -97,7 +123,7 @@ namespace RentApp.Controllers
                 }
                 File.Copy(file.LocalFileName, destinationFilePath);
                 File.Delete(file.LocalFileName);
-                user.PicturePath = @"/Content/Images/UserIdPhotos/"+ user.Id + ".jpg";
+                user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
                 db.AppUsers.Update(user);
                 db.Complete();
                 return Request.CreateResponse(HttpStatusCode.OK);

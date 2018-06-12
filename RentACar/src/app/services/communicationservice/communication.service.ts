@@ -17,7 +17,8 @@ export class CommunicationService {
   isManagerMessage = this.isManagerSource.asObservable();
 
 
-  constructor() { }
+  constructor() {
+   }
 
   changeIsLoggedIn(message: boolean)
   {

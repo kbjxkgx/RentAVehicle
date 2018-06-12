@@ -1,4 +1,4 @@
-<div *ngIf="!manager.IsUserConfirmed" class="card border-0 transform-on-hover">
+<div class="card border-0 transform-on-hover">
       
     <a class="lightbox" [href]="manager.PicturePath">
       <img [src]="manager.PicturePath" alt="Card Image" class="card-img-top">
@@ -7,6 +7,6 @@
           <h6><a href="#">{{manager.FullName}}</a></h6>
           <h5><a href="#">{{manager.LastName}}</a></h5>
           <p class="text-muted card-text">{{manager.LastName}}</p>
-          <button type="button" class="btn btn-warning">Confirm</button>
+          <button type="button" class="btn btn-warning" (click)="ConfirmManager()" > {{manager.IsManagerAllowed ? 'Forbid' : 'Allow'}} </button>
       </div>
   </div>

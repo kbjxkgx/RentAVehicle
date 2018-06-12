@@ -19,36 +19,6 @@ export class MainpageComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private router: Router, private data: CommunicationService) { }
   ngOnInit() {
     this.getVehicles();
-    if (localStorage.getItem('jwt'))
-    {
-      this.data.changeIsLoggedIn(true);
-      // let role = localStorage.getItem("role");
-      if (localStorage.getItem("role")=='Admin')
-      {
-        this.data.changeIsAdmin(true);
-        this.data.changeIsManager(false);
-        this.data.changeIsUser(false);
-        this.router.navigate(['/admin']);
-      } else if (localStorage.getItem("role")=='Manager')
-      {
-        this.data.changeIsAdmin(false);
-        this.data.changeIsManager(true);
-        this.data.changeIsUser(false);
-        this.router.navigate(['/manager']);
-      } else if (localStorage.getItem("role")=='AppUser')
-      {
-        this.data.changeIsAdmin(false);
-        this.data.changeIsManager(false);
-        this.data.changeIsUser(true);
-        this.router.navigate(['/home']);
-      }
-    }
-    else{ 
-        this.data.changeIsLoggedIn(false);
-        this.data.changeIsAdmin(false);
-        this.data.changeIsManager(false);
-        this.data.changeIsUser(false);
-    }
   }
 
   getVehicles() {

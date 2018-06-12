@@ -29,6 +29,7 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { UserlistitemComponent } from './userlistitem/userlistitem.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 
+import { CanActivateViaAuthGuard } from './guard/auth.guard'
 
 const Routes = [
   {
@@ -43,6 +44,7 @@ const Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: 'manager',
@@ -51,6 +53,7 @@ const Routes = [
   {
     path: 'managers',
     component: ManagerlistComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: 'login',
@@ -67,6 +70,7 @@ const Routes = [
   {
     path: 'users',
     component: UserlistComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: 'servicelist',
@@ -109,11 +113,18 @@ const Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    CanActivateViaAuthGuard,
     CommunicationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: 'CanAlwaysActivateGuard',
+      useValue: () => {
+        return true;
+      } 
     }
   ],
   bootstrap: [AppComponent]

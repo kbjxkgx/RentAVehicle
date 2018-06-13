@@ -102,6 +102,12 @@ namespace RentApp.Controllers
             }
 
             db.Services.Add(service);
+
+            Notification notification = new Notification();
+            notification.Seen = false;
+            notification.Text = "Added new service:" + service.Name + " " + service.Email + ", check services for confirmation!";
+            db.Notifications.Add(notification);
+
             db.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);

@@ -125,6 +125,12 @@ namespace RentApp.Controllers
                 File.Delete(file.LocalFileName);
                 user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
                 db.AppUsers.Update(user);
+
+                Notification notification = new Notification();
+                notification.Seen = false;
+                notification.Text = "Added new user:" + user.FullName + " " + user.LastName + ", check users for confirmation!";
+                db.Notifications.Add(notification);
+
                 db.Complete();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

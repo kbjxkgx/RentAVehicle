@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/accountService/account.service';
-import {
-  Router,
-  ActivatedRoute
-} from '@angular/router';
+import { Router } from '@angular/router';
 import { CommunicationService } from '../services/communicationservice/communication.service';
+import { SocketserviceService } from '../services/socketservice/socketservice.service';
 
 @Component({
   selector: 'app-header',
@@ -12,14 +10,25 @@ import { CommunicationService } from '../services/communicationservice/communica
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  isConnected: Boolean;
+  notifications: string[];
+
    public isLoggedIn: boolean;
    public isUser: boolean;
    public isAdmin: boolean;
    public isManager: boolean;
    public notificationExists: boolean;
-  constructor( private router: Router, private data: CommunicationService, private accountService: AccountService) { }
+  constructor( private router: Router, private data: CommunicationService, private accountService: AccountService, private socketService: SocketserviceService) {
+    this.isConnected = false;
+    this.notifications = [];
+   }
 
   ngOnInit() {
+
+    this.checkConnection();
+    this.subscribeForNotifications();
+
     this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
     this.data.isLoggedInMessage.subscribe(message => this.isLoggedIn = message);
     this.data.isManagerMessage.subscribe(message => this.isManager = message);
@@ -75,5 +84,27 @@ export class HeaderComponent implements OnInit {
   Register(): void {
     this.router.navigate(['/register']);
   }
+
+  private checkConnection(){
+    this.socketService.connectionEstablished.subscribe(e => {this.isConnected = e; 
+        if (e) {
+          //this.socketService.sendHello()
+        }
+    });
+  }
+
+  private subscribeForNotifications () {
+    this.socketService.notificationReceived.subscribe(e => this.onNotification(e));
+  }
+
+  public onNotification(notif: any) {
+
+    this.notifications.push(notif);  
+
+  //   this.ngZone.run(() => { 
+  //     this.notifications.push(notif);  
+  //  });  
+ }
+
 
 }

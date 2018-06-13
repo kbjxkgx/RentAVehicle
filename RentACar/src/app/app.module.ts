@@ -34,6 +34,8 @@ import { NotificationitemComponent } from './notificationitem/notificationitem.c
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 
+import { SocketserviceService } from './services/socketservice/socketservice.service';
+
 const Routes = [
   {
     path: '',
@@ -123,6 +125,7 @@ const Routes = [
   ],
   providers: [
     CanActivateViaAuthGuard,
+    SocketserviceService,
     CommunicationService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -2,7 +2,7 @@
     <div *ngIf='!user.IsUserConfirmed' class="card border-0 transform-on-hover">
       
         <a class="lightbox" href="../assets/tesla2.jpg">
-          <img [src]="user.PicturePath" alt="Card Image" class="card-img-top">
+          <img [src]="user.PicturePath" onerror="this.src='../assets/icon.jpg'" alt="Card Image" class="card-img-top">
         </a>
           <div class="card-body">
               <h6><a href="#">{{user.Name}} {{user.IsConfirmed}}</a></h6>

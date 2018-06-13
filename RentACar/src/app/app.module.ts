@@ -32,6 +32,7 @@ import { ServicePageComponent } from './service-page/service-page.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationitemComponent } from './notificationitem/notificationitem.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
 
 const Routes = [
   {
@@ -75,11 +76,15 @@ const Routes = [
   },
   {
     path: 'vehicles',
-    component: MainpageComponent,
+    component: VehiclesComponent,
   },
   {
     path: 'vehiclelist',
     component: CarlistComponent,
+  },
+  {
+    path: 'servicepage',
+    component: ServicePageComponent,
   }
 ];
 
@@ -104,7 +109,8 @@ const Routes = [
     ServicePageComponent,
     NotificationsComponent,
     NotificationitemComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    VehicleComponent
   ],
   imports: [
     BrowserModule,

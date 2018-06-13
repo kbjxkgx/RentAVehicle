@@ -1,0 +1,40 @@
+<div class="container">
+<div class="map-example well">
+      <div class="row">
+          <div class="col-lg-8">
+              <a *ngIf="vehicle.Images[0]" href="../assets/defaultVehicleImage.jpeg" class="lightbox">
+                  <img [src]="vehicle.Images[0].ImagePath" onerror="this.src='../assets/icon.jpg'" alt="Card Image" class="card-img-top">
+                </a>
+          </div>
+          <div class="col-lg-4">
+              <div class="heading">
+                  <h3>{{vehicle.Manufacturer}} {{vehicle.Model}}</h3>
+                  <div class="rating">
+                      <i class="fa fa-star icon"></i>
+                      <i class="fa fa-star icon"></i>
+                      <i class="fa fa-star icon"></i>
+                      <i class="fa fa-star icon"></i>
+                      <i class="fa fa-star-o icon"></i>
+                  </div>
+              </div>
+              <div class="info">
+                <h4>Description</h4> {{vehicle.Description}}
+                <p>{{vehicle.Description}}</p>
+              </div>
+              <div class="info">
+                <h4>Year of production</h4>
+                <p>{{vehicle.YearOfProduction}}</p>
+              </div>
+
+              <div class="gallery row">
+                  <h4>Photos</h4>
+                  <div *ngIf="vehicle.Images" class="row">
+                      <div *ngFor="let image of vehicle.Images" class="col-md-4">
+                          <a *ngIf="image" href="../assets/defaultVehicleImage.jpeg" ><img class="img-fluid image" [src]="image.ImagePath" ></a>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>

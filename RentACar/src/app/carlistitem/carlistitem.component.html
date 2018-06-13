@@ -4,8 +4,8 @@
     <span>$70</span>
     <sup>00</sup>/Day
   </div>
-  <a *ngIf="vehicle.Images" [routerLink]="['/addvehicle/']" class="lightbox">
-    <img  src={{vehicle.Images[0].ImagePath}} alt="Card Image" class="card-img-top">
+  <a *ngIf="vehicle.Images[0]" [routerLink]="['/addvehicle/']" class="lightbox">
+    <img [src]="vehicle.Images[0].ImagePath" onerror="this.src='../assets/defaultVehicleImage.jpeg'" alt="Card Image" class="card-img-top">
   </a>
     <div class="card-body">
         <h6><a href="#">{{vehicle.Model}}</a></h6>

@@ -1,7 +1,7 @@
 <div class="card border-0 transform-on-hover">
       
     <a class="lightbox" [href]="manager.PicturePath">
-      <img [src]="manager.PicturePath" alt="Card Image" class="card-img-top">
+      <img [src]="manager.PicturePath" onerror="this.src='../assets/icon.jpg'" alt="Card Image" class="card-img-top">
     </a>
       <div class="card-body">
           <h6><a href="#">{{manager.FullName}}</a></h6>

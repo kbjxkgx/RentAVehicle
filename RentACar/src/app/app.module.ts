@@ -17,8 +17,6 @@ import { CarlistComponent } from './carlist/carlist.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AddvehicleComponent } from './addvehicle/addvehicle.component';
-import { AdminComponent } from './admin/admin.component';
-import { ManagerComponent } from './manager/manager.component';
 import { ServicelistComponent } from './servicelist/servicelist.component';
 import { ServicelistitemComponent } from './servicelistitem/servicelistitem.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
@@ -29,7 +27,11 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { UserlistitemComponent } from './userlistitem/userlistitem.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 
-import { CanActivateViaAuthGuard } from './guard/auth.guard'
+import { CanActivateViaAuthGuard } from './guard/auth.guard';
+import { ServicePageComponent } from './service-page/service-page.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationitemComponent } from './notificationitem/notificationitem.component';
+import { VehiclesComponent } from './vehicles/vehicles.component';
 
 const Routes = [
   {
@@ -39,16 +41,7 @@ const Routes = [
    },
   {
     path: 'home',
-    component: MainpageComponent,
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
-    canActivate: [CanActivateViaAuthGuard]
-  },
-  {
-    path: 'manager',
-    component: ManagerComponent,
+    component: VehiclesComponent,
   },
   {
     path: 'managers',
@@ -83,6 +76,10 @@ const Routes = [
   {
     path: 'vehicles',
     component: MainpageComponent,
+  },
+  {
+    path: 'vehiclelist',
+    component: CarlistComponent,
   }
 ];
 
@@ -96,8 +93,6 @@ const Routes = [
     LoginComponent,
     RegisterComponent,
     AddvehicleComponent,
-    AdminComponent,
-    ManagerComponent,
     ServicelistComponent,
     ServicelistitemComponent,
     VerifyAccountComponent,
@@ -105,7 +100,11 @@ const Routes = [
     ManagerlistitemComponent,
     UserlistComponent,
     UserlistitemComponent,
-    AddServiceComponent
+    AddServiceComponent,
+    ServicePageComponent,
+    NotificationsComponent,
+    NotificationitemComponent,
+    VehiclesComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +127,7 @@ const Routes = [
       provide: 'CanAlwaysActivateGuard',
       useValue: () => {
         return true;
-      } 
+      }
     }
   ],
   bootstrap: [AppComponent]

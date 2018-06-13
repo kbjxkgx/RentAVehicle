@@ -8,4 +8,5 @@ export class VehicleModel {
     IsAvailable = false;
     VehicleServiceId: number;
     TypeId: number;
+    Images: any[];
 }

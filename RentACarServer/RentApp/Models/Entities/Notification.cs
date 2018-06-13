@@ -12,16 +12,9 @@ namespace RentApp.Models.Entities
         public int Id { get; set; }
         [Required]
         public bool Seen { get; set; }
-        /// <summary>
-        /// Id koji hoces da dodas u zavisnosti od tipa notifikacije(user, servis)
-        /// </summary>
+       
         [Required]
-        public int EntityId { get; set; }
-
-        [Required]
-        [ForeignKey("Type")]
-        public int TypeId { get; set; }
-        public NotificationType Type { get; set; }
+        public string Text { get; set; }
 
     }
 }

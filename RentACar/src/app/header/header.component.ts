@@ -35,13 +35,13 @@ export class HeaderComponent implements OnInit {
         this.data.changeIsAdmin(true);
         this.data.changeIsManager(false);
         this.data.changeIsUser(false);
-        this.router.navigate(['/vehiclelist']);
+        this.router.navigate(['/home']);
       } else if (localStorage.getItem("role")=='Manager')
       {
         this.data.changeIsAdmin(false);
         this.data.changeIsManager(true);
         this.data.changeIsUser(false);
-        this.router.navigate(['/manager']);
+        this.router.navigate(['/home']);
       } else if (localStorage.getItem("role")=='AppUser')
       {
         this.data.changeIsAdmin(false);

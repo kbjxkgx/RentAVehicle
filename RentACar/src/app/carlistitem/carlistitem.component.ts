@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { VehicleModel } from '../models/vehicleModel';
 
 @Component({
   selector: 'app-carlistitem',
@@ -7,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CarlistitemComponent implements OnInit {
 
-  @Input() vehicle: any;
+  @Input() vehicle: VehicleModel;
+  @Input() imagePath: string;
   constructor() { }
 
   ngOnInit() {

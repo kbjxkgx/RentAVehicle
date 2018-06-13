@@ -7,11 +7,11 @@ import {ServicesService} from '../services/servicesService/services.service'
   styleUrls: ['./servicelist.component.css']
 })
 export class ServicelistComponent implements OnInit {
-  @Input() services: any;
+  services: any;
   constructor(private servicesService: ServicesService ) {}
 
   ngOnInit() {
-    this.servicesService.getUnconfirmedServices()
+    this.servicesService.getServices()
     .subscribe(
       data => {
         this.services = data;

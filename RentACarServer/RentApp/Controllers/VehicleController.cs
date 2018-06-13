@@ -28,8 +28,8 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Vehicle> GetVehicles()
         {
-            List<Vehicle> list = (db.Vehicles as VehicleRepository).GetAll().ToList();
-            return (db.Vehicles as VehicleRepository).GetAll().ToList();
+            List<Vehicle> list = db.Vehicles.GetAll().ToList();
+            return db.Vehicles.GetAll().ToList();
         }
 
         // GET: api/Services/5

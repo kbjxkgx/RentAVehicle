@@ -1,4 +1,5 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Hubs;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,9 @@ namespace RentApp.Controllers
 
             db.Notifications.Add(notification);
             db.Complete();
+
+            NotificationHub.Notify(notification);
+            //return Ok("Hello");
 
             return CreatedAtRoute("DefaultApi", new { id = notification.Id }, notification);
         }

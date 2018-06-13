@@ -43,7 +43,7 @@ export class LoginService {
     parameters = parameters.concat(password);
     parameters = parameters.concat('&grant_type=password');
     if (!localStorage.jwt) {
-       const x = this.httpClient.post('http://localhost:51680/oauth/token',
+       const x = this.httpClient.post('https://localhost:44313/oauth/token',
        parameters, {'headers': headers}) as Observable<any>;
       x.subscribe(
         res => {
@@ -66,20 +66,6 @@ export class LoginService {
           let user: any;
           localStorage.setItem('username', username);
           
-          //const x = this.appUserService.getUserByUsername(username);
-          // x.subscribe(
-          //     res => {
-          //       console.log('getUserByUsername succeded');
-          //       user = res;
-          //       localStorage.setItem('user', user);
-          //       localStorage.setItem('username', username);
-          //     },
-          //     err => {
-          //       console.log('getUserByUsername failed');
-          //       return;
-          //     }
-          //   );
-            
           this.data.changeIsLoggedIn(true);
           // let role = localStorage.getItem("role");
           if (localStorage.getItem("role")=='Admin')
@@ -87,13 +73,13 @@ export class LoginService {
             this.data.changeIsAdmin(true);
             this.data.changeIsManager(false);
             this.data.changeIsUser(false);
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/home']);
           } else if (localStorage.getItem("role")=='Manager')
           {
             this.data.changeIsAdmin(false);
             this.data.changeIsManager(true);
             this.data.changeIsUser(false);
-            this.router.navigate(['/manager']);
+            this.router.navigate(['/home']);
           } else if (localStorage.getItem("role")=='AppUser')
           {
             this.data.changeIsAdmin(false);

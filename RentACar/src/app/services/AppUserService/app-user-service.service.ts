@@ -35,42 +35,17 @@ export class AppUserService {
     let _formData = new FormData();
     _formData.append('Id', Id);
     _formData.append('MyFile', fileToUpload);
-    let body = _formData;
-    // let headers = new Headers();
-    // let options = new RequestOptions({
-    //     headers: headers
-    // });
-    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', body);
+    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', _formData);
   }
 
   getManagers(): any {
     return this.httpClient.get('https://localhost:44313/api/AppUsers/getManagers') as Observable<any>;
-    // x.subscribe(
-    //   res => {
-    //     console.log('getManagers succeded');
-    //     return res;
-    //   },
-    //   err => {
-    //     console.log('Error occured');
-    //     return;
-    //   }
-    // );
   }
 
   getUserByUsername(Username: string): any {
     let params = new HttpParams().set('Username', localStorage.getItem('username'));
 
     return this.httpClient.get('https://localhost:44313/api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
-    // x.subscribe(
-    //   res => {
-    //     console.log('getManagers succeded');
-    //     return res;
-    //   },
-    //   err => {
-    //     console.log('Error occured');
-    //     return;
-    //   }
-    // );
   }
 
   ConfirmManager(user: AppUserModel): any {

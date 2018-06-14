@@ -1,4 +1,5 @@
-﻿using RentApp.Hubs;
+﻿using RentApp.Helper;
+using RentApp.Hubs;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
@@ -12,6 +13,7 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
+    [RequireHttps]
     public class NotificationController : ApiController
     {
         private IUnitOfWork db;
@@ -25,6 +27,12 @@ namespace RentApp.Controllers
         public IEnumerable<Notification> GetNotifications()
         {
             return db.Notifications.GetAll();
+        }
+
+        [Route("api/Notification/UnseenNotifications")]
+        public IEnumerable<Notification> GetUnseenNotifications()
+        {
+            return db.Notifications.GetAll().Where(t => t.Seen == false);
         }
 
         // GET: api/Services/5
@@ -42,7 +50,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutService(int id, Notification notification)
+        public IHttpActionResult PutNotification(int id, Notification notification)
         {
             if (!ModelState.IsValid)
             {
@@ -86,7 +94,7 @@ namespace RentApp.Controllers
             db.Notifications.Add(notification);
             db.Complete();
 
-            NotificationHub.Notify(notification);
+           
             //return Ok("Hello");
 
             return CreatedAtRoute("DefaultApi", new { id = notification.Id }, notification);

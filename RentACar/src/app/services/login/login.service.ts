@@ -5,6 +5,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommunicationService } from '../communicationservice/communication.service';
 import { AppUserService } from '../AppUserService/app-user-service.service';
+import { SocketserviceService } from '../socketservice/socketservice.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -13,6 +14,7 @@ import {
   Router,
   ActivatedRoute
 } from '@angular/router';
+import { Configuration } from '../../Constants/constants';
 
 
 @Injectable({
@@ -21,7 +23,7 @@ import {
 export class LoginService {
 
   constructor(private httpClient: HttpClient, private router: Router, private data: CommunicationService,
-     private appUserService: AppUserService) { }
+     private appUserService: AppUserService, private socketService: SocketserviceService) { }
 
   private parseData(res: Response) {
     return res.json() || [];
@@ -43,7 +45,7 @@ export class LoginService {
     parameters = parameters.concat(password);
     parameters = parameters.concat('&grant_type=password');
     if (!localStorage.jwt) {
-       const x = this.httpClient.post('https://localhost:44313/oauth/token',
+       const x = this.httpClient.post('http://localhost:51680/oauth/token',
        parameters, {'headers': headers}) as Observable<any>;
       x.subscribe(
         res => {
@@ -65,7 +67,7 @@ export class LoginService {
           localStorage.setItem('role', role);
           let user: any;
           localStorage.setItem('username', username);
-          
+
           this.data.changeIsLoggedIn(true);
           // let role = localStorage.getItem("role");
           if (localStorage.getItem("role")=='Admin')
@@ -74,6 +76,7 @@ export class LoginService {
             this.data.changeIsManager(false);
             this.data.changeIsUser(false);
             this.router.navigate(['/home']);
+            this.socketService.startHubConnection();
           } else if (localStorage.getItem("role")=='Manager')
           {
             this.data.changeIsAdmin(false);
@@ -91,7 +94,7 @@ export class LoginService {
           return;
         },
         err => {
-          console.log('Error occured');
+          console.log('Error occured', err);
           return;
         }
       );

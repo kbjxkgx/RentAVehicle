@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using RentApp.Helper;
+using RentApp.Hubs;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
@@ -132,6 +133,7 @@ namespace RentApp.Controllers
                 db.Notifications.Add(notification);
 
                 db.Complete();
+                NotificationHub.Notify(notification);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (System.Exception e)
@@ -179,6 +181,7 @@ namespace RentApp.Controllers
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

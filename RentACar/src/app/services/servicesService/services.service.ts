@@ -5,6 +5,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { ServiceModel } from '../../models/serviceModel';
 import { Observable } from 'rxjs/Observable';
+import { Configuration } from '../../Constants/constants';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -26,28 +27,28 @@ export class ServicesService {
   }
 
    getServices(): Observable<any> {
-    return this.httpClient.get('https://localhost:44313/api/Services');
+    return this.httpClient.get(Configuration.path + 'api/Services');
       // .map(this.parseData)
       // .catch(this.handleError);
   }
 
   getUnconfirmedServices(): Observable<any> {
-    return this.httpClient.get('https://localhost:44313/api/Services/UnconfirmedServices');
+    return this.httpClient.get(Configuration.path + 'api/Services/UnconfirmedServices');
   }
 
   getConfirmedServices(): Observable<any> {
-    return this.httpClient.get('https://localhost:44313/api/Services/ConfirmedServices');
+    return this.httpClient.get(Configuration.path + 'api/Services/ConfirmedServices');
   }
 
   addService(service: ServiceModel): Observable<any> {
-    return this.httpClient.post('https://localhost:44313/api/Services', service);
+    return this.httpClient.post(Configuration.path + 'api/Services', service);
       // .map(this.parseData)
       // .catch(this.handleError);
   }
 
   ConfirmService(service: ServiceModel) {
     let url = '';
-    url = url.concat('https://localhost:44313/api/Services/');
+    url = url.concat(Configuration.path + 'api/Services/');
     url = url.concat(service.Id.toString());
     const x = this.httpClient.put(url, service) as Observable<any>;
     x.subscribe(

@@ -12,6 +12,7 @@ using RentApp.Helper;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Hubs;
 
 namespace RentApp.Controllers
 {
@@ -109,6 +110,8 @@ namespace RentApp.Controllers
             db.Notifications.Add(notification);
 
             db.Complete();
+
+            NotificationHub.Notify(notification);
 
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
         }

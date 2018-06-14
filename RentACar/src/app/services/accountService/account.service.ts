@@ -6,6 +6,7 @@ import { RegisterModel } from '../../models/registerModel';
 import { Observable } from 'rxjs/Observable';
 import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Configuration } from '../../Constants/constants';
 // import { MethodResult } from '../models/methodResult.model';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -42,7 +43,7 @@ export class AccountService {
     // parameters = parameters.concat(account.Password);
     // parameters = parameters.concat('&ConfirmPassword=');
     // parameters = parameters.concat(account.ConfirmPassword);
-    return this.httpClient.post('https://localhost:44313/api/Account/Register', account);
+    return this.httpClient.post(Configuration.path + 'api/Account/Register', account);
       // .map(this.parseData)
       // .catch(this.handleError);
   }
@@ -51,6 +52,6 @@ export class AccountService {
     let _formData = new FormData();
     let body = _formData;
     localStorage.removeItem('username');
-    return this.httpClient.post('https://localhost:44313/api/Account/Logout', body);
+    return this.httpClient.post(Configuration.path + 'api/Account/Logout', body);
   }
 }

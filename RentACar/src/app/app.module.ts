@@ -87,6 +87,10 @@ const Routes = [
   {
     path: 'servicepage',
     component: ServicePageComponent,
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
   }
 ];
 

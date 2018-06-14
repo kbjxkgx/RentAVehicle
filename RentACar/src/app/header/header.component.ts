@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AccountService } from '../services/accountService/account.service';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../services/communicationservice/communication.service';
@@ -19,7 +19,8 @@ export class HeaderComponent implements OnInit {
    public isAdmin: boolean;
    public isManager: boolean;
    public notificationExists: boolean;
-  constructor( private router: Router, private data: CommunicationService, private accountService: AccountService, private socketService: SocketserviceService) {
+  constructor( private router: Router, private data: CommunicationService, private ngZone: NgZone, private accountService: AccountService,
+     private socketService: SocketserviceService) {
     this.isConnected = false;
     this.notifications = [];
    }
@@ -34,9 +35,7 @@ export class HeaderComponent implements OnInit {
     this.data.isManagerMessage.subscribe(message => this.isManager = message);
     this.data.isUserMessage.subscribe(message => this.isUser = message);
 
-
-    if (localStorage.getItem('jwt'))
-    {
+    if (localStorage.getItem('jwt')) {
       this.data.changeIsLoggedIn(true);
       // let role = localStorage.getItem("role");
       if (localStorage.getItem("role")=='Admin')
@@ -44,6 +43,7 @@ export class HeaderComponent implements OnInit {
         this.data.changeIsAdmin(true);
         this.data.changeIsManager(false);
         this.data.changeIsUser(false);
+        this.socketService.startHubConnection();
         this.router.navigate(['/home']);
       } else if (localStorage.getItem("role")=='Manager')
       {
@@ -99,12 +99,17 @@ export class HeaderComponent implements OnInit {
 
   public onNotification(notif: any) {
 
-    this.notifications.push(notif);  
+    this.notifications.push(notif);
 
-  //   this.ngZone.run(() => { 
-  //     this.notifications.push(notif);  
-  //  });  
- }
+    this.ngZone.run(() => {
+      //this.notifications.push(notif);
+      this.notificationExists = true;
+      //alert("Dosla poruka.");
+    });
+  }
 
-
+  NotificationClick()
+  {
+    this.notificationExists = false;
+  }
 }

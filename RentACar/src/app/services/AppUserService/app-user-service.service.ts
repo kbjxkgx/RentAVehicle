@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { AppUserModel } from '../../models/appUserModel';
+import { Configuration } from '../../Constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -28,29 +29,29 @@ export class AppUserService {
   }
 
    getMethodDemo(): Observable<any> {
-    return this.httpClient.get('http://localhost:51680/api/AppUser');
+    return this.httpClient.get(Configuration.path + 'api/AppUser');
   }
 
   uploadIdPhoto(fileToUpload: File, Id: string): Observable<any> {
     let _formData = new FormData();
     _formData.append('Id', Id);
     _formData.append('MyFile', fileToUpload);
-    return this.httpClient.post('https://localhost:44313/api/AppUser/VerifyUser', _formData);
+    return this.httpClient.post(Configuration.path + 'api/AppUser/VerifyUser', _formData);
   }
 
   getManagers(): any {
-    return this.httpClient.get('https://localhost:44313/api/AppUsers/getManagers') as Observable<any>;
+    return this.httpClient.get(Configuration.path + 'api/AppUsers/getManagers') as Observable<any>;
   }
 
   getUserByUsername(Username: string): any {
     let params = new HttpParams().set('Username', localStorage.getItem('username'));
 
-    return this.httpClient.get('https://localhost:44313/api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
+    return this.httpClient.get(Configuration.path + 'api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
   }
 
   ConfirmManager(user: AppUserModel): any {
     let url = '';
-    url = url.concat('https://localhost:44313/api/AppUser/');
+    url = url.concat(Configuration.path + 'api/AppUser/');
     url = url.concat(user.Id.toString());
     const x = this.httpClient.put(url, user) as Observable<any>;
 
@@ -68,12 +69,12 @@ export class AppUserService {
   }
 
   getUnconfirmedUsers() {
-    return this.httpClient.get('https://localhost:44313/api/AppUsers/UnconfirmedUsers') as Observable<any>;
+    return this.httpClient.get(Configuration.path + 'api/AppUsers/UnconfirmedUsers') as Observable<any>;
   }
 
   ConfirmUser(user: AppUserModel) {
     let url = '';
-    url = url.concat('https://localhost:44313/api/AppUser/');
+    url = url.concat(Configuration.path + 'api/AppUser/');
     url = url.concat(user.Id.toString());
     user.IsUserConfirmed = true;
     const x = this.httpClient.put(url, user) as Observable<any>;

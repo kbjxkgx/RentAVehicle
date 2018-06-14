@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/behaviorsubject';
+import { Configuration } from '../../Constants/constants';
 
 @Injectable()
 export class CommunicationService {

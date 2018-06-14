@@ -24,7 +24,6 @@ using RentApp.Helper;
 namespace RentApp.Controllers
 {
     [Authorize]
-    [RequireHttps]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

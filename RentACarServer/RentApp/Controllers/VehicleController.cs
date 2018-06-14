@@ -15,7 +15,6 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
-    [RequireHttps]
     public class VehicleController : ApiController
     {
         private IUnitOfWork db;

@@ -4,6 +4,7 @@ using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -18,14 +19,14 @@ namespace RentApp.Hubs
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
         private static Timer t = new Timer();
 
-        IUnitOfWork db { get; set; }
+        
 
-        public NotificationHub(IUnitOfWork db)
+        public NotificationHub()
         {
-            this.db = db;
+           
         }
 
-        
+
         public static void Notify(Notification notification)
         {
            

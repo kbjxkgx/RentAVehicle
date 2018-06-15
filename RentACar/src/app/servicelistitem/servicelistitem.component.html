@@ -1,13 +1,42 @@
 
-    <div *ngIf='isAdmin||service.IsConfirmed' class="card border-0 transform-on-hover">
-      
-      <a class="lightbox" href="service.LogoImagePath">
-        <img src="service.LogoImagePath" alt="Card Image" class="card-img-top">
-      </a>
-        <div class="card-body">
-            <h6><a href="#">{{service.Name}} {{service.IsConfirmed}}</a></h6>
-            <h5><a href="#">{{service.Email}}</a></h5>
-            <p class="text-muted card-text">{{service.Description}}</p>
-            <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
-        </div>  
-    </div>
+    <div *ngIf='isAdmin||service.IsConfirmed' class="container">
+        <div class="map-example well">
+            <div class="row">
+                <div class="col-lg-6">
+                    <a class="lightbox">
+                        <img [src]="service.LogoImagePath" alt="Card Image" class="card-img-top">
+                      </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="heading">
+                        <h3>{{service.Name}} {{service.IsConfirmed}}</h3>
+                        <div class="rating">
+                            <i class="fa fa-star icon"></i>
+                            <i class="fa fa-star icon"></i>
+                            <i class="fa fa-star icon"></i>
+                            <i class="fa fa-star icon"></i>
+                            <i class="fa fa-star-o icon"></i>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <p><strong>Description: </strong>{{service.Description}}</p>
+                    </div>
+                    <div class="info">
+                        <p><strong>Email: </strong>{{service.Email}}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let comment of service.Comments">
+              <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-2" >
+              <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+              </div>
+              <div class="col-lg-2">
+                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+              </div>
+            </div>
+        </div>
+        </div>
+        

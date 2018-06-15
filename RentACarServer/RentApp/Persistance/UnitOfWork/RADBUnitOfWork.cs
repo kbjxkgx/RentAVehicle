@@ -42,6 +42,9 @@ namespace RentApp.Persistance.UnitOfWork
         public RADBUnitOfWork(DbContext context)
         {
             _context = context;
+            _context.Configuration.ProxyCreationEnabled = true;
+            _context.Configuration.LazyLoadingEnabled = true;
+
         }
 
         public int Complete()

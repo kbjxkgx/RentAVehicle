@@ -29,23 +29,23 @@ namespace RentApp.Controllers
         {
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
             IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
+            IEnumerable<Pricelist> pl = db.Pricelists.GetAll();
+            IEnumerable<Item> items = db.Items.GetAll();
             foreach (Vehicle vehicle in vehicles)
             {
                 Service service = db.Services.Get(vehicle.VehicleServiceId);
-                List<Pricelist> priceLists = db.Pricelists.GetAll().ToList();
                 VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
-                if (priceLists.Count > 0)
+                if (service.Pricelists.Count > 0)
                 {
-                    Pricelist actualPriceList = priceLists[0];
-                    foreach (Pricelist pricelist in priceLists.Where(p=> p.PricelistServiceId == vehicle.VehicleServiceId))
+                    Pricelist actualPriceList = service.Pricelists[0];
+                    foreach (Pricelist pricelist in service.Pricelists)
                     {
                         if (pricelist.EndTime > actualPriceList.EndTime)
                         {
                             actualPriceList = pricelist;
                         }
                     }
-
-                    Item item = db.Items.GetAll().First(i => i.ItemVehicleId == vehicle.Id && i.ItemPriceListId == actualPriceList.Id);
+                    Item item = actualPriceList.Items.First( i => i.ItemVehicleId == vehicle.Id);
                     vehicleDTO.PricePerHour = item.Price;
                 }
                 else

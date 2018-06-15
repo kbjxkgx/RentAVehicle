@@ -6,4 +6,5 @@ export class ServiceModel {
     Description: string;
     LogoImagePath: string;
     ServiceManagerId: string;
+    Comments: any;
 }

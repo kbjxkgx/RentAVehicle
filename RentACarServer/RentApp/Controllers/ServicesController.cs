@@ -16,7 +16,6 @@ using RentApp.Hubs;
 
 namespace RentApp.Controllers
 {
-    [RequireHttps]
     public class ServicesController : ApiController
     {
         private IUnitOfWork db;
@@ -29,6 +28,10 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Service> GetServices()
         {
+            List<Service> services = db.Services.GetAll().ToList();
+            IEnumerable<Comment> comments = db.Comments.GetAll().ToList();
+            IEnumerable<AppUser> users = db.AppUsers.GetAll();
+
             return db.Services.GetAll();
         }
 

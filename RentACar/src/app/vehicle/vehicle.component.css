@@ -1,3 +1,52 @@
+.price-wrap {
+  width: 16.5%;
+  font-size: 20px;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #989898;
+  font-weight: bold;
+  letter-spacing: 1.6px;
+  position: absolute;
+ }
+
+ .col-md-6
+ {
+    position: relative;
+ }
+ 
+.price-wrap sup {
+  font-size: 14px;
+  color: #262626;
+  font-weight: bold;
+  margin-right: 6px;
+  letter-spacing: normal;
+  position: relative;
+  top: -10px; }
+.price-wrap span {
+  font-size: 30px;
+  color: #ff7043;
+  font-weight: bold;
+  letter-spacing: normal; }
+.price-wrap {
+  margin-bottom: 10px; }
+.product-cell {
+  display: block;
+  width: auto;
+  text-align: center; }
+.product-cell {
+  text-align: left; }
+.product-cell {
+  display: table-cell;
+  vertical-align: middle; }
+.product-cell {
+  display: block;
+  width: auto;
+  text-align: center; }
+
+
+
+
+
+
 .navbar.navbar-light.navbar-expand-lg.bg-white.page-navbar {
     box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
   }

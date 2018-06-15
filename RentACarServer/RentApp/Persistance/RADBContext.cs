@@ -22,11 +22,11 @@ namespace RentApp.Persistance
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<VehicleImage> VehicleImages { get; set; }
-        //TODO dbsets
+        
         public RADBContext() : base("name=RADB")
         {
         }
-
+        
         public static RADBContext Create()
         {
             return new RADBContext();

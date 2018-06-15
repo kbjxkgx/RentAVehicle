@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RentApp.Persistance.Repository
 {
-    public interface IServiceRepository : IRepository<Service, int>
+    public interface IRAIdentityUserRepository : IRepository<RAIdentityUser, int>
     {
-        IEnumerable<Service> GetAll(int pageIndex, int pageSize);
-        //IEnumerable<Service> GetAll();
+        RAIdentityUser Get(string id);
     }
 }

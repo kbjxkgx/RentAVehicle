@@ -56,6 +56,7 @@ namespace RentApp
             container.RegisterType<DbContext, RADBContext>(new PerRequestLifetimeManager());
             container.RegisterType<ApplicationUserManager>();
             container.RegisterType<IAppUserRepository, AppUserRepository>();
+            container.RegisterType<IRAIdentityUserRepository, RAIdentityUserRepository>();
             container.RegisterType<IBranchRepository, BranchRepository>();
             container.RegisterType<ICommentRepository, CommentRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();

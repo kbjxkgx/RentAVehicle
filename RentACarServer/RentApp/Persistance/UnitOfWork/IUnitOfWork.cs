@@ -1,4 +1,5 @@
-﻿using RentApp.Persistance.Repository;
+﻿using RentApp.Models.Entities;
+using RentApp.Persistance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace RentApp.Persistance.UnitOfWork
         IBranchRepository Branches { get; set; }
         ICommentRepository Comments { get; set; }
         IAppUserRepository AppUsers { get; set; }
+        IRAIdentityUserRepository Users { get; set; }
         INotificationRepository Notifications { get; set; }
         IItemRepository Items { get; set; }
         INotificationTypeRepository NotificationTypes { get; set; }

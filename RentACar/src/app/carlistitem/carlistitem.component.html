@@ -1,7 +1,7 @@
 
 <div class="card border-0 transform-on-hover">
   <div class="price-wrap product-cell">
-    <span>$70</span>
+    <span>${{vehicle.PricePerHour}}</span>
     <sup>00</sup>/Day
   </div>
   <a *ngIf="vehicle.Images[0]" [routerLink]="['/addvehicle/']" class="lightbox">

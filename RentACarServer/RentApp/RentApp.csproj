@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44313</IISExpressSSLPort>
+    <IISExpressSSLPort>44379</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -320,6 +320,26 @@
     <Compile Include="Migrations\201806131004435_FinishedDatabaseIHopeSoGodHelpMePlease.Designer.cs">
       <DependentUpon>201806131004435_FinishedDatabaseIHopeSoGodHelpMePlease.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806151420128_UpdateTables3.cs" />
+    <Compile Include="Migrations\201806151420128_UpdateTables3.Designer.cs">
+      <DependentUpon>201806151420128_UpdateTables3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806151422390_UpdateTables4.cs" />
+    <Compile Include="Migrations\201806151422390_UpdateTables4.Designer.cs">
+      <DependentUpon>201806151422390_UpdateTables4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806151426464_UpdateTables5.cs" />
+    <Compile Include="Migrations\201806151426464_UpdateTables5.Designer.cs">
+      <DependentUpon>201806151426464_UpdateTables5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806151916114_UpdateTables6.cs" />
+    <Compile Include="Migrations\201806151916114_UpdateTables6.Designer.cs">
+      <DependentUpon>201806151916114_UpdateTables6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806151937155_UpdateTables7.cs" />
+    <Compile Include="Migrations\201806151937155_UpdateTables7.Designer.cs">
+      <DependentUpon>201806151937155_UpdateTables7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -336,6 +356,7 @@
     <Compile Include="Models\Entities\Service.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
     <Compile Include="Models\Entities\VehicleImage.cs" />
+    <Compile Include="Models\DTO\VehicleDTO.cs" />
     <Compile Include="Models\VehicleType.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\AppUserRepository.cs" />
@@ -358,6 +379,8 @@
     <Compile Include="Persistance\Repository\NotificationRepository.cs" />
     <Compile Include="Persistance\Repository\NotificationTypeRepository.cs" />
     <Compile Include="Persistance\Repository\PricelistRepository.cs" />
+    <Compile Include="Persistance\Repository\IRAIdentityUserRepository.cs" />
+    <Compile Include="Persistance\Repository\RAIdentityUserRepository.cs" />
     <Compile Include="Persistance\Repository\Repository.cs" />
     <Compile Include="Persistance\Repository\ReservationRepository.cs" />
     <Compile Include="Persistance\Repository\ServiceRepository.cs" />
@@ -471,6 +494,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806131004435_FinishedDatabaseIHopeSoGodHelpMePlease.resx">
       <DependentUpon>201806131004435_FinishedDatabaseIHopeSoGodHelpMePlease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151420128_UpdateTables3.resx">
+      <DependentUpon>201806151420128_UpdateTables3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151422390_UpdateTables4.resx">
+      <DependentUpon>201806151422390_UpdateTables4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151426464_UpdateTables5.resx">
+      <DependentUpon>201806151426464_UpdateTables5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151916114_UpdateTables6.resx">
+      <DependentUpon>201806151916114_UpdateTables6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151937155_UpdateTables7.resx">
+      <DependentUpon>201806151937155_UpdateTables7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -25,10 +25,37 @@ namespace RentApp.Controllers
         }
         
         // GET: api/Services
-        public IEnumerable<Vehicle> GetVehicles()
+        public IEnumerable<VehicleDTO> GetVehicles()
         {
-            List<Vehicle> list = db.Vehicles.GetAll().ToList();
-            return db.Vehicles.GetAll().ToList();
+            List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
+            IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
+            foreach (Vehicle vehicle in vehicles)
+            {
+                Service service = db.Services.Get(vehicle.VehicleServiceId);
+                List<Pricelist> priceLists = db.Pricelists.GetAll().ToList();
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+                if (priceLists.Count > 0)
+                {
+                    Pricelist actualPriceList = priceLists[0];
+                    foreach (Pricelist pricelist in priceLists.Where(p=> p.PricelistServiceId == vehicle.VehicleServiceId))
+                    {
+                        if (pricelist.EndTime > actualPriceList.EndTime)
+                        {
+                            actualPriceList = pricelist;
+                        }
+                    }
+
+                    Item item = db.Items.GetAll().First(i => i.ItemVehicleId == vehicle.Id && i.ItemPriceListId == actualPriceList.Id);
+                    vehicleDTO.PricePerHour = item.Price;
+                }
+                else
+                {
+                    vehicleDTO.PricePerHour = 0;
+                }
+                vehiclesDTO.Add(vehicleDTO);
+            }
+
+            return vehiclesDTO;
         }
 
         // GET: api/Services/5

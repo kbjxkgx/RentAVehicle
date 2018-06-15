@@ -37,6 +37,6 @@ export class VehicleService {
       _formData.append(file.name, file);
     }
     let body = _formData;
-    return this.httpClient.post('https://localhost:44313/api/VehicleImage/AddVehicleImages', body);
+    return this.httpClient.post(Configuration.path + 'api/VehicleImage/AddVehicleImages', body);
   }
 }

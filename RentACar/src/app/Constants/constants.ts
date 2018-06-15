@@ -1,3 +1,3 @@
 export class Configuration {
-    static path = 'https://localhost:44313/';
+    static path = 'http://localhost:51680/';
 }

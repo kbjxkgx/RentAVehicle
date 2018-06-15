@@ -20,6 +20,16 @@ namespace RentApp.Persistance.Repository
             return RADBContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        
+        public IEnumerable<Service> GetAll()
+        {
+            return context.Set<Service>().Include("Pricelists").ToList();
+        }
+
+        //public Service Get(int id)
+        //{
+        //    context.Set<Service>().
+        //    IDbSet<Service> ser = context.Set<Service>().Include("Pricelists");
+        //    return ser.Find(id);
+        //}
     }
 }

@@ -9,4 +9,5 @@ export class VehicleModel {
     VehicleServiceId: number;
     TypeId: number;
     Images: any[];
+    PricePerHour: number;
 }

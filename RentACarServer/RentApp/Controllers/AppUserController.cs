@@ -23,11 +23,9 @@ namespace RentApp.Controllers
     public class AppUserController : ApiController
     {
         private IUnitOfWork db;
-        public ApplicationUserManager UserManager { get; private set; }
 
-        public AppUserController(IUnitOfWork context, ApplicationUserManager userManager)
+        public AppUserController(IUnitOfWork context)
         {
-            UserManager = userManager;
             db = context;
         }
 
@@ -49,7 +47,7 @@ namespace RentApp.Controllers
         public IEnumerable<AppUser> GetManagers()
         {
             List<AppUser> users = new List<AppUser>();
-            foreach (RAIdentityUser user in UserManager.Users)
+            foreach (RAIdentityUser user in db.Users.GetAll())
             {
                 foreach (var userRole in user.Roles)
                 {
@@ -80,12 +78,12 @@ namespace RentApp.Controllers
         [HttpGet]
         [Route("api/AppUser/GetAppUserByUsername")]
         [ResponseType(typeof(AppUser))]
-        public async Task<HttpResponseMessage> GetAppUserByUsername(string Username)
+        public HttpResponseMessage GetAppUserByUsername(string Username)
         {
             try
             {
-                RAIdentityUser RAUser = await UserManager.FindByIdAsync(Username);
-                AppUser user = db.AppUsers.Get(RAUser.AppUserId);
+                RAIdentityUser RAUser = db.Users.Get(Username);
+                AppUser user = RAUser.AppUser;
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }
             catch (System.Exception e)
@@ -113,7 +111,7 @@ namespace RentApp.Controllers
             {
                 await Request.Content.ReadAsMultipartAsync(provider);
                 string userId = provider.FormData.GetValues("Id")[0];
-                RAIdentityUser RAUser = await UserManager.FindByIdAsync(userId);
+                RAIdentityUser RAUser = db.Users.Get(userId);
                 AppUser user = db.AppUsers.Get(RAUser.AppUserId);
                 MultipartFileData file = provider.FileData[0];
                 string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");

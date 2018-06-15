@@ -21,6 +21,8 @@ namespace RentApp.Persistance.UnitOfWork
         [Dependency]
         public IAppUserRepository AppUsers { get; set; }
         [Dependency]
+        public IRAIdentityUserRepository Users { get; set; }
+        [Dependency]
         public INotificationRepository Notifications { get; set; }
         [Dependency]
         public IItemRepository Items { get; set; }

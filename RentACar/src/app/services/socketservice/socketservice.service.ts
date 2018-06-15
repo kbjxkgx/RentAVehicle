@@ -26,8 +26,8 @@ export class SocketserviceService {
 
   startHubConnection() {
     // create hub connection
-    this.connection = $.hubConnection("http://localhost:51680/");
-    this.connection.qs = { "token" : "Bearer " + localStorage.jwt };
+    this.connection = $.hubConnection('http://localhost:51680/');
+    this.connection.qs = { 'token' : 'Bearer ' + localStorage.jwt };
     // create new proxy as name already given in top
     this.proxy = this.connection.createHubProxy(this.proxyName);
     // register on server events
@@ -54,7 +54,7 @@ export class SocketserviceService {
     this.proxy.on('newNotification', (data: string) => {
         console.log('received notification: ' + data);
         this.notificationReceived.emit(data);
-    }
+    });
   }
 
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ServicesService } from '../services/servicesService/services.service';
 import { CommunicationService } from '../services/communicationservice/communication.service';
+import { CommentService } from '../services/commentService/comment.service';
 import {
   Router,
   ActivatedRoute
 } from '@angular/router';
+import { CommentModel } from '../models/CommentModel';
 
 
 @Component({
@@ -19,7 +21,9 @@ export class ServicelistitemComponent implements OnInit {
    public isAdmin: boolean;
    public isManager: boolean;
    public notificationExists: boolean;
-  constructor(private servicesService: ServicesService, private router: Router, private data: CommunicationService) { }
+   public newCommentContent: string;
+  constructor(private servicesService: ServicesService, private commentService: CommentService,
+    private router: Router, private data: CommunicationService) { }
 
   ngOnInit() {
     this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
@@ -34,4 +38,17 @@ export class ServicelistitemComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
+  AddComment(){
+    let comment: any;
+    comment.User.FullName = localStorage.getItem('username');
+    comment.Content = this.newCommentContent;
+    this.commentService.addComment(comment)
+        .subscribe(
+          data => {
+            console.log('registration succeded...');
+          },
+          error => {
+            console.log(error);
+          });
+  }
 }

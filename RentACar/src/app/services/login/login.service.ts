@@ -67,10 +67,10 @@ export class LoginService {
           localStorage.setItem('role', role);
           let user: any;
           localStorage.setItem('username', username);
-
+          this.data.changeUsername(username);
           this.data.changeIsLoggedIn(true);
           // let role = localStorage.getItem("role");
-          if (localStorage.getItem("role")=='Admin')
+          if (localStorage.getItem('rol') == 'Admin')
           {
             this.data.changeIsAdmin(true);
             this.data.changeIsManager(false);

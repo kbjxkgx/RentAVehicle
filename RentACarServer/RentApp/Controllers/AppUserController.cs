@@ -18,8 +18,6 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
-    [RequireHttps]
-    //[RoutePrefix("api/AppUser")]
     public class AppUserController : ApiController
     {
         private IUnitOfWork db;

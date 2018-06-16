@@ -36,6 +36,15 @@ export class HeaderComponent implements OnInit {
     this.data.isUserMessage.subscribe(message => this.isUser = message);
 
     if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+
+      const jwtData = jwt.split('.')[1];
+      const decodedJwtJsonData = window.atob(jwtData);
+      const decodedJwtData = JSON.parse(decodedJwtJsonData);
+
+      const role = decodedJwtData.role;
+      this.data.changeUsername(decodedJwtData.nameid);
+
       this.data.changeIsLoggedIn(true);
       // let role = localStorage.getItem("role");
       if (localStorage.getItem("role")=='Admin')

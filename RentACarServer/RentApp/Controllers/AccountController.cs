@@ -29,16 +29,14 @@ namespace RentApp.Controllers
     {
         private const string LocalLoginProvider = "Local";
         IUnitOfWork unitOfWork;
-        public AccountController(IUnitOfWork unitOfWork)
-        {
-            this.unitOfWork = unitOfWork;
-        }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IUnitOfWork unitOfWork)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            this.unitOfWork = unitOfWork;
         }
 
         public ApplicationUserManager UserManager { get; private set; }

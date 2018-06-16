@@ -3,9 +3,12 @@ using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -85,6 +88,46 @@ namespace RentApp.Controllers
             db.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);
+        }
+
+        [Route("api/Branch/UploadImage")]
+        [HttpPost]
+        [ResponseType(typeof(AppUser))]
+        public async Task<HttpResponseMessage> VerifyAppUser()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+
+            try
+            {
+                await Request.Content.ReadAsMultipartAsync(provider);
+                string branchId = provider.FormData.GetValues("Id")[0];
+                int id = Int32.Parse(branchId);
+                Branch branch = db.Branches.Get(id);
+                MultipartFileData file = provider.FileData[0];
+                string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/BranchImages/");
+                destinationFilePath += branchId + ".jpg";
+                if (File.Exists(destinationFilePath))
+                {
+                    File.Delete(destinationFilePath);
+                }
+                File.Copy(file.LocalFileName, destinationFilePath);
+                File.Delete(file.LocalFileName);
+                branch.Image = @"http://localhost:51680/Content/Images/BranchImages/" + branchId + ".jpg";
+                db.Branches.Update(branch);
+                db.Complete();
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+
         }
 
         // DELETE: api/Services/5

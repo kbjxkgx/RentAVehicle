@@ -5,7 +5,6 @@
         <a href="#" *ngIf="!isLoggedIn||isUser" [routerLink]="['/home']">Home</a>
         <a href="#" [routerLink]="['/vehicles']">Vehicles</a>
         <a href="#" [routerLink]="['/servicelist']">Services</a>
-        <a href="#" [routerLink]="['/servicepage']">Service page</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/managers']">Managers</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/users']">Users</a>
         <a href="#" (click)="NotificationClick()" *ngIf="isAdmin" [routerLink]="['/notifications']">Notifications<span class="header-new-feature" *ngIf="notificationExists">new</span></a>

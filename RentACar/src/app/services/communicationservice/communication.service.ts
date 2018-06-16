@@ -21,7 +21,9 @@ export class CommunicationService {
   AppUserIdMessage = this.AppUserIdSource.asObservable();
   UsernameMessage = this.UsernameSource.asObservable();
 
-
+  // for service-page
+  public service: any;
+  public user: any;
   constructor() {
    }
 

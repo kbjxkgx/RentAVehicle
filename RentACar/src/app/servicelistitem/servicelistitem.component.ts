@@ -16,7 +16,7 @@ import { CommentModel } from '../models/CommentModel';
 })
 export class ServicelistitemComponent implements OnInit {
   @Input() service: any;
-  public isLoggedIn: boolean;
+   public isLoggedIn: boolean;
    public isUser: boolean;
    public isAdmin: boolean;
    public isManager: boolean;
@@ -51,5 +51,10 @@ export class ServicelistitemComponent implements OnInit {
           error => {
             console.log(error);
           });
+  }
+
+  MoreInfo() {
+    this.data.service = this.service;
+    this.router.navigate(['/servicepage']);
   }
 }

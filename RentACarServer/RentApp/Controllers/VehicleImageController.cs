@@ -15,7 +15,6 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
-    [RequireHttps]
     public class VehicleImageController : ApiController
     {
         private IUnitOfWork db;
@@ -113,7 +112,7 @@ namespace RentApp.Controllers
                     File.Delete(file.LocalFileName);
                     VehicleImage image = new VehicleImage();
                     image.VehicleImageVehicleId = vehicleId; 
-                    image.ImagePath = @"http://localhost:51680/Content/Images/VehicleImages/" + i + ".jpg";
+                    image.ImagePath = @"http://localhost:51680/Content/Images/VehicleImages/" + vehicleId +"/"+ i + ".jpg";
                     db.VehicleImages.Add(image);
                     db.Complete();
                     i++;

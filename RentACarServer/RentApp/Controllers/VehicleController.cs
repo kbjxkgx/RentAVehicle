@@ -45,8 +45,15 @@ namespace RentApp.Controllers
                             actualPriceList = pricelist;
                         }
                     }
-                    Item item = actualPriceList.Items.First( i => i.ItemVehicleId == vehicle.Id);
-                    vehicleDTO.PricePerHour = item.Price;
+                    try
+                    {
+                        Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                        vehicleDTO.PricePerHour = item.Price;
+                    }
+                    catch (Exception e)
+                    {
+                        vehicleDTO.PricePerHour = 0;
+                    }
                 }
                 else
                 {

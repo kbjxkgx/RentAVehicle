@@ -37,6 +37,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 
 import { SocketserviceService } from './services/socketservice/socketservice.service';
 import { AddBranchComponent } from './add-branch/add-branch.component';
+import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 
 const Routes = [
   {
@@ -123,7 +124,8 @@ const Routes = [
     NotificationitemComponent,
     VehiclesComponent,
     VehicleComponent,
-    AddBranchComponent
+    AddBranchComponent,
+    BranchListItemComponent
   ],
   imports: [
     BrowserModule,

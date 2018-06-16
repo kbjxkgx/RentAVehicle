@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="map-example well">
+        <div class="row">
+            
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+            <agm-map [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [zoom]="14">
+                     
+                <!-- Postavljamo markere -->
+                <agm-marker [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [title]="mapInfo.title"
+                [label]="mapInfo.label">
+            
+                  <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
+                  <agm-info-window [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" >
+                  </agm-info-window>
+            
+                </agm-marker>
+              </agm-map>
+            </div>
+            <div class="col-lg-6">
+                <div class="heading">
+                    <h3>Branch Id: {{branch.Id}}</h3>
+                </div>
+                <div class="info">
+                    <p><strong>Address: </strong>{{branch.Address}}</p>
+                </div>
+                <div class="info">
+                    <p><strong>Service Id: </strong>{{branch.BranchServiceId}}</p>
+                </div>
+                <div class="gallery">
+                    <h4>Photos</h4>
+                    <div class="row">
+                        <div class="col-md-8"><a [href]="branch.Image"><img class="img-fluid image" [src]="branch.Image"></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

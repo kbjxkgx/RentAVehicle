@@ -3,6 +3,7 @@ import { CommunicationService } from '../services/communicationservice/communica
 import { ServicesService } from '../services/servicesService/services.service';
 import { CommentService } from '../services/commentService/comment.service';
 import { CommentModel } from '../models/CommentModel';
+import { BranchService } from '../services/branchService/branch.service';
 import {
   Router,
   ActivatedRoute
@@ -17,6 +18,7 @@ import { AppUserModel } from '../models/appUserModel';
 })
 export class ServicePageComponent implements OnInit {
   @Input() service: any;
+  branches: any;
   public isLoggedIn: boolean;
    public isUser: boolean;
    public isAdmin: boolean;
@@ -25,7 +27,7 @@ export class ServicePageComponent implements OnInit {
    public newCommentContent: string;
    private sub: any;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
-    private router: Router, private data: CommunicationService, private route: ActivatedRoute) { }
+    private router: Router, private data: CommunicationService, private route: ActivatedRoute, private branchService: BranchService) { }
 
   ngOnInit() {
     this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
@@ -34,6 +36,16 @@ export class ServicePageComponent implements OnInit {
     this.data.isUserMessage.subscribe(message => this.isUser = message);
 
     this.service = this.data.service;
+
+    this.branchService.getBranches()
+      .subscribe(
+        data => {
+          this.branches = data;
+          console.log('getBranches succeded...');
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   ConfirmService() {

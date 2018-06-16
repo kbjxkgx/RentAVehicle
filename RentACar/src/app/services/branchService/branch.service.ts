@@ -15,6 +15,10 @@ export class BranchService {
     return this.httpClient.post(Configuration.path + 'api/Branch', branch);
   }
 
+  getBranches() {
+    return this.httpClient.get(Configuration.path + 'api/Branch');
+  }
+
   uploadIdPhoto(fileToUpload: File, Id: string): Observable<any> {
     let _formData = new FormData();
     _formData.append('Id', Id);

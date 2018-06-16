@@ -44,7 +44,7 @@ export class AppUserService {
   }
 
   getUserByUsername(Username: string): any {
-    let params = new HttpParams().set('Username', localStorage.getItem('username'));
+    let params = new HttpParams().set('Username', Username);
 
     return this.httpClient.get(Configuration.path + 'api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
   }

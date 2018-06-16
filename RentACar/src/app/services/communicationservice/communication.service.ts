@@ -10,8 +10,8 @@ export class CommunicationService {
   private isUserSource = new BehaviorSubject<boolean>(false);
   private isAdminSource = new BehaviorSubject<boolean>(false);
   private isManagerSource = new BehaviorSubject<boolean>(false);
-  private AppUserIdSource = new BehaviorSubject<number>(0);
-  private UsernameSource = new BehaviorSubject<string>('');
+  public AppUserIdSource = new BehaviorSubject<number>(0);
+  public UsernameSource = new BehaviorSubject<string>('');
 
   isLoggedInMessage = this.isLoggedInSource.asObservable();
   isConfirmedMessage = this.isConfirmedSource.asObservable();
@@ -39,14 +39,13 @@ export class CommunicationService {
   {
     this.isUserSource.next(message);
   }
-  
+
   changeIsAdmin(message: boolean)
   {
     this.isAdminSource.next(message);
   }
-  
-  changeIsManager(message: boolean)
-  {
+
+  changeIsManager(message: boolean) {
     this.isManagerSource.next(message);
   }
 

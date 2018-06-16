@@ -3,6 +3,7 @@ import { AccountService } from '../services/accountService/account.service';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../services/communicationservice/communication.service';
 import { SocketserviceService } from '../services/socketservice/socketservice.service';
+import { AppUserService } from '../services/AppUserService/app-user-service.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
    public isManager: boolean;
    public notificationExists: boolean;
   constructor( private router: Router, private data: CommunicationService, private ngZone: NgZone, private accountService: AccountService,
-     private socketService: SocketserviceService) {
+     private socketService: SocketserviceService, private appUserService: AppUserService) {
     this.isConnected = false;
     this.notifications = [];
    }
@@ -44,7 +45,16 @@ export class HeaderComponent implements OnInit {
 
       const role = decodedJwtData.role;
       this.data.changeUsername(decodedJwtData.nameid);
-
+      let asd = this.data.UsernameSource.value;
+      this.appUserService.getUserByUsername(this.data.UsernameSource.value)
+        .subscribe(
+          dataa => {
+            this.data.changeAppUserId(dataa.Id);
+            console.log('registration succeded...');
+          },
+          error => {
+            console.log(error);
+          });
       this.data.changeIsLoggedIn(true);
       // let role = localStorage.getItem("role");
       if (localStorage.getItem("role")=='Admin')

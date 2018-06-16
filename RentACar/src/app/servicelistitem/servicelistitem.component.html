@@ -29,13 +29,21 @@
             <div *ngFor="let comment of service.Comments">
               <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}}</div>
             </div>
-            <div class="well" *ngIf='isUser'><strong>Add Comment: </strong><input [(ngModel)]="newCommentContent" type="text" onsubmit="AddComment()"></div>
+              <div class="well">
+                <div class="container">
+                  <strong class="col-lg-2">Add Comment: </strong>
+                  <input class="col-lg-4" [(ngModel)]="newCommentContent" placeholder="Enter Comment content Here.." type="text">
+                  <div class="col-lg-2">
+                    <button class="col-lg-2" type="button" (click)="AddComment()" class="btn btn-warning">Add</button>
+                  </div>
+                </div>
+              </div>
             <div class="row">
-              <div class="col-lg-2" >
+              <div class="col-lg-1" >
               <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
               </div>
-              <div class="col-lg-2">
-                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+              <div class="col-lg-1">
+                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">More Info</button>
               </div>
             </div>
         </div>

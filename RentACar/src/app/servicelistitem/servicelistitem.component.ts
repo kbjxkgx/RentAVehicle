@@ -38,10 +38,11 @@ export class ServicelistitemComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
-  AddComment(){
-    let comment: any;
-    comment.User.FullName = localStorage.getItem('username');
+  AddComment() {
+    let comment = new CommentModel();
+    comment.UserId = this.data.AppUserIdSource.value;
     comment.Content = this.newCommentContent;
+    comment.CommentedServiceId = this.service.Id;
     this.commentService.addComment(comment)
         .subscribe(
           data => {

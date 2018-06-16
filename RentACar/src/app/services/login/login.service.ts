@@ -66,6 +66,16 @@ export class LoginService {
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('role', role);
           let user: any;
+
+          this.appUserService.getUserByUsername(username)
+            .subscribe(
+              dataa => {
+                this.data.changeAppUserId(dataa.Id);
+                console.log('registration succeded...');
+              },
+              error => {
+                console.log(error);
+              });
           localStorage.setItem('username', username);
           this.data.changeUsername(username);
           this.data.changeIsLoggedIn(true);

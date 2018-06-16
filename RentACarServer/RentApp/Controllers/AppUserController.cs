@@ -81,7 +81,7 @@ namespace RentApp.Controllers
             try
             {
                 RAIdentityUser RAUser = db.Users.Get(Username);
-                AppUser user = RAUser.AppUser;
+                AppUser user = db.AppUsers.Get(RAUser.AppUserId);
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }
             catch (System.Exception e)

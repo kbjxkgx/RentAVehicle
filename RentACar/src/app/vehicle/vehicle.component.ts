@@ -1,5 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VehicleModel } from '../models/vehicleModel';
+import { VehicleService } from '../services/vehicleService/vehicle.service';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import { CommunicationService } from '../services/communicationservice/communication.service';
 
 @Component({
   selector: 'app-vehicle',
@@ -8,9 +14,24 @@ import { VehicleModel } from '../models/vehicleModel';
 })
 export class VehicleComponent implements OnInit {
   @Input() vehicle: any;
-  constructor() { }
+  public isLoggedIn: boolean;
+   public isManager: boolean;
+
+  constructor(private router: Router, private data: CommunicationService, private vehicleService: VehicleService) { }
 
   ngOnInit() {
+    this.data.isManagerMessage.subscribe(message => this.isManager = message);
   }
 
+  Delete() {
+      this.vehicleService.deleteVehicle(this.vehicle)
+        .subscribe(
+          data => {
+            console.log('delete vehicle succeded...');
+            
+          },
+          error => {
+            console.log('delete vehicle failed...');
+          });
+  }
 }

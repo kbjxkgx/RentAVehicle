@@ -13,7 +13,6 @@ using System.Web.Http.Description;
 
 namespace RentApp.Controllers
 {
-    [RequireHttps]
     public class NotificationController : ApiController
     {
         private IUnitOfWork db;

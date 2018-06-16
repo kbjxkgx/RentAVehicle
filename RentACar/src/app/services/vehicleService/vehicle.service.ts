@@ -36,7 +36,11 @@ export class VehicleService {
     for (let file of filesToUpload) {
       _formData.append(file.name, file);
     }
-    let body = _formData;
-    return this.httpClient.post(Configuration.path + 'api/VehicleImage/AddVehicleImages', body);
+    return this.httpClient.post(Configuration.path + 'api/VehicleImage/AddVehicleImages', _formData);
   }
+
+  deleteVehicle(vehicle: VehicleModel) {
+    return this.httpClient.delete(Configuration.path + 'api/Vehicle'+vehicle.Id);
+  }
+
 }

@@ -65,12 +65,12 @@ export class LoginService {
 
           localStorage.setItem('jwt', jwt);
           localStorage.setItem('role', role);
-          let user: any;
 
           this.appUserService.getUserByUsername(username)
             .subscribe(
               dataa => {
                 this.data.changeAppUserId(dataa.Id);
+                this.data.user = dataa;
                 console.log('registration succeded...');
               },
               error => {

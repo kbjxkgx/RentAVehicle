@@ -43,7 +43,7 @@
               <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
               </div>
               <div class="col-lg-1">
-                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">More Info</button>
+                  <button type="button" (click)='MoreInfo()' class="btn btn-warning">More Info</button>
               </div>
             </div>
         </div>

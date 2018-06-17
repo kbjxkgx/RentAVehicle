@@ -1,26 +1,59 @@
-<div class="container">
-<div class="map-example well">
-    <div class="row">
-        <div class="col-lg-6">
-            <a class="lightbox">
-                <img [src]="service.LogoImagePath" alt="Card Image" class="card-img-top">
-              </a>
-        </div>
-        <div class="col-lg-6">
             <div class="heading">
-                <h3>Lorem Ipsum Dolor</h3>
-                <div class="rating">
-                    <i class="fa fa-star icon"></i>
-                    <i class="fa fa-star icon"></i>
-                    <i class="fa fa-star icon"></i>
-                    <i class="fa fa-star icon"></i>
-                    <i class="fa fa-star-o icon"></i>
+                    <h1 class="well">Service Name: {{service.Name}}</h1>
+                </div>
+            <div class="map-example well">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a class="lightbox">
+                            <img [src]="service.LogoImagePath" alt="Card Image" class="card-img-top">
+                          </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="heading">
+                            <h3>{{service.Name}} {{service.IsConfirmed}}</h3>
+                            <div class="rating">
+                                <i class="fa fa-star icon"></i>
+                                <i class="fa fa-star icon"></i>
+                                <i class="fa fa-star icon"></i>
+                                <i class="fa fa-star icon"></i>
+                                <i class="fa fa-star-o icon"></i>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <p><strong>Description: </strong>{{service.Description}}</p>
+                        </div>
+                        <div class="info">
+                            <p><strong>Email: </strong>{{service.Email}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let comment of service.Comments">
+                  <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}}</div>
+                </div>
+                  <div class="well">
+                    <div class="container">
+                      <strong class="col-lg-2">Add Comment: </strong>
+                      <input class="col-lg-4" [(ngModel)]="newCommentContent" placeholder="Enter Comment content Here.." type="text">
+                      <div class="col-lg-2">
+                        <button class="col-lg-2" type="button" (click)="AddComment()" class="btn btn-warning">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                <div class="row">
+                  <div class="col-lg-1" >
+                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+                  </div>
+                  <div class="col-lg-1" >
+                    <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='AddBranch()' class="btn btn-warning">Add Branch</button>
+                  </div>
                 </div>
             </div>
-            <div class="info">
-                <p></p>
             </div>
+
+
+
+            
+            <div class="container">
+            <app-branch-list-item  *ngFor="let branch of branches" [branch]="branch"></app-branch-list-item>
         </div>
-    </div>
-</div>
-</div>
+                  

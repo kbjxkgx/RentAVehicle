@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ServicesService } from '../services/servicesService/services.service';
 import { CommunicationService } from '../services/communicationservice/communication.service';
 import { CommentService } from '../services/commentService/comment.service';
+import { BranchService } from '../services/branchService/branch.service';
 import {
   Router,
   ActivatedRoute
@@ -16,14 +17,15 @@ import { CommentModel } from '../models/CommentModel';
 })
 export class ServicelistitemComponent implements OnInit {
   @Input() service: any;
-  public isLoggedIn: boolean;
+  @Input() branches: any;
+   public isLoggedIn: boolean;
    public isUser: boolean;
    public isAdmin: boolean;
    public isManager: boolean;
    public notificationExists: boolean;
    public newCommentContent: string;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
-    private router: Router, private data: CommunicationService) { }
+    private router: Router, private data: CommunicationService, private branchService: BranchService) { }
 
   ngOnInit() {
     this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
@@ -46,10 +48,25 @@ export class ServicelistitemComponent implements OnInit {
     this.commentService.addComment(comment)
         .subscribe(
           data => {
-            console.log('registration succeded...');
+            console.log('addComment succeded...');
           },
           error => {
             console.log(error);
           });
+
+    this.branchService.getBranches()
+      .subscribe(
+        data => {
+          this.branches = data;
+          console.log('getBranches succeded...');
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  MoreInfo() {
+    this.data.service = this.service;
+    this.router.navigate(['/servicepage']);
   }
 }

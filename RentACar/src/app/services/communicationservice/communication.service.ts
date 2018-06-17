@@ -26,6 +26,10 @@ export class CommunicationService {
   UsernameMessage = this.UsernameSource.asObservable();
   VehicleForUpdateMessage = this.VehicleForUpdate.asObservable();
 
+
+  // for service-page
+  public service: any;
+  public user: any;
   constructor() {
    }
 

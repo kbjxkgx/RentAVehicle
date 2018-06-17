@@ -17,7 +17,7 @@ import { AppUserModel } from '../models/appUserModel';
   styleUrls: ['./service-page.component.css']
 })
 export class ServicePageComponent implements OnInit {
-  @Input() service: any;
+  service: any;
   branches: any;
   public isLoggedIn: boolean;
    public isUser: boolean;

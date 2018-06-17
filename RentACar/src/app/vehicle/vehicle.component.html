@@ -6,7 +6,7 @@
                     <span>${{vehicle.PricePerHour}}</span>
                     <sup>00</sup>/Day
                 </div>
-              <a *ngIf="vehicle.Images[0]" href="../assets/defaultVehicleImage.jpeg" class="lightbox">
+              <a *ngIf="vehicle.Images[0]" [href]="vehicle.Images[0].ImagePath" class="lightbox">
                   <img [src]="vehicle.Images[0].ImagePath" onerror="this.src='../assets/icon.jpg'" alt="Card Image" class="card-img-top">
                 </a>
           </div>
@@ -34,7 +34,7 @@
                   <h4>Photos</h4>
                   <div *ngIf="vehicle.Images" class="row">
                       <div *ngFor="let image of vehicle.Images" class="col-md-4">
-                          <a *ngIf="image" href="image.ImagePath" ><img class="img-fluid image" [src]="image.ImagePath" ></a>
+                          <a *ngIf="image" [href]="image.ImagePath" ><img class="img-fluid image" [src]="image.ImagePath" ></a>
                       </div>
                   </div>
                   </div>

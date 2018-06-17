@@ -1,5 +1,5 @@
 export class VehicleModel {
-    Id: string;
+    Id: number;
     Model: string;
     Manufacturer: string;
     YearOfProduction: number;

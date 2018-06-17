@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/behaviorsubject';
 import { Configuration } from '../../Constants/constants';
+import { VehicleModel } from '../../models/vehicleModel';
 
 @Injectable()
 export class CommunicationService {
+
+  vehicle: VehicleModel;
 
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
   private isConfirmedSource = new BehaviorSubject<boolean>(false);
@@ -12,6 +15,7 @@ export class CommunicationService {
   private isManagerSource = new BehaviorSubject<boolean>(false);
   public AppUserIdSource = new BehaviorSubject<number>(0);
   public UsernameSource = new BehaviorSubject<string>('');
+  public VehicleForUpdate = new BehaviorSubject<VehicleModel>(this.vehicle);
 
   isLoggedInMessage = this.isLoggedInSource.asObservable();
   isConfirmedMessage = this.isConfirmedSource.asObservable();
@@ -20,7 +24,7 @@ export class CommunicationService {
   isManagerMessage = this.isManagerSource.asObservable();
   AppUserIdMessage = this.AppUserIdSource.asObservable();
   UsernameMessage = this.UsernameSource.asObservable();
-
+  VehicleForUpdateMessage = this.VehicleForUpdate.asObservable();
 
   constructor() {
    }
@@ -30,6 +34,11 @@ export class CommunicationService {
     this.isLoggedInSource.next(message);
   }
   
+  changeVehicleForUpdate(message: VehicleModel)
+  {
+    this.VehicleForUpdate.next(message);
+  }
+
   changeIsConfirmed(message: boolean)
   {
     this.isConfirmedSource.next(message);

@@ -1,0 +1,52 @@
+<div class="container">
+  <h1 class="well">Update Vehicle</h1>
+<div class="col-lg-12 well">
+  <div class="row">
+    <form #f="ngForm" (ngSubmit)="updateVehicle(f.value, f)">
+      <div class="col-sm-12">	
+        <div class="row">
+          <div class="col-sm-4 form-group">
+            <label>Model</label>
+            <input type="text" name='Model' [(ngModel)]="vehicle.Model" class="form-control" ngModel>
+          </div>	
+          <div class="col-sm-4 form-group">
+            <label>Manufacturer</label>
+            <input type="text" name='Manufacturer' [(ngModel)]="vehicle.Manufacturer" placeholder="Enter Manufacturer	 Here.." class="form-control" ngModel>
+          </div>	
+          <div class="col-sm-4 form-group">
+            <label>YearOfProduction</label>
+            <input type="number" name='YearOfProduction' [(ngModel)]="vehicle.YearOfProduction" placeholder="Enter YearOfProduction Here.." class="form-control" ngModel>
+          </div>		
+        </div>				 	
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <label>Description</label>
+            <input type="text" name='Description' [(ngModel)]="vehicle.Description" placeholder="Enter Description Here.." class="form-control" ngModel>
+          </div>
+        </div>				 	
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <label>Service Name</label>
+            <select name="VehicleServiceId" ngModel>
+                <option *ngFor="let x of services" [value]="x.Id">
+                  {{x.Name}}
+                </option>
+              </select>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form-group">
+              <label>Vehicle Type</label>
+              <select name="TypeId" ngModel>
+                  <option *ngFor="let type of vehicleTypes" [value]="type.Id">
+                    {{type.Name}}
+                  </option>
+                </select>
+            </div>
+          </div>
+        <button type="submit" class="btn btn-lg btn-info">Submit</button>					
+      </div>
+    </form> 
+  </div>
+</div>
+</div>

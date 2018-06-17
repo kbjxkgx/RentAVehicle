@@ -30,6 +30,10 @@ export class VehicleService {
       // .catch(this.handleError);
   }
 
+  updateVehicle(vehicle: VehicleModel): Observable<any> {
+    return this.httpClient.put(Configuration.path + 'api/Vehicle/'+vehicle.Id , vehicle);
+  }
+
   addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {
     let _formData = new FormData();
     _formData.append('vehicleId', vehicle.Id.toString());
@@ -40,7 +44,7 @@ export class VehicleService {
   }
 
   deleteVehicle(vehicle: VehicleModel) {
-    return this.httpClient.delete(Configuration.path + 'api/Vehicle'+vehicle.Id);
+    return this.httpClient.delete(Configuration.path + 'api/Vehicle/'+vehicle.Id);
   }
 
 }

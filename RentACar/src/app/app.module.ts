@@ -35,6 +35,7 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 
 import { SocketserviceService } from './services/socketservice/socketservice.service';
+import { UpdatevehicleComponent } from './updatevehicle/updatevehicle.component';
 
 const Routes = [
   {
@@ -89,6 +90,10 @@ const Routes = [
     component: ServicePageComponent,
   },
   {
+    path: 'updateVehicle',
+    component: UpdatevehicleComponent,
+  },
+  {
     path: 'notifications',
     component: NotificationsComponent,
   }
@@ -116,7 +121,8 @@ const Routes = [
     NotificationsComponent,
     NotificationitemComponent,
     VehiclesComponent,
-    VehicleComponent
+    VehicleComponent,
+    UpdatevehicleComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,6 @@ import {ServicesService} from '../services/servicesService/services.service'
 })
 export class ServicelistComponent implements OnInit {
   services: any;
-  vehicles: any;
   constructor(private servicesService: ServicesService ) {}
 
   ngOnInit() {
@@ -20,15 +19,6 @@ export class ServicelistComponent implements OnInit {
       error => {
         console.log(error);
       });
-
-    this.servicesService.getVehicles()
-      .subscribe(
-        data => {
-          this.services = data;
-        },
-        error => {
-          console.log(error);
-        });
   }
 
 }

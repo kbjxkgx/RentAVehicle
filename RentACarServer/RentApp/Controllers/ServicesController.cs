@@ -125,11 +125,13 @@ namespace RentApp.Controllers
         [HttpGet]
         [Route("api/Services/getVehicles")]
         [ResponseType(typeof(List<Vehicle>))]
-        public HttpResponseMessage getServiceVehicles(int Id)
+        public HttpResponseMessage getServiceVehicles(string Id)
         {
+
             try
             {
-                Service service = db.Services.GetServiceWithVehicles(Id);
+                int id = Int32.Parse(Id);
+                Service service = db.Services.GetServiceWithVehicles(id);
                 return Request.CreateResponse(HttpStatusCode.OK, service.Vehicles);
             }
             catch (System.Exception e)

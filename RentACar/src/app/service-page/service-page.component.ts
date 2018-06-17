@@ -19,6 +19,7 @@ import { AppUserModel } from '../models/appUserModel';
 export class ServicePageComponent implements OnInit {
   service: any;
   branches: any;
+  vehicles: any;
   public isLoggedIn: boolean;
    public isUser: boolean;
    public isAdmin: boolean;
@@ -42,6 +43,16 @@ export class ServicePageComponent implements OnInit {
         data => {
           this.branches = data;
           console.log('getBranches succeded...');
+        },
+        error => {
+          console.log(error);
+        });
+
+    this.servicesService.getVehicles(this.service.Id)
+      .subscribe(
+        data => {
+          this.vehicles = data;
+          console.log('getVehicles succeded...');
         },
         error => {
           console.log(error);

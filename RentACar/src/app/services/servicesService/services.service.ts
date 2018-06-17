@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ServiceModel } from '../../models/serviceModel';
 import { Observable } from 'rxjs/Observable';
 import { Configuration } from '../../Constants/constants';
@@ -31,7 +31,8 @@ export class ServicesService {
   }
 
   getVehicles(Id: number) {
-    return this.httpClient.get(Configuration.path + 'api/Services/getVehicles', Id);
+    let params = new HttpParams().set('Id', Id.toString());
+    return this.httpClient.get(Configuration.path + 'api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
   }
 
   getUnconfirmedServices(): Observable<any> {

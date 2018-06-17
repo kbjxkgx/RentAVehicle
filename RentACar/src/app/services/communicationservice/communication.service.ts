@@ -24,6 +24,7 @@ export class CommunicationService {
   // for service-page
   public service: any;
   public user: any;
+  
   constructor() {
    }
 

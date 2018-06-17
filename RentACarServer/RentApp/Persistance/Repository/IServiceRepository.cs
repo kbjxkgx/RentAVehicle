@@ -10,6 +10,6 @@ namespace RentApp.Persistance.Repository
     public interface IServiceRepository : IRepository<Service, int>
     {
         IEnumerable<Service> GetAll(int pageIndex, int pageSize);
-        //IEnumerable<Service> GetAll();
+        Service GetServiceWithVehicles(int id);
     }
 }

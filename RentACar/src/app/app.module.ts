@@ -80,6 +80,10 @@ const Routes = [
     component: AddvehicleComponent,
   },
   {
+    path: 'addservice',
+    component: AddServiceComponent,
+  },
+  {
     path: 'vehicles',
     component: VehiclesComponent,
   },

@@ -5,6 +5,6 @@ export class ServiceModel {
     IsConfirmed: boolean;
     Description: string;
     LogoImagePath: string;
-    ServiceManagerId: string;
+    ServiceManagerId: number;
     Comments: any;
 }

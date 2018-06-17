@@ -7,7 +7,7 @@ export class MapInfo {
     centerLong: number;
     link: string;
 
-    constructor(lat: number, long: number, icon: string, title:string, label:string, link: string){
+    constructor(lat: number, long: number, icon: string, title: string, label: string, link: string){
         this.iconUrl = icon;
         this.title = title;
         this.label = label;
@@ -15,4 +15,4 @@ export class MapInfo {
         this.centerLong = long;
         this.link = link;
     }
-} 
+}

@@ -13,6 +13,9 @@ using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
 using RentApp.Hubs;
+using System.Threading.Tasks;
+using System.Web;
+using System.IO;
 
 namespace RentApp.Controllers
 {
@@ -104,7 +107,7 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            service.IsConfirmed = false;
             db.Services.Add(service);
 
             Notification notification = new Notification();
@@ -117,6 +120,63 @@ namespace RentApp.Controllers
             NotificationHub.Notify(notification);
 
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
+        }
+
+        [HttpGet]
+        [Route("api/Services/getVehicles")]
+        [ResponseType(typeof(List<Vehicle>))]
+        public HttpResponseMessage getServiceVehicles(int Id)
+        {
+            try
+            {
+                Service service = db.Services.GetServiceWithVehicles(Id);
+                return Request.CreateResponse(HttpStatusCode.OK, service.Vehicles);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+
+        }
+
+        [Route("api/Service/UploadImage")]
+        [HttpPost]
+        [ResponseType(typeof(AppUser))]
+        public async Task<HttpResponseMessage> VerifyAppUser()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+
+            try
+            {
+                await Request.Content.ReadAsMultipartAsync(provider);
+                string serviceId = provider.FormData.GetValues("Id")[0];
+                int id = Int32.Parse(serviceId);
+                Service service = db.Services.Get(id);
+                MultipartFileData file = provider.FileData[0];
+                string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/ServiceImages/");
+                destinationFilePath += serviceId + ".jpg";
+                if (File.Exists(destinationFilePath))
+                {
+                    File.Delete(destinationFilePath);
+                }
+                File.Copy(file.LocalFileName, destinationFilePath);
+                File.Delete(file.LocalFileName);
+                service.LogoImagePath = @"http://localhost:51680/Content/Images/ServiceImages/" + serviceId + ".jpg";
+                db.Services.Update(service);
+                db.Complete();
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+
         }
 
         // DELETE: api/Services/5

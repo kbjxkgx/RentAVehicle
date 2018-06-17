@@ -462,6 +462,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\BranchImages\" />
+    <Folder Include="Content\Images\ServiceImages\" />
     <Folder Include="Content\Images\VehicleImages\" />
   </ItemGroup>
   <ItemGroup>

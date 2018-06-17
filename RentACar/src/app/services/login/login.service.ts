@@ -71,7 +71,7 @@ export class LoginService {
               dataa => {
                 this.data.changeAppUserId(dataa.Id);
                 this.data.user = dataa;
-                console.log('registration succeded...');
+                console.log('getuser succeded...');
               },
               error => {
                 console.log(error);

@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
    public isAdmin: boolean;
    public isManager: boolean;
    public notificationExists: boolean;
+   public username: string;
   constructor( private router: Router, private data: CommunicationService, private ngZone: NgZone, private accountService: AccountService,
      private socketService: SocketserviceService, private appUserService: AppUserService) {
     this.isConnected = false;
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit {
     this.data.isLoggedInMessage.subscribe(message => this.isLoggedIn = message);
     this.data.isManagerMessage.subscribe(message => this.isManager = message);
     this.data.isUserMessage.subscribe(message => this.isUser = message);
-
+    this.data.UsernameMessage.subscribe(message => this.username = message);
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
 

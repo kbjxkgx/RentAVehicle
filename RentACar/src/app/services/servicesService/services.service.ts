@@ -28,8 +28,10 @@ export class ServicesService {
 
    getServices(): Observable<any> {
     return this.httpClient.get(Configuration.path + 'api/Services');
-      // .map(this.parseData)
-      // .catch(this.handleError);
+  }
+
+  getVehicles(Id: number) {
+    return this.httpClient.get(Configuration.path + 'api/Services/getVehicles', Id);
   }
 
   getUnconfirmedServices(): Observable<any> {
@@ -58,6 +60,13 @@ export class ServicesService {
       error => {
         console.log('Confirm service failed');
       });
+  }
+
+  uploadServiceImage(fileToUpload: File, Id: string): Observable<any> {
+    let _formData = new FormData();
+    _formData.append('Id', Id);
+    _formData.append('MyFile', fileToUpload);
+    return this.httpClient.post(Configuration.path + 'api/Service/UploadImage', _formData);
   }
 
 

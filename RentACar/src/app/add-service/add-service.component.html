@@ -1,3 +1,34 @@
-<p>
-  add-service works!
-</p>
+<div class="container">
+    <h1 class="well">Add Service</h1>
+	<div class="col-lg-12 well">
+		<div class="row">
+			<form #f="ngForm" (ngSubmit)="addService(f.value, f)">
+				<div class="col-sm-12">	
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label>Name</label>
+							<input type="text" name='Name' placeholder="Enter Name Here.." class="form-control" ngModel>
+						</div>	
+						<div class="col-sm-6 form-group">
+							<label>Email</label>
+							<input type="text" name='Email' placeholder="Enter Email Here.." class="form-control" ngModel>
+						</div>	
+					</div>				 	
+					<div class="row">
+						<div class="col-sm-12 form-group">
+							<label>Description</label>
+							<input type="text" name='Description' placeholder="Enter Description Here.." class="form-control" ngModel>
+						</div>
+					</div>				 	
+					<div class="row">
+							<div class="col-sm-12 form-group">
+							  <label for="image1">Service Image</label>
+							  <input name="image1" type="file" (change)='fileChange($event)' accept="image/*" multiple />
+							</div>
+						  </div>
+					<button type="submit" class="btn btn-lg btn-info">Submit</button>					
+				</div>
+			</form> 
+		</div>
+	</div>
+</div>

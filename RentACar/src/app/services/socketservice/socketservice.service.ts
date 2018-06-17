@@ -4,7 +4,6 @@ import { Configuration } from '../../Constants/constants';
 declare var $: any;
 
 @Injectable()
-
 export class SocketserviceService {
 
   // Declare the variables

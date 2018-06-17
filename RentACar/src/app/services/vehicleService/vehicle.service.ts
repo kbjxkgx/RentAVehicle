@@ -20,14 +20,10 @@ export class VehicleService {
 
    getVehicles(): Observable<any> {
     return this.httpClient.get(Configuration.path + 'api/Vehicle');
-      // .map(this.parseData)
-      // .catch(this.handleError);
   }
 
   addVehicle(vehicle: VehicleModel): Observable<any> {
     return this.httpClient.post(Configuration.path + 'api/Vehicle', vehicle);
-      // .map(this.parseData)
-      // .catch(this.handleError);
   }
 
   addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {

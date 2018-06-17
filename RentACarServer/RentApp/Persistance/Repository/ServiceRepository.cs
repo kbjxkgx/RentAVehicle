@@ -25,11 +25,9 @@ namespace RentApp.Persistance.Repository
             return context.Set<Service>().Include("Pricelists").ToList();
         }
 
-        //public Service Get(int id)
-        //{
-        //    context.Set<Service>().
-        //    IDbSet<Service> ser = context.Set<Service>().Include("Pricelists");
-        //    return ser.Find(id);
-        //}
+        public Service GetServiceWithVehicles(int id)
+        {
+            return context.Set<Service>().Include("Vehicles").Include("Images").First(s => s.Id == id);
+        }
     }
 }

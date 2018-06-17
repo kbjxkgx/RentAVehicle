@@ -26,13 +26,21 @@ export class VehicleService {
     return this.httpClient.post(Configuration.path + 'api/Vehicle', vehicle);
   }
 
+  updateVehicle(vehicle: VehicleModel): Observable<any> {
+    return this.httpClient.put(Configuration.path + 'api/Vehicle/'+vehicle.Id , vehicle);
+  }
+
   addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {
     let _formData = new FormData();
     _formData.append('vehicleId', vehicle.Id.toString());
     for (let file of filesToUpload) {
       _formData.append(file.name, file);
     }
-    let body = _formData;
-    return this.httpClient.post(Configuration.path + 'api/VehicleImage/AddVehicleImages', body);
+    return this.httpClient.post(Configuration.path + 'api/VehicleImage/AddVehicleImages', _formData);
   }
+
+  deleteVehicle(vehicle: VehicleModel) {
+    return this.httpClient.delete(Configuration.path + 'api/Vehicle/'+vehicle.Id);
+  }
+
 }

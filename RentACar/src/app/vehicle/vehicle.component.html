@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="isVisible">
 <div class="map-example well">
       <div class="row">
           <div class="col-lg-8">
@@ -22,7 +22,7 @@
                   </div>
               </div>
               <div class="info">
-                <h4>Description</h4> {{vehicle.Description}}
+                <h4>Description</h4>
                 <p>{{vehicle.Description}}</p>
               </div>
               <div class="info">
@@ -37,8 +37,14 @@
                           <a *ngIf="image" [href]="image.ImagePath" ><img class="img-fluid image" [src]="image.ImagePath" ></a>
                       </div>
                   </div>
-                  </div>
               </div>
+            </div>
+            
           </div>
+          <div *ngIf="isManager" class="btn-toolbar">
+            <button type="button" class="btn btn-warning" (click)="Update()">Update</button>
+            <button type="button" class="btn btn-danger" (click)="Delete()">Delete</button>
+          </div>
+          
       </div>
     </div>

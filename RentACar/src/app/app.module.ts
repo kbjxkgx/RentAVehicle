@@ -36,6 +36,7 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 
 import { SocketserviceService } from './services/socketservice/socketservice.service';
+import { UpdatevehicleComponent } from './updatevehicle/updatevehicle.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 
@@ -96,6 +97,10 @@ const Routes = [
     component: ServicePageComponent,
   },
   {
+    path: 'updateVehicle',
+    component: UpdatevehicleComponent,
+  },
+  {
     path: 'notifications',
     component: NotificationsComponent,
   },
@@ -128,6 +133,7 @@ const Routes = [
     NotificationitemComponent,
     VehiclesComponent,
     VehicleComponent,
+    UpdatevehicleComponent,
     AddBranchComponent,
     BranchListItemComponent
   ],

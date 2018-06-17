@@ -24,6 +24,8 @@ namespace RentApp.Models.Entities
         public int TypeId { get; set; }
         public int VehicleServiceId { get; set; }
 
+        public VehicleDTO() { }
+
         public VehicleDTO(Vehicle vehicle)
         {
             this.Id = vehicle.Id;

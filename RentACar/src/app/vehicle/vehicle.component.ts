@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VehicleModel } from '../models/vehicleModel';
 import { VehicleService } from '../services/vehicleService/vehicle.service';
+import { Configuration } from '../Constants/constants';
 import {
   Router,
   ActivatedRoute
@@ -41,4 +42,7 @@ export class VehicleComponent implements OnInit {
     this.router.navigate(['/updateVehicle']);
   }
 
+  Configuration() {
+    return Configuration.path;
+  }
 }

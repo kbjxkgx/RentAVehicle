@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MapInfo } from '../models/map-info.model';
-
+import { Configuration } from '../Constants/constants';
 
 @Component({
   selector: 'app-branch-list-item',
@@ -18,6 +18,10 @@ export class BranchListItemComponent implements OnInit {
     this.mapInfo = new MapInfo(this.branch.Latitude, this.branch.Longitude,
       'assets/defaultVehicleImage.jpeg',
       'Branch: ' + this.branch.Id  , '' , '');
+  }
+
+  Configuration() {
+    return Configuration.path;
   }
 
 }

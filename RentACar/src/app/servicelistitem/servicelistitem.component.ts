@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ServicesService } from '../services/servicesService/services.service';
 import { CommunicationService } from '../services/communicationservice/communication.service';
 import { CommentService } from '../services/commentService/comment.service';
-
+import { Configuration } from '../Constants/constants';
 import {
   Router,
   ActivatedRoute
@@ -58,5 +58,9 @@ export class ServicelistitemComponent implements OnInit {
   MoreInfo() {
     this.data.service = this.service;
     this.router.navigate(['/servicepage']);
+  }
+
+  Configuration() {
+    return Configuration.path;
   }
 }

@@ -112,7 +112,7 @@ namespace RentApp.Controllers
                     File.Delete(file.LocalFileName);
                     VehicleImage image = new VehicleImage();
                     image.VehicleImageVehicleId = vehicleId; 
-                    image.ImagePath = @"http://localhost:51680/Content/Images/VehicleImages/" + vehicleId +"/"+ i + ".jpg";
+                    image.ImagePath = @"Content/Images/VehicleImages/" + vehicleId +"/"+ i + ".jpg";
                     db.VehicleImages.Add(image);
                     db.Complete();
                     i++;

@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
         .subscribe(
           dataa => {
             this.data.changeAppUserId(dataa.Id);
+            this.data.user = dataa;
             console.log('registration succeded...');
           },
           error => {

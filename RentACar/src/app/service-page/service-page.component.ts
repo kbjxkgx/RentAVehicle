@@ -1,4 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommunicationService } from '../services/communicationservice/communication.service';
+import { ServicesService } from '../services/servicesService/services.service';
+import { CommentService } from '../services/commentService/comment.service';
+import { CommentModel } from '../models/CommentModel';
+import { BranchService } from '../services/branchService/branch.service';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import { query } from '@angular/core/src/render3/query';
+import { AppUserModel } from '../models/appUserModel';
 
 @Component({
   selector: 'app-service-page',

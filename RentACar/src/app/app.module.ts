@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/demo.interceptor';
@@ -36,6 +37,8 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 
 import { SocketserviceService } from './services/socketservice/socketservice.service';
 import { UpdatevehicleComponent } from './updatevehicle/updatevehicle.component';
+import { AddBranchComponent } from './add-branch/add-branch.component';
+import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 
 const Routes = [
   {
@@ -96,6 +99,10 @@ const Routes = [
   {
     path: 'notifications',
     component: NotificationsComponent,
+  },
+  {
+    path: 'addbranch',
+    component: AddBranchComponent,
   }
 ];
 
@@ -122,7 +129,9 @@ const Routes = [
     NotificationitemComponent,
     VehiclesComponent,
     VehicleComponent,
-    UpdatevehicleComponent
+    UpdatevehicleComponent,
+    AddBranchComponent,
+    BranchListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +140,8 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [
     CanActivateViaAuthGuard,

@@ -464,11 +464,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-<<<<<<< HEAD
-=======
     <Folder Include="Content\Images\BranchImages\" />
     <Folder Include="Content\Images\VehicleImages\" />
->>>>>>> 15936b034d282e3567f0b7954fa04682862885b2
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -93,7 +93,7 @@ export class AppUserService {
   }
 
   Delete(user: AppUserModel) {
-    return this.httpClient.delete(Configuration.path + 'api/AppUsers/'+user.Id) as Observable<any>;
+    return this.httpClient.delete(Configuration.path + 'api/AppUser/'+user.Id) as Observable<any>;
   }
 
 }

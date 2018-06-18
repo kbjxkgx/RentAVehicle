@@ -23,6 +23,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register(account: any, form: NgForm) {
+    if(account.IsManager=="") {
+      account.IsManager=false;
+    }
     this.accountService.register(account)
         .subscribe(
           data => {

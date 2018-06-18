@@ -315,6 +315,8 @@ namespace RentApp.Controllers
         [Route("Register")]
         public IHttpActionResult Register(RegisterBindingModel model)
         {
+            //if(model.IsManager)
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

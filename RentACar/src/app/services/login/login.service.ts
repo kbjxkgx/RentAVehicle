@@ -22,6 +22,8 @@ import { Configuration } from '../../Constants/constants';
 })
 export class LoginService {
 
+  public dataUser: any;
+
   constructor(private httpClient: HttpClient, private router: Router, private data: CommunicationService,
      private appUserService: AppUserService, private socketService: SocketserviceService) { }
 
@@ -71,6 +73,7 @@ export class LoginService {
               dataa => {
                 this.data.changeAppUserId(dataa.Id);
                 this.data.user = dataa;
+                this.data.changeUserForUpdate(dataa);
                 console.log('getuser succeded...');
               },
               error => {
@@ -80,13 +83,13 @@ export class LoginService {
           this.data.changeUsername(username);
           this.data.changeIsLoggedIn(true);
           // let role = localStorage.getItem("role");
-          if (localStorage.getItem('rol') == 'Admin')
+          if (localStorage.getItem('role') == 'Admin')
           {
             this.data.changeIsAdmin(true);
             this.data.changeIsManager(false);
             this.data.changeIsUser(false);
-            this.router.navigate(['/home']);
             this.socketService.startHubConnection();
+            this.router.navigate(['/home']);
           } else if (localStorage.getItem("role")=='Manager')
           {
             this.data.changeIsAdmin(false);
@@ -99,6 +102,7 @@ export class LoginService {
             this.data.changeIsManager(false);
             this.data.changeIsUser(true);
             this.router.navigate(['/home']);
+            
           }
 
           return;
@@ -109,6 +113,8 @@ export class LoginService {
         }
       );
     }
+    
+    
     return;
   }
 }

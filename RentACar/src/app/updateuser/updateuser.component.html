@@ -1,0 +1,39 @@
+
+<div class="container">
+  <h1 class="well">Update Form</h1>
+  <div class="col-lg-12 well">
+    <div class="row">
+      <form #f="ngForm" (ngSubmit)="register(f.value, f)" enctype='multipart/form-data'>
+        <div class="col-sm-12">	
+          <div class="row">
+            <div class="col-sm-4 form-group">
+              <label>Full Name</label>
+              <input type="text" name='FullName' [(ngModel)]="user.FullName" class="form-control" ngModel>
+            </div>	
+            <div class="col-sm-4 form-group">
+              <label>Last Name</label>
+              <input type="text" name='LastName' [(ngModel)]="user.LastName" class="form-control" ngModel>
+            </div>	
+            <div class="col-sm-4 form-group">
+              <label>BirthDay</label>
+              <input type="date" name='BirthDay' [(ngModel)]="user.BirthDay" class="form-control" ngModel>
+            </div>		
+          </div>				 	
+          <div class="row">
+              <div class="col-sm-6 form-group">
+                <label>Password</label>
+                <input type="password" name='Password' [(ngModel)]="user.Password" class="form-control" ngModel>
+              </div>
+              <div class="col-sm-6 form-group">
+                <label>Confirm Password</label>
+                <input type="password" name='ConfirmPassword' [(ngModel)]="user.ConfirmPassword" class="form-control" ngModel>
+              </div>
+          </div>	
+          
+          <button type="submit" class="btn btn-lg btn-info">Update</button>	
+          <button class="btn btn-lg btn-danger" (click)="Delete()">Delete</button>				
+        </div>
+      </form> 
+    </div>
+  </div>
+</div>

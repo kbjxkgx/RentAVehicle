@@ -38,6 +38,7 @@ import { UpdatevehicleComponent } from './updatevehicle/updatevehicle.component'
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 import { AddPricelistComponent } from './add-pricelist/add-pricelist.component';
+import { UpdateuserComponent } from './updateuser/updateuser.component';
 
 const Routes = [
   {
@@ -104,6 +105,10 @@ const Routes = [
     component: NotificationsComponent,
   },
   {
+    path: 'userinfo',
+    component: UpdateuserComponent,
+  },
+  {
     path: 'addbranch',
     component: AddBranchComponent,
   },
@@ -138,6 +143,7 @@ const Routes = [
     AddBranchComponent,
     BranchListItemComponent,
     AddPricelistComponent
+    UpdateuserComponent
   ],
   imports: [
     BrowserModule,

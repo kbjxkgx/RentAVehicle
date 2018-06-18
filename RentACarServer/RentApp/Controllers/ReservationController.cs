@@ -25,7 +25,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Reservation> GetReservations()
         {
-            return db.Reservations.GetAll();
+            return db.Reservations.GetAllWithImages();
         }
 
         // GET: api/Services/5

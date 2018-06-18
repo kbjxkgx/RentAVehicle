@@ -31,25 +31,25 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Service> GetServices()
         {
-            List<Service> services = db.Services.GetAll().ToList();
-            IEnumerable<Comment> comments = db.Comments.GetAll().ToList();
-            IEnumerable<AppUser> users = db.AppUsers.GetAll();
+            List<Service> services = db.Services.GetAllWithImages().ToList();
+            IEnumerable<Comment> comments = db.Comments.GetAllWithImages().ToList();
+            IEnumerable<AppUser> users = db.AppUsers.GetAllWithImages();
 
-            return db.Services.GetAll();
+            return db.Services.GetAllWithImages();
         }
 
         [HttpGet]
         [Route("api/Services/UnconfirmedServices")]
         public IEnumerable<Service> GetUnconfirmedServices()
         {
-            return db.Services.GetAll().Where(service => service.IsConfirmed == false);
+            return db.Services.GetAllWithImages().Where(service => service.IsConfirmed == false);
         }
 
         [HttpGet]
         [Route("api/Services/ConfirmedServices")]
         public IEnumerable<Service> GetConfirmedServices()
         {
-            return db.Services.GetAll().Where(service => service.IsConfirmed == true);
+            return db.Services.GetAllWithImages().Where(service => service.IsConfirmed == true);
         }
 
         // GET: api/Services/5

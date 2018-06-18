@@ -12,10 +12,22 @@ namespace RentApp.Persistance.Repository
         public VehicleRepository(DbContext context) : base(context)
         {
         }
-        public IEnumerable<Vehicle> GetAll()
+
+        public IEnumerable<Vehicle> GetAllWithImages()
         {
             return context.Set<Vehicle>().Include("Images").ToList();
         }
+
+        public int Count()
+        {
+            return context.Set<Vehicle>().Count();
+        }
+
+        public IEnumerable<Vehicle> GetVehiclePageWithImages(int pageIndex, int pageSize)
+        {
+            return context.Set<Vehicle>().Include("Images").OrderBy(v => v.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

@@ -19,6 +19,14 @@ export class VehicleService {
     return this.httpClient.get(Configuration.path + 'api/Vehicle');
   }
 
+  getVehiclesPage(pageIndex: number): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Vehicles/GetVehiclesPage/' + pageIndex);
+  }
+
+  getVehiclesCount(): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Vehicles/GetVehiclesCount');
+  }
+
   addVehicle(vehicle: VehicleModel): Observable<any> {
     return this.httpClient.post(Configuration.path + 'api/Vehicle', vehicle);
   }

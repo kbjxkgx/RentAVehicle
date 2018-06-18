@@ -30,9 +30,7 @@ namespace RentApp.Controllers
         {
             string name = User.Identity.Name;
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
-            IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
-            //IEnumerable<Pricelist> pl = db.Pricelists.GetAll();
-            //IEnumerable<Item> items = db.Items.GetAll();
+            IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAllWithImages();
             foreach (Vehicle vehicle in vehicles)
             {
                 Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
@@ -65,6 +63,55 @@ namespace RentApp.Controllers
             }
 
             return vehiclesDTO;
+        }
+
+        
+        [HttpGet]
+        [Route("api/Vehicles/GetVehiclesPage/{pageIndex}")]
+        public IEnumerable<VehicleDTO> GetVehiclesPage(int pageIndex)
+        {
+            string name = User.Identity.Name;
+            List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
+            IEnumerable<Vehicle> vehicles = db.Vehicles.GetVehiclePageWithImages(pageIndex, 4);
+            foreach (Vehicle vehicle in vehicles)
+            {
+                Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+                if (service.Pricelists.Count > 0)
+                {
+                    Pricelist actualPriceList = service.Pricelists[0];
+                    foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+                    {
+                        if (pricelist.EndTime > actualPriceList.EndTime)
+                        {
+                            actualPriceList = pricelist;
+                        }
+                    }
+                    try
+                    {
+                        Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                        vehicleDTO.PricePerHour = item.Price;
+                    }
+                    catch (Exception e)
+                    {
+                        vehicleDTO.PricePerHour = 0;
+                    }
+                }
+                else
+                {
+                    vehicleDTO.PricePerHour = 0;
+                }
+                vehiclesDTO.Add(vehicleDTO);
+            }
+
+            return vehiclesDTO;
+        }
+
+        [HttpGet]
+        [Route("api/Vehicles/GetVehiclesCount")]
+        public int GetVehiclesCount()
+        {
+            return db.Vehicles.Count();
         }
 
         // GET: api/Services/5

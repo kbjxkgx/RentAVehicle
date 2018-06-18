@@ -26,7 +26,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Branch> GetBranches()
         {
-            return db.Branches.GetAll();
+            return db.Branches.GetAllWithImages();
         }
 
         // GET: api/Services/5
@@ -47,7 +47,7 @@ namespace RentApp.Controllers
         [HttpGet]
         public IEnumerable<Branch> GetBranchesOfService(int serviceId)
         {
-            return db.Branches.GetAll().Where(b => b.BranchServiceId == serviceId);
+            return db.Branches.GetAllWithImages().Where(b => b.BranchServiceId == serviceId);
         }
         // PUT: api/Services/5
         [ResponseType(typeof(void))]

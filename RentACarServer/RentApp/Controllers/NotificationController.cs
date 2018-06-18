@@ -25,13 +25,13 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Notification> GetNotifications()
         {
-            return db.Notifications.GetAll();
+            return db.Notifications.GetAllWithImages();
         }
 
         [Route("api/Notification/UnseenNotifications")]
         public IEnumerable<Notification> GetUnseenNotifications()
         {
-            return db.Notifications.GetAll().Where(t => t.Seen == false);
+            return db.Notifications.GetAllWithImages().Where(t => t.Seen == false);
         }
 
         // GET: api/Services/5

@@ -56,8 +56,6 @@ export class VehiclesComponent implements OnInit {
           console.log(error);
         });
 
-    
-
     // get current page of items
     // this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
 }

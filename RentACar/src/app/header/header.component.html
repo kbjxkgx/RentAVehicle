@@ -19,7 +19,7 @@
               <li><a href="#" class="highlight" *ngIf="isLoggedIn" (click)='Logout()' [routerLink]="['/home']">Logout </a></li>
               <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/login']">Login </a></li>
               <li><a href="#" class="highlight" *ngIf="!isLoggedIn" [routerLink]="['/register']">Register </a></li>
-              <li><a href="#" class="highlight" *ngIf="isLoggedIn&&isUser" [routerLink]="['/userinfo']">Account info</a></li>
+              <li><a href="#" class="highlight" *ngIf="isLoggedIn" [routerLink]="['/userinfo']">Account info</a></li>
             </ul>
         </div>
     </div>

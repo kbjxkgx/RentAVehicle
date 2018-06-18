@@ -4,6 +4,7 @@ import { ServicesService } from '../services/servicesService/services.service';
 import { CommentService } from '../services/commentService/comment.service';
 import { CommentModel } from '../models/CommentModel';
 import { BranchService } from '../services/branchService/branch.service';
+import { Configuration } from '../Constants/constants';
 import {
   Router,
   ActivatedRoute
@@ -85,5 +86,9 @@ export class ServicePageComponent implements OnInit {
   AddBranch() {
     this.data.service = this.service;
     this.router.navigate(['/addbranch']);
+  }
+
+  Configuration() {
+    return Configuration.path;
   }
 }

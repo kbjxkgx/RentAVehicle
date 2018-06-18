@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppUserService } from '../services/AppUserService/app-user-service.service';
-
+import { Configuration } from '../Constants/constants';
 @Component({
   selector: 'app-userlistitem',
   templateUrl: './userlistitem.component.html',
@@ -15,5 +15,9 @@ export class UserlistitemComponent implements OnInit {
 
   ConfirmUser() {
     this.appUserService.ConfirmUser(this.user);
+  }
+
+  Configuration() {
+    return Configuration.path;
   }
 }

@@ -11,5 +11,7 @@ namespace RentApp.Persistance.Repository
     {
         IEnumerable<Service> GetAll(int pageIndex, int pageSize);
         Service GetServiceWithVehicles(int id);
+        Service GetWithItemsAndPricelists(int id);
+        Service GetWithPricelists(int id);
     }
 }

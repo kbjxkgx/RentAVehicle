@@ -27,18 +27,19 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<VehicleDTO> GetVehicles()
         {
+            string name = User.Identity.Name;
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
             IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
-            IEnumerable<Pricelist> pl = db.Pricelists.GetAll();
-            IEnumerable<Item> items = db.Items.GetAll();
+            //IEnumerable<Pricelist> pl = db.Pricelists.GetAll();
+            //IEnumerable<Item> items = db.Items.GetAll();
             foreach (Vehicle vehicle in vehicles)
             {
-                Service service = db.Services.Get(vehicle.VehicleServiceId);
+                Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
                 VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
                 if (service.Pricelists.Count > 0)
                 {
                     Pricelist actualPriceList = service.Pricelists[0];
-                    foreach (Pricelist pricelist in service.Pricelists)
+                    foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
                     {
                         if (pricelist.EndTime > actualPriceList.EndTime)
                         {
@@ -127,14 +128,38 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(Vehicle vehicle)
+        public IHttpActionResult PostVehicle(VehicleDTO vehicleDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            Vehicle vehicle = new Vehicle();
+            vehicle.Description = vehicleDTO.Description;
+            vehicle.Id = vehicleDTO.Id;
+            vehicle.IsAvailable = vehicleDTO.IsAvailable;
+            vehicle.Manufacturer = vehicleDTO.Manufacturer;
+            vehicle.Model = vehicleDTO.Model;
+            vehicle.TypeId = vehicleDTO.TypeId;
+            vehicle.VehicleServiceId = vehicleDTO.VehicleServiceId;
+            vehicle.YearOfProduction = vehicleDTO.YearOfProduction;
+
+            Item item = new Item();
+            item.ItemVehicleId = vehicle.Id;
+            Service service = db.Services.GetWithPricelists(vehicle.VehicleServiceId);
+            Pricelist actualPricelist = service.Pricelists[0];
+            foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+            {
+                if (pricelist.EndTime > actualPricelist.EndTime)
+                {
+                    actualPricelist = pricelist;
+                }
+            }
+            item.ItemPriceListId = actualPricelist.Id;
+            item.Price = vehicleDTO.PricePerHour;
             db.Vehicles.Add(vehicle);
+            db.Items.Add(item);
             db.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);

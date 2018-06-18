@@ -118,7 +118,7 @@ namespace RentApp.Controllers
                 }
                 File.Copy(file.LocalFileName, destinationFilePath);
                 File.Delete(file.LocalFileName);
-                branch.Image = @"http://localhost:51680/Content/Images/BranchImages/" + branchId + ".jpg";
+                branch.Image = @"Content/Images/BranchImages/" + branchId + ".jpg";
                 db.Branches.Update(branch);
                 db.Complete();
                 return Request.CreateResponse(HttpStatusCode.OK);

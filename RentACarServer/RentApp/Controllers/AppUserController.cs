@@ -120,7 +120,7 @@ namespace RentApp.Controllers
                 }
                 File.Copy(file.LocalFileName, destinationFilePath);
                 File.Delete(file.LocalFileName);
-                user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
+                user.PicturePath = @"Content/Images/UserIdPhotos/" + user.Id + ".jpg";
                 db.AppUsers.Update(user);
 
                 Notification notification = new Notification();

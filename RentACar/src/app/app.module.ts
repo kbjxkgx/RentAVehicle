@@ -11,9 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/demo.interceptor';
 
 import { AppComponent } from './app.component';
-import { MainpageComponent } from './mainpage/mainpage.component';
 import { HeaderComponent } from './header/header.component';
-import { CarlistitemComponent } from './carlistitem/carlistitem.component';
 import { CarlistComponent } from './carlist/carlist.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -118,9 +116,7 @@ const Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MainpageComponent,
     HeaderComponent,
-    CarlistitemComponent,
     CarlistComponent,
     LoginComponent,
     RegisterComponent,

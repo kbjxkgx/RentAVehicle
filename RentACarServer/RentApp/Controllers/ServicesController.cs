@@ -108,13 +108,21 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
             service.IsConfirmed = false;
+            
             db.Services.Add(service);
+            
+            db.Complete();
+
+            Pricelist pricelist = new Pricelist();
+            pricelist.PricelistServiceId = service.Id;
+            pricelist.BeginTime = DateTime.Now;
+            pricelist.EndTime = DateTime.Now;
+            db.Pricelists.Add(pricelist);
 
             Notification notification = new Notification();
             notification.Seen = false;
             notification.Text = "Added new service:" + service.Name + " " + service.Email + ", check services for confirmation!";
             db.Notifications.Add(notification);
-
             db.Complete();
 
             NotificationHub.Notify(notification);
@@ -169,7 +177,7 @@ namespace RentApp.Controllers
                 }
                 File.Copy(file.LocalFileName, destinationFilePath);
                 File.Delete(file.LocalFileName);
-                service.LogoImagePath = @"http://localhost:51680/Content/Images/ServiceImages/" + serviceId + ".jpg";
+                service.LogoImagePath = @"Content/Images/ServiceImages/" + serviceId + ".jpg";
                 db.Services.Update(service);
                 db.Complete();
                 return Request.CreateResponse(HttpStatusCode.OK);

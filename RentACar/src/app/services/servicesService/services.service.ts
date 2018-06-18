@@ -32,7 +32,7 @@ export class ServicesService {
 
   getVehicles(Id: number) {
     let params = new HttpParams().set('Id', Id.toString());
-    return this.httpClient.get(Configuration.path + 'api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
+    return this.httpClient.get(Configuration.path + 'api/Services/getVehicles', { params: params }) as Observable<any>;
   }
 
   getUnconfirmedServices(): Observable<any> {

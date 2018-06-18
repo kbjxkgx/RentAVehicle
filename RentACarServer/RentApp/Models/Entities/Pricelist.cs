@@ -16,8 +16,7 @@ namespace RentApp.Models.Entities
         [Required]
         [Column("EndTime", TypeName = "datetime2")]
         public DateTime EndTime { get; set; }
-
-        [Required]
+        
         public List<Item> Items { get; set; }
 
         [ForeignKey("PricelistService")]

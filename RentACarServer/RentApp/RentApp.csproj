@@ -406,9 +406,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\UserIdPhotos\id1.jpg" />
     <Content Include="Content\Images\UserIdPhotos\id2.png" />
-    <Content Include="Content\Images\VehicleImages\15\0.jpg" />
-    <Content Include="Content\Images\VehicleImages\15\1.jpg" />
-    <Content Include="Content\Images\VehicleImages\15\2.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -470,6 +467,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\BranchImages\" />
     <Folder Include="Content\Images\ServiceImages\" />
+    <Folder Include="Content\Images\VehicleImages\15\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

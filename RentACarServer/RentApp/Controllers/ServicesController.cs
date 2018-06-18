@@ -200,6 +200,12 @@ namespace RentApp.Controllers
             }
 
             db.Services.Remove(service);
+            string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
+            destinationFilePath += service.LogoImagePath;
+            if (File.Exists(destinationFilePath))
+            {
+                File.Delete(destinationFilePath);
+            }
             db.Complete();
 
             return Ok(service);

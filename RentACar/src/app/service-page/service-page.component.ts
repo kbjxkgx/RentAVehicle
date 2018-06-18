@@ -88,6 +88,11 @@ export class ServicePageComponent implements OnInit {
     this.router.navigate(['/addbranch']);
   }
 
+  AddPricelist() {
+    this.data.service = this.service;
+    this.router.navigate(['/addpricelist']);
+  }
+
   Configuration() {
     return Configuration.path;
   }

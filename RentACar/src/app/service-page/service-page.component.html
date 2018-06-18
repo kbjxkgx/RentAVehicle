@@ -1,7 +1,6 @@
-
-    <div *ngIf='isAdmin||service.IsConfirmed' class="container">
+   <div class="container">
             <div class="heading">
-                    <h1 class="well">Service Name: {{service.Name}}</h1>
+                    <h1 class="well">Service Name: {{service.Name}} is admin : {{isAdmin}}</h1>
                 </div>
             <div class="map-example well">
                 <div class="row">
@@ -40,21 +39,23 @@
                         <button class="col-lg-2" type="button" (click)="AddComment()" class="btn btn-warning">Add</button>
                       </div>
                     </div>
-                  </div>
+                  </div>    
                 <div class="row">
-                  <div class="col-lg-1" >
-                  <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+                  <div>
+                  <button type="button" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
                   </div>
-                  <div class="col-lg-1" >
-                    <button type="button" *ngIf="isAdmin&&!service.IsConfirmed" (click)='AddBranch()' class="btn btn-warning">Add Branch</button>
+                  <div>
+                    <button type="button" (click)='AddBranch()' class="btn btn-warning">Add Branch</button>
                   </div>
+                  <div >
+                    <button type="button"  (click)='AddPricelist()' class="btn btn-warning">Add Pricelist</button>
+                    </div>
                 </div>
             </div>
             </div>
 
 
 
-            
             <div >
                 <div class="heading container">
                     <h1 class="well">Branches</h1>
@@ -63,5 +64,5 @@
             </div>
                   
             <div >
-                <app-carlist  *ngFor="let vehicle of vehicles" [vehicles]="vehicles"></app-carlist>
+                <app-carlist [vehicles]="vehicles"></app-carlist>
             </div>

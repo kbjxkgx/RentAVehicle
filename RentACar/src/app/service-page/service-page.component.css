@@ -1,3 +1,7 @@
+button {
+  margin-left: 10px;
+}
+
 .navbar.navbar-light.navbar-expand-lg.bg-white.page-navbar {
   box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
 }

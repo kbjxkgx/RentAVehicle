@@ -1,0 +1,26 @@
+
+<div class="container">
+    <h1 class="well">Add Pricelist</h1>
+		<div class="col-lg-12">
+			<div>
+        <div *ngFor="let vehicle of vehicles">
+            <app-vehicle [vehicle]="vehicle" ></app-vehicle>
+            <div class="container well">
+                <strong class="col-lg-2">Enter Price: </strong>
+                <input class="col-lg-4" [(ngModel)]="vehicle.PricePerHour" placeholder="Enter Price Here.." type="text">
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-4 form-group">
+          <label>Begin Time</label>
+          <input type="date" name='BeginTime' [(ngModel)]="pricelist.BeginTime" placeholder="Enter BeginTime Here.." class="form-control" ngModel>
+      </div>	
+      <div class="col-sm-4 form-group">
+          <label>End Time</label>
+          <input type="date" name='EndTime' [(ngModel)]="pricelist.EndTime"  placeholder="Enter EndTime Here.." class="form-control" ngModel>
+      </div>	
+      <div >
+          <button type="button"  (click)='AddPricelist()' class="btn btn-warning">Add Pricelist</button>
+          </div>
+		</div>
+	</div>

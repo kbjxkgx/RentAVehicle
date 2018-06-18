@@ -34,11 +34,12 @@
                   <h4>Photos</h4>
                   <div *ngIf="vehicle.Images" class="row">
                       <div *ngFor="let image of vehicle.Images" class="col-md-4">
-                          <a *ngIf="image" [href]="Configuration() + image.ImagePath" ><img class="img-fluid image" onerror="this.src='../assets/icon.jpg'" [src]="Configuration() + image.ImagePath" ></a>
+                          <a *ngIf="image" [href]="Configuration() + image.ImagePath" ><img class="img-fluid image" [src]="Configuration() + image.ImagePath" ></a>
                       </div>
                   </div>
               </div>
             </div>
+            
             
           </div>
           <div *ngIf="isManager" class="btn-toolbar">

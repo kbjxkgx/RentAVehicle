@@ -75,17 +75,24 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Pricelist))]
-        public IHttpActionResult PostPricelist(Pricelist item)
+        public IHttpActionResult PostPricelist(Pricelist pricelist)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Pricelists.Add(item);
+            List<Item> items = pricelist.Items;
+            pricelist.Items = null;
+            db.Pricelists.Add(pricelist);
             db.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
+            foreach (Item item in items)
+            {
+                item.ItemPriceListId = pricelist.Id;
+                db.Items.Add(item);
+            }
+            db.Complete();
+            return CreatedAtRoute("DefaultApi", new { id = pricelist.Id }, pricelist);
         }
 
         // DELETE: api/Services/5

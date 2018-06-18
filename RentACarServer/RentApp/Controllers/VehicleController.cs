@@ -5,6 +5,7 @@ using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -179,8 +180,18 @@ namespace RentApp.Controllers
             }
 
             db.Vehicles.Remove(vehicle);
+            foreach (VehicleImage image in vehicle.Images)
+            {
+                string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
+                destinationFilePath += image.ImagePath;
+                if (File.Exists(destinationFilePath))
+                {
+                    File.Delete(destinationFilePath);
+                }
+            }
+            
             db.Complete();
-
+            
             return Ok(vehicle);
         }
 

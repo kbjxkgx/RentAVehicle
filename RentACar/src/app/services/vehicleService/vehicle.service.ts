@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-
-import { Http, Response } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { VehicleModel } from '../../models/vehicleModel';
 import { Observable } from 'rxjs/Observable';
@@ -40,7 +37,7 @@ export class VehicleService {
   }
 
   deleteVehicle(vehicle: VehicleModel) {
-    return this.httpClient.delete(Configuration.path + 'api/Vehicle/'+vehicle.Id);
+    return this.httpClient.delete(Configuration.path + 'api/Vehicle/' + vehicle.Id);
   }
 
 }

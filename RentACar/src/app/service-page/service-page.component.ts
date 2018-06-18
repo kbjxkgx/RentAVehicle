@@ -39,11 +39,11 @@ export class ServicePageComponent implements OnInit {
 
     this.service = this.data.service;
 
-    this.branchService.getBranches()
+    this.branchService.getBranchesOfService(this.service.Id)
       .subscribe(
         data => {
           this.branches = data;
-          console.log('getBranches succeded...');
+          console.log('getBranchesOfService succeded...');
         },
         error => {
           console.log(error);

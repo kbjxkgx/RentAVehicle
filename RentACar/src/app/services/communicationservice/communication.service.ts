@@ -7,7 +7,7 @@ import { AppUserModel } from '../../models/appUserModel';
 @Injectable()
 export class CommunicationService {
 
-  vehicle: VehicleModel;
+  public vehicle: VehicleModel;
   userUpdate: AppUserModel;
 
   private isLoggedInSource = new BehaviorSubject<boolean>(false);

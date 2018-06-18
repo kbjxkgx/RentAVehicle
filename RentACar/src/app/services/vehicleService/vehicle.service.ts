@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { VehicleModel } from '../../models/vehicleModel';
 import { Observable } from 'rxjs/Observable';
-import { Configuration } from '../../Constants/constants';
+  import { Configuration } from '../../Constants/constants';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -24,7 +24,7 @@ export class VehicleService {
   }
 
   updateVehicle(vehicle: VehicleModel): Observable<any> {
-    return this.httpClient.put(Configuration.path + 'api/Vehicle/'+vehicle.Id , vehicle);
+    return this.httpClient.put(Configuration.path + 'api/Vehicle/' + vehicle.Id , vehicle);
   }
 
   addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {

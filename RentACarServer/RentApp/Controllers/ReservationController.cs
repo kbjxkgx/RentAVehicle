@@ -13,6 +13,7 @@ namespace RentApp.Controllers
 {
     public class ReservationController : ApiController
     {
+        private static object reservationLockObject = new object();
         private IUnitOfWork db;
 
         public ReservationController(IUnitOfWork context)
@@ -78,14 +79,42 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Reservation))]
         public IHttpActionResult PostReservation(Reservation reservation)
         {
-            if (!ModelState.IsValid)
+            lock(reservationLockObject)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (reservation.BeginTime > reservation.EndTime)
+                {
+                    return BadRequest("Begin time need to be before end time.");
+                }
+
+                if (reservation.BeginTime < DateTime.Now.Date || reservation.EndTime < DateTime.Now.Date)
+                {
+                    return BadRequest("Begin and end time should be after today.");
+                }
+
+                List<Reservation> reservations = db.Reservations.GetAllReservationsOfVehicle(reservation.ReservedVehicleId).ToList();
+                foreach (Reservation r in reservations)
+                {
+                    if (reservation.BeginTime >= r.BeginTime && reservation.BeginTime <= r.EndTime)
+                    {
+                        return BadRequest("Vehicle is reserved in this period, try different time period.");
+                    }
+                    if (reservation.EndTime >= r.BeginTime && reservation.EndTime <= r.EndTime)
+                    {
+                        return BadRequest("Vehicle is reserved in this period, try different time period.");
+                    }
+
+                    if (reservation.BeginTime < r.BeginTime && reservation.EndTime > r.EndTime)
+                    {
+                        return BadRequest("Vehicle is reserved in this period, try different time period.");
+                    }
+                }
+                db.Reservations.Add(reservation);
+                db.Complete();
             }
-
-            db.Reservations.Add(reservation);
-            db.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = reservation.Id }, reservation);
         }
 

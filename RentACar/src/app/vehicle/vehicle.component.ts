@@ -15,14 +15,16 @@ import { CommunicationService } from '../services/communicationservice/communica
 })
 export class VehicleComponent implements OnInit {
   @Input() vehicle: VehicleModel;
-  public isVisible:boolean = true;
+  public isVisible = true;
   public isLoggedIn: boolean;
    public isManager: boolean;
+   public isUser: boolean;
 
   constructor(private router: Router, private data: CommunicationService, private vehicleService: VehicleService) { }
 
   ngOnInit() {
     this.data.isManagerMessage.subscribe(message => this.isManager = message);
+    this.data.isUserMessage.subscribe(message => this.isUser = message);
   }
 
   Delete() {
@@ -40,6 +42,11 @@ export class VehicleComponent implements OnInit {
   Update() {
     this.data.changeVehicleForUpdate(this.vehicle);
     this.router.navigate(['/updateVehicle']);
+  }
+
+  MakeReservation() {
+    this.data.vehicle = this.vehicle;
+    this.router.navigate(['/makereservation']);
   }
 
   Configuration() {

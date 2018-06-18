@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Configuration } from '../../Constants/constants';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { NumberFormatStyle } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class ServicesService {
 
    getServices(): Observable<any> {
     return this.httpClient.get(Configuration.path + 'api/Services');
+  }
+
+  getService(Id: NumberFormatStyle): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Services/' + Id);
   }
 
   getVehicles(Id: number) {

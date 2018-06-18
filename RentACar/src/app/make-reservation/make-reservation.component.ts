@@ -15,6 +15,7 @@ export class MakeReservationComponent implements OnInit {
   vehicle: VehicleModel;
   service: any;
   branches: any;
+  reservations: any;
   BeginTime: Date;
   EndTime: Date;
   selectedBranchId1 = -1;
@@ -43,6 +44,15 @@ export class MakeReservationComponent implements OnInit {
         error => {
           console.log(error);
         });
+    this.reservationService.getReservationsOfVehicle(this.vehicle.Id)
+      .subscribe(
+        data => {
+          this.reservations = data;
+          console.log('getReservationsOfVehicle succeded...');
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   makeReservation(account: any, form: NgForm) {
@@ -54,15 +64,15 @@ export class MakeReservationComponent implements OnInit {
     reservation.ReservedVehicleId = this.vehicle.Id;
     reservation.UserId = this.data.AppUserIdSource.value;
     this.reservationService.makeReservation(reservation)
-          .subscribe(
-            data => {
-              window.alert('Reservation succeded...');
-              console.log('makeReservation succeded...');
-            },
-            error => {
-              window.alert(error.error.Message);
-              console.log(error);
-            });
+      .subscribe(
+        data => {
+          window.alert('Reservation succeded...');
+          console.log('makeReservation succeded...');
+        },
+        error => {
+          window.alert(error.error.Message);
+          console.log(error);
+        });
 
   }
 

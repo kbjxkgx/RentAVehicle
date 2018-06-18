@@ -41,6 +41,13 @@ namespace RentApp.Controllers
             return Ok(reservation);
         }
 
+        [HttpGet]
+        [Route("api/Reservations/GetReservationsOfVehicle/{vehicleId}")]
+        public IEnumerable<Reservation> GetReservationsOfVehicle(int vehicleId)
+        {
+            return db.Reservations.GetAllReservationsOfVehicle(vehicleId);
+        }
+
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutReservation(int id, Reservation reservation)
@@ -79,22 +86,22 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Reservation))]
         public IHttpActionResult PostReservation(Reservation reservation)
         {
-            lock(reservationLockObject)
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                if (reservation.BeginTime > reservation.EndTime)
-                {
-                    return BadRequest("Begin time need to be before end time.");
-                }
+                return BadRequest(ModelState);
+            }
+            if (reservation.BeginTime > reservation.EndTime)
+            {
+                return BadRequest("Begin time need to be before end time.");
+            }
 
-                if (reservation.BeginTime < DateTime.Now.Date || reservation.EndTime < DateTime.Now.Date)
-                {
-                    return BadRequest("Begin and end time should be after today.");
-                }
+            if (reservation.BeginTime < DateTime.Now.Date || reservation.EndTime < DateTime.Now.Date)
+            {
+                return BadRequest("Begin and end time should be after today.");
+            }
 
+            lock (reservationLockObject)
+            {
                 List<Reservation> reservations = db.Reservations.GetAllReservationsOfVehicle(reservation.ReservedVehicleId).ToList();
                 foreach (Reservation r in reservations)
                 {

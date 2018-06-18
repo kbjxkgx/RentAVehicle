@@ -13,4 +13,8 @@ export class ReservationService {
   makeReservation(reservation: ReservationModel): Observable<any> {
     return this.httpClient.post(Configuration.path + 'api/Reservation', reservation);
   }
+
+  getReservationsOfVehicle(vehicleId: number): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Reservations/GetReservationsOfVehicle/' + vehicleId);
+  }
 }

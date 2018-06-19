@@ -3,3 +3,4 @@
 -Kod more info na servisu ne pise cijena
 -Dodavanje tipova	 
 -Komentarisanje nakon rezervacije
+-Put metoda za usera da se zamjeni

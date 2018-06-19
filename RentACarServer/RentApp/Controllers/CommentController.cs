@@ -52,7 +52,22 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
-            db.Comments.Update(item);
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            if (RAUser == null)
+            {
+                return BadRequest();
+            }
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+            if (appUser.Id != item.UserId)
+            {
+                return BadRequest();
+            }
+
+            Comment comment = db.Comments.Get(item.Id);
+            comment.Content = item.Content;
+            db.Comments.Update(comment);
 
             try
             {
@@ -70,22 +85,56 @@ namespace RentApp.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return CreatedAtRoute("DefaultApi", new { id = comment.Id }, comment);
         }
 
         // POST: api/Services
         [ResponseType(typeof(Comment))]
+        [Authorize]
         public IHttpActionResult PostComment(Comment item)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Comments.Add(item);
-            db.Complete();
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            if (RAUser == null)
+            {
+                return BadRequest();
+            }
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+            if (appUser.Id != item.UserId)
+            {
+                return BadRequest();
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
+            Comment comment = db.Comments.GetCommentOfUser(item.UserId);
+            if (comment != null)
+            {
+                return BadRequest("You can comment only once.");
+            }
+
+            List<Reservation> reservations = db.Reservations.GetAllReservationsOfUser(appUser.Id).ToList();
+            if (reservations.Count == 0)
+            {
+                return BadRequest("You can comment only after first finished reservation.");
+            }
+
+            foreach (Reservation reservation in reservations)
+            {
+                if (reservation.EndTime < DateTime.Now.Date)
+                {
+                    db.Comments.Add(item);
+                    db.Complete();
+
+                    return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
+                }
+            }
+
+            return BadRequest("You can comment only after first finished reservation.");
         }
 
         // DELETE: api/Services/5

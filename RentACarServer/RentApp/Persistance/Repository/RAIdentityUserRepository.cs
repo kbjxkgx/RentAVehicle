@@ -21,7 +21,7 @@ namespace RentApp.Persistance.Repository
 
         public RAIdentityUser GetByAppUserId(int appUserId)
         {
-            return context.Set<RAIdentityUser>().First(u => u.AppUserId == appUserId);
+            return context.Set<RAIdentityUser>().FirstOrDefault(u => u.AppUserId == appUserId);
         }
 
         protected RADBContext RADBContext { get { return context as RADBContext; } }

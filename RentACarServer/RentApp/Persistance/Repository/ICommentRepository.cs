@@ -9,5 +9,6 @@ namespace RentApp.Persistance.Repository
 {
     public interface ICommentRepository : IRepository<Comment, int>
     {
+        Comment GetCommentOfUser(int userId);
     }
 }

@@ -7,6 +7,7 @@
         <a href="#" [routerLink]="['/servicelist']">Services</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/managers']">Managers</a>
         <a href="#" *ngIf="isAdmin" [routerLink]="['/users']">Users</a>
+        <a href="#" *ngIf="isAdmin" [routerLink]="['/vehicletypes']">Vehicle Types</a>
         <a href="#" (click)="NotificationClick()" *ngIf="isAdmin" [routerLink]="['/notifications']">Notifications<span class="header-new-feature" *ngIf="notificationExists">new</span></a>
         <a href="#" *ngIf="isManager" [routerLink]="['/addservice']">Add Service</a>
         <a href="#" *ngIf="isManager" [routerLink]="['/addvehicle']">Add Vehicle</a>

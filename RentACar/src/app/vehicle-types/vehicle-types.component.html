@@ -1,0 +1,23 @@
+<div class="container">
+    <h1 class="well">Vehicle Types</h1>
+    <div class="col-lg-12 well">
+        <div *ngFor="let vehicleType of vehicleTypes"> 
+            <div class="well">
+                <div class="info">
+                    <h4>{{vehicleType.Name}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="well">
+            <div class="container">
+              <strong class="col-lg-2">Add Vehicle Type: </strong>
+              <input class="col-lg-4" [(ngModel)]="vehicleTypeName" placeholder="Enter Vehicle Type Here.." type="text">
+              <div class="col-lg-2">
+                <button class="col-lg-2" type="button" (click)="AddType()" class="btn btn-warning">Add</button>
+              </div>
+            </div>
+          </div>  
+    </div>
+</div>
+
+

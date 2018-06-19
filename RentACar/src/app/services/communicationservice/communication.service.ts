@@ -8,7 +8,7 @@ import { ServiceModel } from '../../models/serviceModel';
 @Injectable()
 export class CommunicationService {
 
-  vehicle: VehicleModel;
+  public vehicle: VehicleModel;
   userUpdate: AppUserModel;
   serviceForUpdate: ServiceModel;
 

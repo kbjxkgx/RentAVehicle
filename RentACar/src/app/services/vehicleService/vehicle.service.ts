@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { VehicleModel } from '../../models/vehicleModel';
 import { Observable } from 'rxjs/Observable';
-import { Configuration } from '../../Constants/constants';
+  import { Configuration } from '../../Constants/constants';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -19,12 +19,20 @@ export class VehicleService {
     return this.httpClient.get(Configuration.path + 'api/Vehicle');
   }
 
+  getVehiclesPage(pageIndex: number): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Vehicles/GetVehiclesPage/' + pageIndex);
+  }
+
+  getVehiclesCount(): Observable<any> {
+    return this.httpClient.get(Configuration.path + 'api/Vehicles/GetVehiclesCount');
+  }
+
   addVehicle(vehicle: VehicleModel): Observable<any> {
     return this.httpClient.post(Configuration.path + 'api/Vehicle', vehicle);
   }
 
   updateVehicle(vehicle: VehicleModel): Observable<any> {
-    return this.httpClient.put(Configuration.path + 'api/Vehicle/'+vehicle.Id , vehicle);
+    return this.httpClient.put(Configuration.path + 'api/Vehicle/' + vehicle.Id , vehicle);
   }
 
   addVehicleImages(filesToUpload: File[], vehicle: VehicleModel): Observable<any> {

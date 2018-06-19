@@ -40,6 +40,7 @@ import { BranchListItemComponent } from './branch-list-item/branch-list-item.com
 import { AddPricelistComponent } from './add-pricelist/add-pricelist.component';
 import { UpdateuserComponent } from './updateuser/updateuser.component';
 import { UpdateserviceComponent } from './updateservice/updateservice.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
 const Routes = [
   {
@@ -120,6 +121,10 @@ const Routes = [
   {
     path: 'updateService',
     component: UpdateserviceComponent,
+  },
+  {
+    path: 'makereservation',
+    component: MakeReservationComponent,
   }
 ];
 
@@ -149,7 +154,8 @@ const Routes = [
     BranchListItemComponent,
     AddPricelistComponent,
     UpdateuserComponent,
-    UpdateserviceComponent
+    UpdateserviceComponent,
+    MakeReservationComponent
   ],
   imports: [
     BrowserModule,

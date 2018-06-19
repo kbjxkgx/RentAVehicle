@@ -26,7 +26,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Branch> GetBranches()
         {
-            return db.Branches.GetAll();
+            return db.Branches.GetAllWithImages();
         }
 
         // GET: api/Services/5
@@ -42,6 +42,13 @@ namespace RentApp.Controllers
             return Ok(branch);
         }
 
+        
+        [Route("api/Branches/BranchesOfService/{serviceId}")]
+        [HttpGet]
+        public IEnumerable<Branch> GetBranchesOfService(int serviceId)
+        {
+            return db.Branches.GetAllWithImages().Where(b => b.BranchServiceId == serviceId);
+        }
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBranch(int id, Branch branch)
@@ -92,7 +99,6 @@ namespace RentApp.Controllers
 
         [Route("api/Branch/UploadImage")]
         [HttpPost]
-        [ResponseType(typeof(AppUser))]
         public async Task<HttpResponseMessage> VerifyAppUser()
         {
             if (!Request.Content.IsMimeMultipartContent())

@@ -13,6 +13,11 @@ namespace RentApp.Persistance.Repository
         {
         }
 
+        public IEnumerable<Reservation> GetAllReservationsOfVehicle(int vehicleId)
+        {
+            return RADBContext.Reservations.Where( r => r.ReservedVehicleId == vehicleId);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

@@ -30,14 +30,14 @@ namespace RentApp.Controllers
         // GET: api/AppUsers
         public IEnumerable<AppUser> GetAppUsers()
         {
-            return db.AppUsers.GetAll();
+            return db.AppUsers.GetAllWithImages();
         }
 
         [HttpGet]
         [Route("api/AppUsers/UnconfirmedUsers")]
         public IEnumerable<AppUser> UnconfirmedUsers()
         {
-            return db.AppUsers.GetAll().Where(user=>user.IsUserConfirmed==false);
+            return db.AppUsers.GetAllWithImages().Where(user=>user.IsUserConfirmed==false);
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace RentApp.Controllers
         public IEnumerable<AppUser> GetManagers()
         {
             List<AppUser> users = new List<AppUser>();
-            foreach (RAIdentityUser user in db.Users.GetAll())
+            foreach (RAIdentityUser user in db.Users.GetAllWithImages())
             {
                 foreach (var userRole in user.Roles)
                 {

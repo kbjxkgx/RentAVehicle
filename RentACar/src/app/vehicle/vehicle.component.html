@@ -12,7 +12,7 @@
           </div>
           <div class="col-lg-4">
               <div class="heading">
-                  <h3>{{vehicle.Manufacturer}} {{vehicle.Model}}</h3>
+                  <h3>{{vehicle.Manufacturer}} {{vehicle.Model}}    </h3>
                   <div class="rating">
                       <i class="fa fa-star icon"></i>
                       <i class="fa fa-star icon"></i>
@@ -42,9 +42,10 @@
             
             
           </div>
-          <div *ngIf="isManager" class="btn-toolbar">
-            <button type="button" class="btn btn-warning" (click)="Update()">Update</button>
-            <button type="button" class="btn btn-danger" (click)="Delete()">Delete</button>
+          <div class="btn-toolbar info">
+            <button *ngIf="isManager" type="button" class="btn btn-warning" (click)="Update()">Update</button>
+            <button *ngIf="isManager" type="button" class="btn btn-danger" (click)="Delete()">Delete</button>
+            <button type="button" class="btn btn-warning" (click)="MakeReservation()">Make Reservation</button>
           </div>
           
       </div>

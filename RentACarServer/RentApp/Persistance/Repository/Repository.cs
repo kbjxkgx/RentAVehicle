@@ -35,7 +35,7 @@ namespace RentApp.Persistance.Repository
             return context.Set<TEntity>().Find(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAllWithImages()
         {
             return context.Set<TEntity>().ToList();
         }

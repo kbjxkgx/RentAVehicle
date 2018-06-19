@@ -3,6 +3,7 @@ using RentApp.Helper;
 using RentApp.Hubs;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -170,6 +171,47 @@ namespace RentApp.Controllers
                 }
             }
 
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("api/AppUser/ConfirmToggleManager/{managerId}")]
+        public IHttpActionResult ConfirmManager(int managerId)
+        {
+            AppUser manager = db.AppUsers.Get(managerId);
+
+            if (manager == null)
+            {
+                return NotFound();
+            }
+
+            manager.IsManagerAllowed = !manager.IsManagerAllowed;
+            db.Complete();
+            SmtpService smtpService = new SmtpService();
+            string mailBody = "Manager " + manager.FullName + " Id:" + manager.Id + " is confirmed.";
+            RAIdentityUser RAUser = db.Users.GetByAppUserId(manager.Id);
+            smtpService.SendMail("User confirmation", mailBody, RAUser.Email);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("api/AppUser/ConfirmUser/{userId}")]
+        public IHttpActionResult ConfirmUser(int userId)
+        {
+            AppUser user = db.AppUsers.Get(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.IsManagerAllowed = true;
+            db.Complete();
+
+            SmtpService smtpService = new SmtpService();
+            string mailBody = "User " + user.FullName + " Id:" + user.Id + " is confirmed.";
+            RAIdentityUser RAUser = db.Users.GetByAppUserId(user.Id);
+            smtpService.SendMail("User confirmation", mailBody, RAUser.Email);
             return StatusCode(HttpStatusCode.NoContent);
         }
 

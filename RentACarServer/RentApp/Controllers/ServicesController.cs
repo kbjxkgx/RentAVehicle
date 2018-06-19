@@ -16,6 +16,7 @@ using RentApp.Hubs;
 using System.Threading.Tasks;
 using System.Web;
 using System.IO;
+using RentApp.Services;
 
 namespace RentApp.Controllers
 {
@@ -99,6 +100,30 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        [HttpPut]
+        [Route("api/Services/ConfirmService/{serviceId}")]
+        public IHttpActionResult ConfirmService(int serviceId)
+        {
+            Service service = db.Services.Get(serviceId);
+            
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            service.IsConfirmed = true;
+            db.Complete();
+            
+            SmtpService smtpService = new SmtpService();
+            string mailBody = "Service " + service.Name + " Id:" + service.Id + " is confirmed.";
+            AppUser manager = db.AppUsers.Get(service.ServiceManagerId);
+            RAIdentityUser RAUser = db.Users.GetByAppUserId(manager.Id);
+            smtpService.SendMail("Service confirmation", mailBody, RAUser.Email);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
         // POST: api/Services
         [ResponseType(typeof(Service))]
         public IHttpActionResult PostService(Service service)
@@ -152,7 +177,7 @@ namespace RentApp.Controllers
         [Route("api/Service/UploadImage")]
         [HttpPost]
         [ResponseType(typeof(AppUser))]
-        public async Task<HttpResponseMessage> VerifyAppUser()
+        public async Task<HttpResponseMessage> UploadImage()
         {
             if (!Request.Content.IsMimeMultipartContent())
             {

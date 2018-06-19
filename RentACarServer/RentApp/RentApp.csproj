@@ -398,6 +398,8 @@
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\ISmtpService.cs" />
+    <Compile Include="Services\SmtpService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

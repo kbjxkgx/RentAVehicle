@@ -10,5 +10,6 @@ namespace RentApp.Persistance.Repository
     public interface IRAIdentityUserRepository : IRepository<RAIdentityUser, int>
     {
         RAIdentityUser Get(string id);
+        RAIdentityUser GetByAppUserId(int appUserId);
     }
 }

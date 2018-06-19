@@ -11,6 +11,7 @@ import {
 } from '@angular/router';
 import { query } from '@angular/core/src/render3/query';
 import { AppUserModel } from '../models/appUserModel';
+import { VehicleService } from '../services/vehicleService/vehicle.service';
 
 @Component({
   selector: 'app-service-page',
@@ -29,7 +30,8 @@ export class ServicePageComponent implements OnInit {
    public newCommentContent: string;
    private sub: any;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
-    private router: Router, private data: CommunicationService, private route: ActivatedRoute, private branchService: BranchService) { }
+    private router: Router, private data: CommunicationService, private route: ActivatedRoute, private branchService: BranchService,
+   private vehicleService: VehicleService) { }
 
   ngOnInit() {
     this.data.isAdminMessage.subscribe(message => this.isAdmin = message);
@@ -96,4 +98,34 @@ export class ServicePageComponent implements OnInit {
   Configuration() {
     return Configuration.path;
   }
+
+  Delete() {
+
+    this.vehicleService.deleteVehicleWithServiceId(this.service.Id)
+    .subscribe(
+      data=>{
+        console.log('Delete vehicles succeded');
+        this.servicesService.delete(this.service)
+        .subscribe(
+          data => {
+            console.log('delete service succeded...');
+            
+            this.router.navigate(['/servicelist']);
+          },
+          error => {
+            console.log('delete service failed...');
+          });
+      },
+      error=>{
+          console.log('Delete vehicles failed');
+      });
+
+   
+  }
+
+  Update() {
+    this.data.serviceForUpdate=this.service;
+    this.router.navigate(['/updateService']);
+  }
+
 }

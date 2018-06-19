@@ -195,6 +195,38 @@ namespace RentApp.Controllers
             return Ok(vehicle);
         }
 
+        
+        [Route("api/Vehicle/DeleteVehicleWithServiceId")]
+        [HttpDelete]
+        [ResponseType(typeof(Vehicle))]
+        public IHttpActionResult DeleteVehicleWithServiceId(int serviceId)
+        {
+            List<Vehicle> vehicles = db.Vehicles.GetAll().Where(t=>t.VehicleServiceId==serviceId).ToList();
+            if (vehicles == null)
+            {
+                return NotFound();
+            }
+
+            foreach(Vehicle vehicle in vehicles)
+            {
+                db.Vehicles.Remove(vehicle);
+                foreach (VehicleImage image in vehicle.Images)
+                {
+                    string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
+                    destinationFilePath += image.ImagePath;
+                    if (File.Exists(destinationFilePath))
+                    {
+                        File.Delete(destinationFilePath);
+                    }
+                }
+            }
+            
+            db.Complete();
+
+            return Ok();
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

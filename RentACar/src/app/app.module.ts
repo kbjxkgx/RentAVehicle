@@ -39,6 +39,7 @@ import { AddBranchComponent } from './add-branch/add-branch.component';
 import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 import { AddPricelistComponent } from './add-pricelist/add-pricelist.component';
 import { UpdateuserComponent } from './updateuser/updateuser.component';
+import { UpdateserviceComponent } from './updateservice/updateservice.component';
 
 const Routes = [
   {
@@ -115,6 +116,10 @@ const Routes = [
   {
     path: 'addpricelist',
     component: AddPricelistComponent,
+  },
+  {
+    path: 'updateService',
+    component: UpdateserviceComponent,
   }
 ];
 
@@ -142,8 +147,9 @@ const Routes = [
     UpdatevehicleComponent,
     AddBranchComponent,
     BranchListItemComponent,
-    AddPricelistComponent
-    UpdateuserComponent
+    AddPricelistComponent,
+    UpdateuserComponent,
+    UpdateserviceComponent
   ],
   imports: [
     BrowserModule,

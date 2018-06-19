@@ -3,12 +3,14 @@ import { BehaviorSubject } from 'rxjs/behaviorsubject';
 import { Configuration } from '../../Constants/constants';
 import { VehicleModel } from '../../models/vehicleModel';
 import { AppUserModel } from '../../models/appUserModel';
+import { ServiceModel } from '../../models/serviceModel';
 
 @Injectable()
 export class CommunicationService {
 
   vehicle: VehicleModel;
   userUpdate: AppUserModel;
+  serviceForUpdate: ServiceModel;
 
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
   private isConfirmedSource = new BehaviorSubject<boolean>(false);

@@ -70,5 +70,12 @@ export class ServicesService {
     return this.httpClient.post(Configuration.path + 'api/Service/UploadImage', _formData);
   }
 
+  delete(service: ServiceModel) {
+    return this.httpClient.delete(Configuration.path + 'api/Services/'+ service.Id);
+  }
+
+  update(service: ServiceModel) {
+    return this.httpClient.put(Configuration.path + 'api/Services/'+ service.Id, service);
+  }
 
 }

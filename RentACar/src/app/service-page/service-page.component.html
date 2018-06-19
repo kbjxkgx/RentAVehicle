@@ -41,14 +41,20 @@
                     </div>
                   </div>    
                 <div class="row">
-                  <div>
-                  <button type="button" (click)='ConfirmService()' class="btn btn-warning">Confirm</button>
+                  <div *ngIf="isAdmin">
+                  <button type="button" (click)='ConfirmService()' class="btn btn-info">Confirm</button>
                   </div>
-                  <div>
-                    <button type="button" (click)='AddBranch()' class="btn btn-warning">Add Branch</button>
+                  <div *ngIf="isManager">
+                    <button type="button" (click)='AddBranch()' class="btn btn-info">Add Branch</button>
                   </div>
-                  <div >
-                    <button type="button"  (click)='AddPricelist()' class="btn btn-warning">Add Pricelist</button>
+                  <div *ngIf="isManager">
+                    <button type="button"  (click)='AddPricelist()' class="btn btn-info">Add Pricelist</button>
+                    </div>
+                    <div *ngIf="isManager">
+                        <button type="button" class="btn btn-warning" (click)="Update()">Update</button>
+                    </div>
+                    <div *ngIf="isManager">
+                        <button type="button" class="btn btn-danger" (click)="Delete()">Delete</button>
                     </div>
                 </div>
             </div>

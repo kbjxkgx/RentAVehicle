@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="well">Update Service</h1>
+<div class="col-lg-12 well">
+  <div class="row">
+    <form #f="ngForm" (ngSubmit)="updateService(f.value, f)">
+      <div class="col-sm-12">	
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <label>Name</label>
+            <input type="text" name='Name' [(ngModel)]="service.Name" class="form-control" ngModel>
+          </div>	
+          <div class="col-sm-6 form-group">
+            <label>Email</label>
+            <input type="text" name='Email' [(ngModel)]="service.Email" class="form-control" ngModel>
+          </div>	
+        </div>				 	
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <label>Description</label>
+            <input type="text" name='Description' [(ngModel)]="service.Description" class="form-control" ngModel>
+          </div>
+        </div>				 	
+        
+        <button type="submit" class="btn btn-lg btn-info">Submit</button>					
+      </div>
+    </form> 
+  </div>
+</div>
+</div>

@@ -27,7 +27,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<VehicleImage> GetVehicleImages()
         {
-            return db.VehicleImages.GetAllWithImages();
+            return db.VehicleImages.GetAll();
         }
 
         // GET: api/Services/5

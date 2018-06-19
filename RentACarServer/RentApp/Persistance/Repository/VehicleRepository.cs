@@ -18,11 +18,16 @@ namespace RentApp.Persistance.Repository
             return context.Set<Vehicle>().Include("Images").ToList();
         }
 
+        public IEnumerable<Vehicle> GetAllOfService(int serviceId)
+        {
+            return context.Set<Vehicle>().Include("Images").Where(v => v.VehicleServiceId == serviceId);
+        }
+
         public int Count()
         {
             return context.Set<Vehicle>().Count();
         }
-
+        
         public IEnumerable<Vehicle> GetVehiclePageWithImages(int pageIndex, int pageSize)
         {
             return context.Set<Vehicle>().Include("Images").OrderBy(v => v.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize);

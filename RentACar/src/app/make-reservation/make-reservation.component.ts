@@ -15,7 +15,7 @@ export class MakeReservationComponent implements OnInit {
   vehicle: VehicleModel;
   service: any;
   branches: any;
-  reservations: any;
+  reservations: any[];
   BeginTime: Date;
   EndTime: Date;
   selectedBranchId1 = -1;
@@ -47,7 +47,7 @@ export class MakeReservationComponent implements OnInit {
     this.reservationService.getReservationsOfVehicle(this.vehicle.Id)
       .subscribe(
         data => {
-          this.reservations = data;
+          this.reservations = data as Array<any>;
           console.log('getReservationsOfVehicle succeded...');
         },
         error => {
@@ -68,6 +68,7 @@ export class MakeReservationComponent implements OnInit {
         data => {
           window.alert('Reservation succeded...');
           console.log('makeReservation succeded...');
+          this.reservations.push(reservation);
         },
         error => {
           window.alert(error.error.Message);

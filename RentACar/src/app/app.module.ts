@@ -39,6 +39,7 @@ import { AddBranchComponent } from './add-branch/add-branch.component';
 import { BranchListItemComponent } from './branch-list-item/branch-list-item.component';
 import { AddPricelistComponent } from './add-pricelist/add-pricelist.component';
 import { UpdateuserComponent } from './updateuser/updateuser.component';
+import { UpdateserviceComponent } from './updateservice/updateservice.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
 const Routes = [
@@ -118,6 +119,10 @@ const Routes = [
     component: AddPricelistComponent,
   },
   {
+    path: 'updateService',
+    component: UpdateserviceComponent,
+  },
+  {
     path: 'makereservation',
     component: MakeReservationComponent,
   }
@@ -149,6 +154,7 @@ const Routes = [
     BranchListItemComponent,
     AddPricelistComponent,
     UpdateuserComponent,
+    UpdateserviceComponent,
     MakeReservationComponent
   ],
   imports: [

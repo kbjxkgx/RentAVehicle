@@ -31,14 +31,14 @@ namespace RentApp.Controllers
         // GET: api/AppUsers
         public IEnumerable<AppUser> GetAppUsers()
         {
-            return db.AppUsers.GetAllWithImages();
+            return db.AppUsers.GetAll();
         }
 
         [HttpGet]
         [Route("api/AppUsers/UnconfirmedUsers")]
         public IEnumerable<AppUser> UnconfirmedUsers()
         {
-            return db.AppUsers.GetAllWithImages().Where(user=>user.IsUserConfirmed==false);
+            return db.AppUsers.GetAll().Where(user=>user.IsUserConfirmed==false);
         }
 
         [HttpGet]
@@ -46,7 +46,7 @@ namespace RentApp.Controllers
         public IEnumerable<AppUser> GetManagers()
         {
             List<AppUser> users = new List<AppUser>();
-            foreach (RAIdentityUser user in db.Users.GetAllWithImages())
+            foreach (RAIdentityUser user in db.Users.GetAll())
             {
                 foreach (var userRole in user.Roles)
                 {
@@ -142,6 +142,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {
             if (!ModelState.IsValid)
@@ -154,6 +155,14 @@ namespace RentApp.Controllers
                 return BadRequest();
             }
             db.AppUsers.Update(appUser);
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser AppUser = db.AppUsers.Get(RAUser.AppUserId);
+            if (AppUser.Id != id)
+            {
+                return BadRequest("You are not authorized.");
+            }
 
             try
             {

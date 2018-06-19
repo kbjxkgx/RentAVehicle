@@ -1,0 +1,6 @@
+-Popraviti za raznim mjestima da se ne ispisuje true ili false u naslovima i ostalo
+-Provjeriti da li sam menadzer za odredjene stvari da uradim
+-Kod more info na servisu ne pise cijena
+-Dodavanje tipova	 
+-Komentarisanje nakon rezervacije
+-Put metoda za usera da se zamjeni

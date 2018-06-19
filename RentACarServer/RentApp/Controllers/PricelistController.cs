@@ -23,7 +23,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Pricelist> GetPricelists()
         {
-            return db.Pricelists.GetAllWithImages();
+            return db.Pricelists.GetAll();
         }
 
         // GET: api/Services/5

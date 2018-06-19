@@ -1,7 +1,5 @@
 -Popraviti za raznim mjestima da se ne ispisuje true ili false u naslovima i ostalo
 -Provjeriti da li sam menadzer za odredjene stvari da uradim
 -Kod more info na servisu ne pise cijena
--Ne sacuva mi sliku za servis, odjednom je sam obrise i ne prikazuje vise
--Puca metoda getUserbyUsername
 -Dodavanje tipova	 
 -Komentarisanje nakon rezervacije

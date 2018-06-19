@@ -100,10 +100,6 @@ export class ServicePageComponent implements OnInit {
   }
 
   Delete() {
-
-    this.vehicleService.deleteVehicleWithServiceId(this.service.Id)
-    .subscribe(
-      data=>{
         console.log('Delete vehicles succeded');
         this.servicesService.delete(this.service)
         .subscribe(
@@ -115,12 +111,6 @@ export class ServicePageComponent implements OnInit {
           error => {
             console.log('delete service failed...');
           });
-      },
-      error=>{
-          console.log('Delete vehicles failed');
-      });
-
-   
   }
 
   Update() {

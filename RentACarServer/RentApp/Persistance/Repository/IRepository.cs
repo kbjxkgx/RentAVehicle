@@ -10,7 +10,7 @@ namespace RentApp.Persistance.Repository
     public interface IRepository<TEntity, TPKey> where TEntity : class
     {
         TEntity Get(TPKey id);
-        IEnumerable<TEntity> GetAllWithImages();
+        IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);

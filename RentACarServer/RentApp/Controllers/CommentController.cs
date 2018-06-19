@@ -23,7 +23,7 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Comment> GetComments()
         {
-            return db.Comments.GetAllWithImages();
+            return db.Comments.GetAll();
         }
 
         // GET: api/Services/5

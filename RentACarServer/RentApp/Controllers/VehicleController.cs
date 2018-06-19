@@ -30,7 +30,7 @@ namespace RentApp.Controllers
         {
             string name = User.Identity.Name;
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
-            IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAllWithImages();
+            IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
             foreach (Vehicle vehicle in vehicles)
             {
                 Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
@@ -218,60 +218,68 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Vehicle))]
+        [Authorize(Roles ="Manager")]
         public IHttpActionResult DeleteVehicle(int id)
         {
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
             Vehicle vehicle = db.Vehicles.Get(id);
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            db.Vehicles.Remove(vehicle);
-            foreach (VehicleImage image in vehicle.Images)
+            Service service = db.Services.Get(vehicle.VehicleServiceId);
+            if (service.ServiceManagerId != appUser.Id)
             {
-                string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
-                destinationFilePath += image.ImagePath;
-                if (File.Exists(destinationFilePath))
-                {
-                    File.Delete(destinationFilePath);
-                }
+                return BadRequest("You are not authorized.");
             }
-            
+
+            db.Vehicles.Remove(vehicle);
+
+            List<VehicleImage> images = db.VehicleImages.GetAll().Where(vi => vi.VehicleImageVehicleId == id).ToList();
+
+            DirectoryInfo directory = new DirectoryInfo(HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/") + id);
+            directory.Delete(true);
+            db.Vehicles.Remove(vehicle);
+
             db.Complete();
             
             return Ok(vehicle);
         }
 
         
-        [Route("api/Vehicle/DeleteVehicleWithServiceId")]
-        [HttpDelete]
-        [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult DeleteVehicleWithServiceId(int serviceId)
-        {
-            List<Vehicle> vehicles = db.Vehicles.GetAll().Where(t=>t.VehicleServiceId==serviceId).ToList();
-            if (vehicles == null)
-            {
-                return NotFound();
-            }
+        //[Route("api/Vehicle/DeleteVehicleWithServiceId")]
+        //[HttpDelete]
+        //[ResponseType(typeof(Vehicle))]
+        //public IHttpActionResult DeleteVehicleWithServiceId(int serviceId)
+        //{
+        //    List<Vehicle> vehicles = db.Vehicles.GetAll().Where(t=>t.VehicleServiceId==serviceId).ToList();
+        //    if (vehicles == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            foreach(Vehicle vehicle in vehicles)
-            {
-                db.Vehicles.Remove(vehicle);
-                foreach (VehicleImage image in vehicle.Images)
-                {
-                    string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
-                    destinationFilePath += image.ImagePath;
-                    if (File.Exists(destinationFilePath))
-                    {
-                        File.Delete(destinationFilePath);
-                    }
-                }
-            }
+        //    foreach(Vehicle vehicle in vehicles)
+        //    {
+        //        db.Vehicles.Remove(vehicle);
+        //        foreach (VehicleImage image in vehicle.Images)
+        //        {
+        //            string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
+        //            destinationFilePath += image.ImagePath;
+        //            if (File.Exists(destinationFilePath))
+        //            {
+        //                File.Delete(destinationFilePath);
+        //            }
+        //        }
+        //    }
             
-            db.Complete();
+        //    db.Complete();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
 
         protected override void Dispose(bool disposing)

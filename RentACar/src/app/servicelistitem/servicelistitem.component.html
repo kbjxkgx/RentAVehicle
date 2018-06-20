@@ -10,13 +10,7 @@
                 <div class="col-lg-6">
                     <div class="heading">
                         <h3>{{service.Name}}</h3>
-                        <div class="rating">
-                            <i class="fa fa-star icon"></i>
-                            <i class="fa fa-star icon"></i>
-                            <i class="fa fa-star icon"></i>
-                            <i class="fa fa-star icon"></i>
-                            <i class="fa fa-star-o icon"></i>
-                        </div>
+                        
                     </div>
                     <div class="info">
                         <p><strong>Description: </strong>{{service.Description}}</p>
@@ -27,12 +21,24 @@
                 </div>
             </div>
             <div *ngFor="let comment of service.Comments">
-              <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}}</div>
+              <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}} <br /><strong>Mark: </strong>{{comment.Mark}}</div>
             </div>
               <div class="well">
                 <div class="container" *ngIf="isUser&&isLoggedIn">
                   <strong class="col-lg-2">Add Comment: </strong>
                   <input class="col-lg-4" [(ngModel)]="newCommentContent" placeholder="Enter Comment content Here.." type="text">
+                  <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Mark:</label>
+                        <select [(ngModel)]="mark">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                        </select>
+                    </div>
+                </div>
                   <div class="col-lg-2">
                     <button class="col-lg-2" type="button" (click)="AddComment()" class="btn btn-warning">Add</button>
                   </div>

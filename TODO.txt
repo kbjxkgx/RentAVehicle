@@ -1,4 +1,2 @@
 -Zavrsiti provjeru da li je menadzer allowed kad hoce da doda nesto ili izmjeni - trebalo bi da sam uradio sve ali moze provjera
--Ne radi stranica za menadzere kod admina
 -Kad sam registrovao menadzera sve mu je bilo true, nisam detalno gledao kako, moze biti da nije greska, samo napominjem da pogledam posle
--Izlistati samo dostupne automobile

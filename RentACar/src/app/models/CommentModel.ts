@@ -4,4 +4,5 @@ export class CommentModel {
     Content: string;
     UserId: number;
     CommentedServiceId: number;
+    Mark: number;
 }

@@ -344,6 +344,10 @@
     <Compile Include="Migrations\201806171926133_UpdateTables8.Designer.cs">
       <DependentUpon>201806171926133_UpdateTables8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806201803597_Final.cs" />
+    <Compile Include="Migrations\201806201803597_Final.Designer.cs">
+      <DependentUpon>201806201803597_Final.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -520,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806171926133_UpdateTables8.resx">
       <DependentUpon>201806171926133_UpdateTables8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201803597_Final.resx">
+      <DependentUpon>201806201803597_Final.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

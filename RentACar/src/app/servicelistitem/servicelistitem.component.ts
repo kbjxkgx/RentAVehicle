@@ -23,6 +23,7 @@ export class ServicelistitemComponent implements OnInit {
    public isManager: boolean;
    public notificationExists: boolean;
    public newCommentContent: string;
+   public mark: number;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
     private router: Router, private data: CommunicationService) { }
 
@@ -44,10 +45,12 @@ export class ServicelistitemComponent implements OnInit {
     comment.UserId = this.data.AppUserIdSource.value;
     comment.Content = this.newCommentContent;
     comment.CommentedServiceId = this.service.Id;
+    comment.Mark=this.mark;
     this.commentService.addComment(comment)
         .subscribe(
           data => {
             console.log('addComment succeded...');
+            this.service.Comments.push(comment);
           },
           error => {
             console.log(error);

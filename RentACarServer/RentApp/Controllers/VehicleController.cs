@@ -1,4 +1,6 @@
-﻿using RentApp.Helper;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using RentApp.Helper;
+using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Persistance.Repository;
 using RentApp.Persistance.UnitOfWork;
@@ -66,15 +68,38 @@ namespace RentApp.Controllers
             return vehiclesDTO;
         }
 
-        
+
         [HttpGet]
         [Route("api/Vehicles/GetVehiclesPage/{pageIndex}")]
         [AllowAnonymous]
-        public IEnumerable<VehicleDTO> GetVehiclesPage(int pageIndex)
+        public GetVehiclesPageResult GetVehiclesPage(int pageIndex)
         {
             string name = User.Identity.Name;
+            RAIdentityUser user = db.Users.Get(name);
+            IdentityRole managerRole = db.Roles.GetAll().FirstOrDefault(role => role.Name == "Manager");
+            bool isManager = false;
+            if (user != null)
+            {
+                foreach (IdentityUserRole userRole in user.Roles)
+                {
+                    if (userRole.RoleId == managerRole.Id)
+                    {
+                        isManager = true;
+                        break;
+                    }
+                }
+            }
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
-            IEnumerable<Vehicle> vehicles = db.Vehicles.GetVehiclePageWithImages(pageIndex, 4);
+            IEnumerable<Vehicle> vehicles;
+            if (isManager)
+            {
+                vehicles = db.Vehicles.GetVehiclePageWithImages(pageIndex, 4);
+            }
+            else
+            {
+                vehicles = db.Vehicles.GetAvailableVehiclePageWithImages(pageIndex, 4);
+            }
+
             foreach (Vehicle vehicle in vehicles)
             {
                 Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
@@ -105,8 +130,84 @@ namespace RentApp.Controllers
                 }
                 vehiclesDTO.Add(vehicleDTO);
             }
+            GetVehiclesPageResult result = new GetVehiclesPageResult();
+            result.Vehicles = vehiclesDTO;
+            result.Count = db.Vehicles.Count();
+            return result;
+        }
 
-            return vehiclesDTO;
+        [HttpPost]
+        [Route("api/Vehicles/GetVehiclesPageFiltered/{pageIndex}")]
+        [AllowAnonymous]
+        public GetVehiclesPageResult GetVehiclesPageFiltered(int pageIndex, VehicleFilterModel vehicleFilter)
+        {
+            string name = User.Identity.Name;
+            RAIdentityUser user = db.Users.Get(name);
+            IdentityRole managerRole = db.Roles.GetAll().FirstOrDefault(role => role.Name == "Manager");
+            bool isManager = false;
+            foreach (IdentityUserRole userRole in user.Roles)
+            {
+                if (userRole.RoleId == managerRole.Id)
+                {
+                    isManager = true;
+                    break;
+                }
+            }
+            List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
+            SearchFilter searchFilter = new SearchFilter(vehicleFilter);
+            IEnumerable<Vehicle> vehicles;
+            if (isManager)
+            {
+                vehicles = db.Vehicles.GetAllWithImages();
+            }
+            else
+            {
+                vehicles = db.Vehicles.GetAllAvailableWithImages();
+            }
+
+            foreach (Vehicle vehicle in vehicles)
+            {
+                if (!searchFilter.CheckVehicle(vehicle))
+                {
+                    continue;
+                }
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+                Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
+                if (service.Pricelists.Count > 0)
+                {
+                    Pricelist actualPriceList = service.Pricelists[0];
+                    foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+                    {
+                        if (pricelist.EndTime > actualPriceList.EndTime)
+                        {
+                            actualPriceList = pricelist;
+                        }
+                    }
+                    try
+                    {
+                        Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                        vehicleDTO.PricePerHour = item.Price;
+                    }
+                    catch (Exception e)
+                    {
+                        vehicleDTO.PricePerHour = 0;
+                    }
+                }
+                else
+                {
+                    vehicleDTO.PricePerHour = 0;
+                }
+
+                if (searchFilter.CheckVehiclePrice(vehicleDTO))
+                {
+                    vehiclesDTO.Add(vehicleDTO);
+                }
+            }
+
+            GetVehiclesPageResult result = new GetVehiclesPageResult();
+            result.Count = vehiclesDTO.Count();
+            result.Vehicles = vehiclesDTO.OrderBy(v => v.Id).Skip((pageIndex - 1) * 4).Take(4);
+            return result;
         }
 
         [HttpGet]

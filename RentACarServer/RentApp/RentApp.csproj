@@ -362,6 +362,9 @@
     <Compile Include="Models\Entities\VehicleImage.cs" />
     <Compile Include="Models\DTO\VehicleDTO.cs" />
     <Compile Include="Models\Entities\VehicleType.cs" />
+    <Compile Include="Models\GetVehiclesPageResult.cs" />
+    <Compile Include="Models\SearchFilter.cs" />
+    <Compile Include="Models\VehicleFilterModel.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\BranchRepository.cs" />
@@ -373,6 +376,7 @@
     <Compile Include="Persistance\Repository\INotificationTypeRepository.cs" />
     <Compile Include="Persistance\Repository\IPricelistRepository.cs" />
     <Compile Include="Persistance\Repository\IReservationRepository.cs" />
+    <Compile Include="Persistance\Repository\IRolesRepository.cs" />
     <Compile Include="Persistance\Repository\ItemRepository.cs" />
     <Compile Include="Persistance\Repository\INotificationRepository.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
@@ -387,6 +391,7 @@
     <Compile Include="Persistance\Repository\RAIdentityUserRepository.cs" />
     <Compile Include="Persistance\Repository\Repository.cs" />
     <Compile Include="Persistance\Repository\ReservationRepository.cs" />
+    <Compile Include="Persistance\Repository\RolesRepository.cs" />
     <Compile Include="Persistance\Repository\ServiceRepository.cs" />
     <Compile Include="Persistance\Repository\VehicleImageRepository.cs" />
     <Compile Include="Persistance\Repository\VehicleRepository.cs" />

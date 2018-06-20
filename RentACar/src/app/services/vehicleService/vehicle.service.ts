@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { VehicleModel } from '../../models/vehicleModel';
 import { Observable } from 'rxjs/Observable';
-  import { Configuration } from '../../Constants/constants';
-
+import { Configuration } from '../../Constants/constants';
+import { VehicleFilterModel } from '../../models/vehicleFilterModel';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -21,6 +21,10 @@ export class VehicleService {
 
   getVehiclesPage(pageIndex: number): Observable<any> {
     return this.httpClient.get(Configuration.path + 'api/Vehicles/GetVehiclesPage/' + pageIndex);
+  }
+
+  getVehiclesPageFiltered(pageIndex: number, vehicleFilter: VehicleFilterModel): Observable<any> {
+    return this.httpClient.post(Configuration.path + 'api/Vehicles/GetVehiclesPageFiltered/' + pageIndex, vehicleFilter);
   }
 
   getVehiclesCount(): Observable<any> {
@@ -48,9 +52,9 @@ export class VehicleService {
     return this.httpClient.delete(Configuration.path + 'api/Vehicle/' + vehicle.Id);
   }
 
-  deleteVehicleWithServiceId(serviceId: number) {
-    let params = new HttpParams().set('serviceId', serviceId.toString());
-    return this.httpClient.delete(Configuration.path + 'api/Vehicle/DeleteVehicleWithServiceId', { params: params }) as Observable<any>;
-  }
+  // deleteVehicleWithServiceId(serviceId: number) {
+  //   let params = new HttpParams().set('serviceId', serviceId.toString());
+  //   return this.httpClient.delete(Configuration.path + 'api/Vehicle/DeleteVehicleWithServiceId', { params: params }) as Observable<any>;
+  // }
 
 }

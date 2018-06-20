@@ -49,11 +49,12 @@ namespace RentApp.Controllers
         public IEnumerable<AppUser> GetManagers()
         {
             List<AppUser> users = new List<AppUser>();
+            IdentityRole managerRole = db.Roles.GetAll().FirstOrDefault( role => role.Name == "Manager");
             foreach (RAIdentityUser user in db.Users.GetAll())
             {
                 foreach (var userRole in user.Roles)
                 {
-                    if (userRole.RoleId == "a3807ce4-b4b3-4475-a951-9038944daab6")
+                    if (userRole.RoleId == managerRole.Id)
                     {
                         users.Add(db.AppUsers.Get(user.AppUserId));
                     }

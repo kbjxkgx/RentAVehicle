@@ -57,6 +57,7 @@ namespace RentApp
             container.RegisterType<ApplicationUserManager>();
             container.RegisterType<IAppUserRepository, AppUserRepository>();
             container.RegisterType<IRAIdentityUserRepository, RAIdentityUserRepository>();
+            container.RegisterType<IRolesRepository, RolesRepository>();
             container.RegisterType<IBranchRepository, BranchRepository>();
             container.RegisterType<ICommentRepository, CommentRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();

@@ -15,6 +15,7 @@ namespace RentApp.Persistance.UnitOfWork
         ICommentRepository Comments { get; set; }
         IAppUserRepository AppUsers { get; set; }
         IRAIdentityUserRepository Users { get; set; }
+        IRolesRepository Roles { get; set; }
         INotificationRepository Notifications { get; set; }
         IItemRepository Items { get; set; }
         INotificationTypeRepository NotificationTypes { get; set; }

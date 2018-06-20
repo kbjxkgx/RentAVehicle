@@ -41,6 +41,7 @@ import { AddPricelistComponent } from './add-pricelist/add-pricelist.component';
 import { UpdateuserComponent } from './updateuser/updateuser.component';
 import { UpdateserviceComponent } from './updateservice/updateservice.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+import { VehicleTypesComponent } from './vehicle-types/vehicle-types.component';
 
 const Routes = [
   {
@@ -125,6 +126,10 @@ const Routes = [
   {
     path: 'makereservation',
     component: MakeReservationComponent,
+  },
+  {
+    path: 'vehicletypes',
+    component: VehicleTypesComponent,
   }
 ];
 
@@ -155,7 +160,8 @@ const Routes = [
     AddPricelistComponent,
     UpdateuserComponent,
     UpdateserviceComponent,
-    MakeReservationComponent
+    MakeReservationComponent,
+    VehicleTypesComponent
   ],
   imports: [
     BrowserModule,

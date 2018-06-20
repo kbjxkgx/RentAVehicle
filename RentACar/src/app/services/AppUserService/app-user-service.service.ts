@@ -51,10 +51,9 @@ export class AppUserService {
 
   ConfirmManager(user: AppUserModel): any {
     let url = '';
-    url = url.concat(Configuration.path + 'api/AppUser/');
+    url = url.concat(Configuration.path + 'api/AppUser/ConfirmToggleManager/');
     url = url.concat(user.Id.toString());
     const x = this.httpClient.put(url, user) as Observable<any>;
-
     x.subscribe(
       res => {
         console.log('getManagers succeded');
@@ -74,18 +73,18 @@ export class AppUserService {
 
   ConfirmUser(user: AppUserModel) {
     let url = '';
-    url = url.concat(Configuration.path + 'api/AppUser/');
+    url = url.concat(Configuration.path + 'api/AppUser/ConfirmUser/');
     url = url.concat(user.Id.toString());
     user.IsUserConfirmed = true;
     const x = this.httpClient.put(url, user) as Observable<any>;
 
     x.subscribe(
       res => {
-        console.log('getManagers succeded');
+        console.log('ConfirmUser succeded');
         return res;
       },
       err => {
-        console.log('Error occured');
+        console.log('ConfirmUser failed');
         user.IsUserConfirmed = false;
         return;
       }
@@ -93,7 +92,7 @@ export class AppUserService {
   }
 
   Delete(user: AppUserModel) {
-    return this.httpClient.delete(Configuration.path + 'api/AppUser/'+user.Id) as Observable<any>;
+    return this.httpClient.delete(Configuration.path + 'api/AppUser/' + user.Id) as Observable<any>;
   }
 
 }

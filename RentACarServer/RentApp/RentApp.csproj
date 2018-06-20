@@ -361,7 +361,7 @@
     <Compile Include="Models\Entities\Vehicle.cs" />
     <Compile Include="Models\Entities\VehicleImage.cs" />
     <Compile Include="Models\DTO\VehicleDTO.cs" />
-    <Compile Include="Models\VehicleType.cs" />
+    <Compile Include="Models\Entities\VehicleType.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\BranchRepository.cs" />
@@ -398,6 +398,8 @@
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\ISmtpService.cs" />
+    <Compile Include="Services\SmtpService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

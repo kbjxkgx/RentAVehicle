@@ -56,15 +56,15 @@ export class ServicesService {
 
   ConfirmService(service: ServiceModel) {
     let url = '';
-    url = url.concat(Configuration.path + 'api/Services/');
-    url = url.concat(service.Id.toString());
-    const x = this.httpClient.put(url, service) as Observable<any>;
+    url = url.concat(Configuration.path + 'api/Services/ConfirmService/' + service.Id);
+    const x = this.httpClient.put(url, service.Id) as Observable<any>;
     x.subscribe(
       res => {
           console.log('Confirm service succeded');
       },
       error => {
         console.log('Confirm service failed');
+        service.IsConfirmed = false;
       });
   }
 

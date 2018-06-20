@@ -28,6 +28,7 @@ export class ServicePageComponent implements OnInit {
    public isManager: boolean;
    public notificationExists: boolean;
    public newCommentContent: string;
+   public editCommentContent: string;
    private sub: any;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
     private router: Router, private data: CommunicationService, private route: ActivatedRoute, private branchService: BranchService,
@@ -85,6 +86,33 @@ export class ServicePageComponent implements OnInit {
           });
   }
 
+  EditComment() {
+    for (let comment of this.service.Comments) {
+      if(comment.UserId == this.data.AppUserIdSource.value)
+      {
+        let comm = new CommentModel();
+        comm.UserId = this.data.AppUserIdSource.value;
+        comm.Content = this.editCommentContent;
+        comm.CommentedServiceId = this.service.Id;
+        comm.Id = comment.Id;
+        this.commentService.editComment(comm)
+          .subscribe(
+            data => {
+              console.log('editComment succeded...');
+              comment.Content = comm.Content;
+              return;
+            },
+            error => {
+              console.log(error);
+              return;
+            });
+        return;
+      }
+    }
+
+    window.alert('You dont have a comment');
+  }
+
   AddBranch() {
     this.data.service = this.service;
     this.router.navigate(['/addbranch']);
@@ -105,7 +133,6 @@ export class ServicePageComponent implements OnInit {
         .subscribe(
           data => {
             console.log('delete service succeded...');
-            
             this.router.navigate(['/servicelist']);
           },
           error => {
@@ -114,7 +141,7 @@ export class ServicePageComponent implements OnInit {
   }
 
   Update() {
-    this.data.serviceForUpdate=this.service;
+    this.data.serviceForUpdate = this.service;
     this.router.navigate(['/updateService']);
   }
 

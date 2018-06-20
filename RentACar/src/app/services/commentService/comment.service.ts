@@ -13,7 +13,9 @@ export class CommentService {
 
   addComment(comment: any): Observable<any> {
     return this.httpClient.post(Configuration.path + 'api/Comment', comment);
-      // .map(this.parseData)
-      // .catch(this.handleError);
+  }
+
+  editComment(comment: any): Observable<any> {
+    return this.httpClient.put(Configuration.path + 'api/Comment/' + comment.Id, comment);
   }
 }

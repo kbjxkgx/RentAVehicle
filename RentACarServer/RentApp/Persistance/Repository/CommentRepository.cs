@@ -13,6 +13,11 @@ namespace RentApp.Persistance.Repository
         {
         }
 
+        public Comment GetCommentOfUser(int userId)
+        {
+            return context.Set<Comment>().FirstOrDefault(u => u.Id == userId);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
 
         

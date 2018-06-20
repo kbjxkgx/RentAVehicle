@@ -239,7 +239,7 @@ namespace RentApp.Controllers
         public IHttpActionResult DeleteVehicle(int id)
         {
             string username = User.Identity.Name;
-            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            RAIdentityUser RAUser = db.Users.Get(username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
 
             Vehicle vehicle = db.Vehicles.Get(id);

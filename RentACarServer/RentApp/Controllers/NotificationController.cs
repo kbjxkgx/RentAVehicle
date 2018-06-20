@@ -23,12 +23,14 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Notification> GetNotifications()
         {
             return db.Notifications.GetAll();
         }
 
         [Route("api/Notification/UnseenNotifications")]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Notification> GetUnseenNotifications()
         {
             return db.Notifications.GetAll().Where(t => t.Seen == false);
@@ -83,6 +85,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Notification))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostNotification(Notification notification)
         {
             if (!ModelState.IsValid)

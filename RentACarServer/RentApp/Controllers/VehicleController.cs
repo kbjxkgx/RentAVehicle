@@ -26,9 +26,10 @@ namespace RentApp.Controllers
         }
         
         // GET: api/Services
+        [AllowAnonymous]
         public IEnumerable<VehicleDTO> GetVehicles()
         {
-            string name = User.Identity.Name;
+            
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
             IEnumerable<Vehicle> vehicles  = db.Vehicles.GetAll();
             foreach (Vehicle vehicle in vehicles)
@@ -68,6 +69,7 @@ namespace RentApp.Controllers
         
         [HttpGet]
         [Route("api/Vehicles/GetVehiclesPage/{pageIndex}")]
+        [AllowAnonymous]
         public IEnumerable<VehicleDTO> GetVehiclesPage(int pageIndex)
         {
             string name = User.Identity.Name;
@@ -109,6 +111,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Vehicles/GetVehiclesCount")]
+        [AllowAnonymous]
         public int GetVehiclesCount()
         {
             return db.Vehicles.Count();
@@ -129,6 +132,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(int))]
+        [AllowAnonymous]
         public IHttpActionResult GetVehiclePrice(int id)
         {
             Vehicle vehicle = db.Vehicles.Get(id);
@@ -142,6 +146,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
         {
             if (!ModelState.IsValid)
@@ -153,6 +158,17 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+                        
+            Service service = db.Services.Get(vehicle.VehicleServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
             db.Vehicles.Update(vehicle);
 
             try
@@ -176,6 +192,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Vehicle))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PostVehicle(VehicleDTO vehicleDTO)
         {
             if (!ModelState.IsValid)

@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="heading">
-                        <h3>{{service.Name}} {{service.IsConfirmed}}</h3>
+                        <h3>{{service.Name}}</h3>
                         <div class="rating">
                             <i class="fa fa-star icon"></i>
                             <i class="fa fa-star icon"></i>
@@ -30,7 +30,7 @@
               <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}}</div>
             </div>
               <div class="well">
-                <div class="container">
+                <div class="container" *ngIf="isUser&&isLoggedIn">
                   <strong class="col-lg-2">Add Comment: </strong>
                   <input class="col-lg-4" [(ngModel)]="newCommentContent" placeholder="Enter Comment content Here.." type="text">
                   <div class="col-lg-2">

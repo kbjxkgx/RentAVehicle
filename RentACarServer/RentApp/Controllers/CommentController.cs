@@ -21,6 +21,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
+        [AllowAnonymous]
         public IEnumerable<Comment> GetComments()
         {
             return db.Comments.GetAll();
@@ -28,6 +29,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(Comment))]
+        [AllowAnonymous]
         public IHttpActionResult GetComment(int id)
         {
             Comment item = db.Comments.Get(id);
@@ -41,6 +43,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult PutComment(int id, Comment item)
         {
             if (!ModelState.IsValid)
@@ -55,6 +58,7 @@ namespace RentApp.Controllers
 
             string username = User.Identity.Name;
             RAIdentityUser RAUser = db.Users.Get(username);
+
             if (RAUser == null)
             {
                 return BadRequest();
@@ -90,7 +94,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Comment))]
-        [Authorize]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult PostComment(Comment item)
         {
 
@@ -139,12 +143,22 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Comment))]
+        [Authorize(Roles ="AppUser")]
         public IHttpActionResult DeleteComment(int id)
         {
             Comment item = db.Comments.Get(id);
             if (item == null)
             {
                 return NotFound();
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+            
+            if (item.UserId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
             }
 
             db.Comments.Remove(item);

@@ -1,6 +1,8 @@
--Popraviti za raznim mjestima da se ne ispisuje true ili false u naslovima i ostalo
 -Provjeriti da li sam menadzer za odredjene stvari da uradim
--Kod more info na servisu ne pise cijena
--Dodavanje tipova	 
--Komentarisanje nakon rezervacije
 -Put metoda za usera da se zamjeni
+-Ocjena da se napravi
+-Autorizacija na vehicletype kad se odradi dodavanje od strane admina
+-Gardovi da se dorade
+-Ne mozes napraviti rezervaciju dok se ne ulogujes
+-Zasto u service kontroleru ima verify app user
+-Auto moze biti nedostupno

@@ -24,6 +24,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
+        [AllowAnonymous]
         public IEnumerable<Branch> GetBranches()
         {
             return db.Branches.GetAll();
@@ -31,6 +32,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(Branch))]
+        [AllowAnonymous]
         public IHttpActionResult GetBranch(int id)
         {
             Branch branch = db.Branches.Get(id);
@@ -45,12 +47,14 @@ namespace RentApp.Controllers
         
         [Route("api/Branches/BranchesOfService/{serviceId}")]
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<Branch> GetBranchesOfService(int serviceId)
         {
             return db.Branches.GetAll().Where(b => b.BranchServiceId == serviceId);
         }
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutBranch(int id, Branch branch)
         {
             if (!ModelState.IsValid)
@@ -62,6 +66,18 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
+
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            Service service = db.Services.Get(branch.BranchServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
             db.Branches.Update(branch);
 
             try
@@ -85,6 +101,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Branch))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PostBranch(Branch branch)
         {
             if (!ModelState.IsValid)
@@ -138,6 +155,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Branch))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult DeleteBranch(int id)
         {
             Branch branch = db.Branches.Get(id);
@@ -145,6 +163,18 @@ namespace RentApp.Controllers
             {
                 return NotFound();
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            Service service = db.Services.Get(branch.BranchServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
+
 
             db.Branches.Remove(branch);
             db.Complete();

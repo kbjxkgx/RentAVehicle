@@ -21,6 +21,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
+        [Authorize(Roles ="Manager")]
         public IEnumerable<Pricelist> GetPricelists()
         {
             return db.Pricelists.GetAll();
@@ -28,6 +29,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult GetPricelist(int id)
         {
             Pricelist item = db.Pricelists.Get(id);
@@ -41,6 +43,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutPricelist(int id, Pricelist item)
         {
             if (!ModelState.IsValid)
@@ -75,6 +78,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PostPricelist(Pricelist pricelist)
         {
             if (!ModelState.IsValid)
@@ -97,6 +101,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult DeletePricelist(int id)
         {
             Pricelist item = db.Pricelists.Get(id);

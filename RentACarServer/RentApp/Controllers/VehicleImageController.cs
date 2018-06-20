@@ -45,6 +45,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutVehicleImage(int id, VehicleImage item)
         {
             if (!ModelState.IsValid)
@@ -80,6 +81,7 @@ namespace RentApp.Controllers
         [Route("api/VehicleImage/AddVehicleImages")]
         [HttpPost]
         [ResponseType(typeof(AppUser))]
+        [Authorize(Roles = "Manager")]
         public async Task<HttpResponseMessage> AddVehicleImages()
         {
             if (!Request.Content.IsMimeMultipartContent())
@@ -150,6 +152,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(VehicleImage))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PostVehicleImage(VehicleImage item)
         {
             if (!ModelState.IsValid)
@@ -165,6 +168,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(VehicleImage))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult DeleteVehicleImage(int id)
         {
             VehicleImage item = db.VehicleImages.Get(id);

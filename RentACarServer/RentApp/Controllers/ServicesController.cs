@@ -29,6 +29,8 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
+        
+        [AllowAnonymous]
         public IEnumerable<Service> GetServices()
         {
             List<Service> services = db.Services.GetAll().ToList();
@@ -39,6 +41,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Services/UnconfirmedServices")]
+        [Authorize(Roles ="Admin")]
         public IEnumerable<Service> GetUnconfirmedServices()
         {
             return db.Services.GetAll().Where(service => service.IsConfirmed == false);
@@ -46,6 +49,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Services/ConfirmedServices")]
+        [AllowAnonymous]
         public IEnumerable<Service> GetConfirmedServices()
         {
             return db.Services.GetAll().Where(service => service.IsConfirmed == true);
@@ -53,6 +57,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(Service))]
+        [AllowAnonymous]
         public IHttpActionResult GetService(int id)
         {
             Service service = db.Services.Get(id);
@@ -66,6 +71,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles ="Manager")]
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -77,6 +83,18 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
+
             db.Services.Update(service);
 
             try
@@ -100,6 +118,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Service))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PostService(Service service)
         {
             if (!ModelState.IsValid)
@@ -132,6 +151,7 @@ namespace RentApp.Controllers
         [HttpGet]
         [Route("api/Services/getVehicles")]
         [ResponseType(typeof(List<Vehicle>))]
+        [AllowAnonymous]
         public HttpResponseMessage getServiceVehicles(string Id)
         {
 
@@ -190,12 +210,23 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Service))]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult DeleteService(int id)
         {
             Service service = db.Services.Get(id);
             if (service == null)
             {
                 return NotFound();
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
             }
 
             List<Vehicle> vehicles = db.Vehicles.GetAllOfService(id).ToList();

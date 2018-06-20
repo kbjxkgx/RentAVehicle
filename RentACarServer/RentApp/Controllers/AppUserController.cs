@@ -28,6 +28,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/AppUsers
+        [Authorize(Roles ="Admin")]
         public IEnumerable<AppUser> GetAppUsers()
         {
             return db.AppUsers.GetAll();
@@ -35,6 +36,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/AppUsers/UnconfirmedUsers")]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<AppUser> UnconfirmedUsers()
         {
             return db.AppUsers.GetAll().Where(user=>user.IsUserConfirmed==false);
@@ -42,6 +44,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/AppUsers/getManagers")]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<AppUser> GetManagers()
         {
             List<AppUser> users = new List<AppUser>();
@@ -61,6 +64,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(AppUser))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult GetAppUser(int id)
         {
             AppUser appUser = db.AppUsers.Get(id);
@@ -76,6 +80,7 @@ namespace RentApp.Controllers
         [HttpGet]
         [Route("api/AppUser/GetAppUserByUsername")]
         [ResponseType(typeof(AppUser))]
+        [Authorize(Roles ="Admin,Manager,AppUser")]
         public HttpResponseMessage GetAppUserByUsername(string Username)
         {
             try
@@ -153,16 +158,18 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
-            db.AppUsers.Update(appUser);
 
             string username = User.Identity.Name;
             RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
-            AppUser AppUser = db.AppUsers.Get(RAUser.AppUserId);
-            if (AppUser.Id != id)
+            AppUser apUser = db.AppUsers.Get(RAUser.AppUserId);
+                        
+            if (appUser.Id!= apUser.Id)
             {
                 return BadRequest("You are not authorized.");
             }
 
+            db.AppUsers.Update(appUser);
+           
             try
             {
                 db.Complete();
@@ -184,6 +191,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(AppUser))]
+        [Authorize(Roles = "Admin,Manager,AppUser")]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
             
@@ -199,12 +207,22 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(AppUser))]
+        [Authorize(Roles = "Admin,Manager,AppUser")]
         public IHttpActionResult DeleteAppUser(int id)
         {
             AppUser appUser = db.AppUsers.Get(id);
             if (appUser == null)
             {
                 return NotFound();
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser apUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            if (appUser.Id != apUser.Id)
+            {
+                return BadRequest("You are not authorized.");
             }
 
             db.AppUsers.Remove(appUser);

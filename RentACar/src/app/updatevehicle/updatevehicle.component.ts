@@ -14,14 +14,14 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./updatevehicle.component.css']
 })
 export class UpdatevehicleComponent implements OnInit {
-
+  myFiles: File[];
   services: ServiceModel[];
   vehicleTypes: any[];
   selectedService: ServiceModel;
   public vehicle: VehicleModel;
 
-  constructor(private data: CommunicationService,private vehicleService: VehicleService, private servicesService: ServicesService,
-    private vehicleTypesService: VehicleTypesService) { 
+  constructor(private data: CommunicationService, private vehicleService: VehicleService, private servicesService: ServicesService,
+    private vehicleTypesService: VehicleTypesService) {
       this.servicesService.getConfirmedServices()
       .subscribe(
         data => {
@@ -45,36 +45,36 @@ export class UpdatevehicleComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.vehicle=this.data.VehicleForUpdate.value;
-    //this.data.VehicleForUpdateMessage.subscribe(message => this.vehicle = message);
+    this.vehicle = this.data.VehicleForUpdate.value;
   }
 
   updateVehicle(vehicleM: VehicleModel, form: NgForm) {
-    
-      vehicleM.Id=this.vehicle.Id;
+      vehicleM.Id = this.vehicle.Id;
 
       this.vehicleService.updateVehicle(vehicleM)
         .subscribe(
           data => {
-            // vehicle.Id = data.Id;
              console.log('updateVehicle succeded');
-            // this.vehicleService.addVehicleImages(this.myFiles, vehicle)
-            // .subscribe(
-            //   data2 => {
-            //     console.log('addVehicleImages succeded');
-            //     form.reset();
-            //   },
-            //   error => {
-            //     console.log('addVehicleImages failed');
-            //     console.log(error);
-            //   });
-            alert("Done!");
+             this.vehicleService.addVehicleImages(this.myFiles, vehicleM)
+                .subscribe(
+                  data2 => {
+                    console.log('addVehicleImages succeded');
+                    window.alert('vehicle added');
+                    form.reset();
+                  },
+                  error => {
+                    console.log('addVehicleImages failed');
+                    console.log(error);
+                  });
           },
           error => {
             console.log('updateVehicle failed');
             console.log(error);
           });
-    
   }
-  
+
+  fileChange(event) {
+    this.myFiles = <File[]>event.target.files;
+      }
+
 }

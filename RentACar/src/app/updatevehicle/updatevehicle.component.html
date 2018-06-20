@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="well">Update Vehicle</h1>
+  <h1 class="well">Update Vehicle Id: {{vehicle.Id}}</h1>
 <div class="col-lg-12 well">
   <div class="row">
     <form #f="ngForm" (ngSubmit)="updateVehicle(f.value, f)">
@@ -43,7 +43,13 @@
                   </option>
                 </select>
             </div>
-          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form-group">
+              <label for="image1">Vehicle Images</label>
+              <input name="image1" type="file" (change)='fileChange($event)' accept="image/*" multiple />
+            </div>
+        </div>
         <button type="submit" class="btn btn-lg btn-info">Submit</button>					
       </div>
     </form> 

@@ -13,6 +13,11 @@ namespace RentApp.Persistance.Repository
         {
         }
 
+        public IEnumerable<Branch>  GetAllOfService(int serviceId)
+        {
+            return context.Set<Branch>().Where(b => b.BranchServiceId == serviceId);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
                
     }

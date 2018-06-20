@@ -56,6 +56,7 @@ export class AddvehicleComponent implements OnInit {
             .subscribe(
               data2 => {
                 console.log('addVehicleImages succeded');
+                window.alert('vehicle added');
                 form.reset();
               },
               error => {

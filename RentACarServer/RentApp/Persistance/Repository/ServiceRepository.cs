@@ -20,19 +20,25 @@ namespace RentApp.Persistance.Repository
             return RADBContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
-        public Service GetWithItemsAndPricelists(int id)
+        public Service GetWithItemsAndPricelists(int serviceId)
         {
-            return context.Set<Service>().Include("Pricelists.Items").First(s => s.Id == id);
+            return context.Set<Service>().Include("Pricelists.Items").First(s => s.Id == serviceId);
         }
 
-        public Service GetWithPricelists(int id)
+
+        public Service GetWithPricelists(int serviceId)
         {
-            return context.Set<Service>().Include("Pricelists").First(s => s.Id == id);
+            return context.Set<Service>().Include("Pricelists").First(s => s.Id == serviceId);
         }
 
-        public Service GetServiceWithVehicles(int id)
+        public Service GetServiceWithVehicles(int serviceId)
         {
-            return context.Set<Service>().Include("Vehicles.Images").First(s => s.Id == id);
+            return context.Set<Service>().Include("Vehicles.Images").First(s => s.Id == serviceId);
+        }
+
+        public Service GetServiceWithVehiclesAndPricelists(int serviceId)
+        {
+            return context.Set<Service>().Include("Vehicles.Images").Include("Pricelists.Items").First(s => s.Id == serviceId);
         }
     }
 }

@@ -99,13 +99,34 @@ namespace RentApp.Controllers
                 //MultipartFileData file = provider.FileData[0];
                 int i = 0;
                 string destinationFolderPath = HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/" + vehicleId);
-                if (!Directory.Exists(destinationFolderPath))
+                if (Directory.Exists(destinationFolderPath))
                 {
-                    Directory.CreateDirectory(destinationFolderPath);
+                    System.IO.DirectoryInfo di = new DirectoryInfo(destinationFolderPath);
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
                 }
+                Directory.CreateDirectory(destinationFolderPath);
+
+                List<VehicleImage> images = db.VehicleImages.GetAllOfVehicle(vehicleId).ToList();
+                foreach(VehicleImage image in images)
+                {
+                    db.VehicleImages.Remove(image);
+                }
+
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    string destinationFilePath = destinationFolderPath+ "/"+ i + ".jpg";
+                    
+                    string fileName = file.Headers.ContentDisposition.FileName;
+                    string[] parts = fileName.Split('.');
+                    if (!parts[1].Contains("jpg"))
+                    {
+                        File.Delete(file.LocalFileName);
+                        continue;
+                    }
+                    string destinationFilePath = destinationFolderPath+ @"\"+ i + ".jpg";
                     if (File.Exists(destinationFilePath))
                     {
                         File.Delete(destinationFilePath);
@@ -124,29 +145,6 @@ namespace RentApp.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
-
-            //try
-            //{
-            //    await Request.Content.ReadAsMultipartAsync(provider);
-            //    string userId = provider.FormData.GetValues("Id")[0];
-            //    MultipartFileData file = provider.FileData[0];
-            //    string destinationFilePath = HttpContext.Current.Server.MapPath("~/Content/Images/UserIdPhotos/");
-            //    destinationFilePath += user.Id + ".jpg";
-            //    if (File.Exists(destinationFilePath))
-            //    {
-            //        File.Delete(destinationFilePath);
-            //    }
-            //    File.Copy(file.LocalFileName, destinationFilePath);
-            //    File.Delete(file.LocalFileName);
-            //    user.PicturePath = @"http://localhost:51680/Content/Images/UserIdPhotos/" + user.Id + ".jpg";
-            //    db.AppUsers.Update(user);
-            //    db.Complete();
-            //    return Request.CreateResponse(HttpStatusCode.OK);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-            //}
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 

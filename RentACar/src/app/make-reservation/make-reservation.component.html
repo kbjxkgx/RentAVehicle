@@ -7,9 +7,9 @@
 					<div class="col-sm-12">	
 						<div class="form-group row">
               <div class="row container">
-                <div class="col-sm-6">
+                <div *ngIf="branches" class="col-sm-6">
                   <!-- Kreiramo mapu -->
-                  <agm-map *ngIf="branches" [latitude]="branches[0].Latitude" [longitude]="branches[0].Longitude" [zoom]="14">
+                  <agm-map [latitude]="branches[0].Latitude" [longitude]="branches[0].Longitude" [zoom]="14">
                     
                     <div *ngFor="let branch of branches">
                       <agm-marker [latitude]="branch.Latitude" [longitude]="branch.Longitude" (markerClick)="changeSelectedBranch1(branch.Id)" [title]="branch.Id.toString()"
@@ -35,9 +35,9 @@
               </div>
             </div>
             <div class="row container">
-                <div class="col-sm-6">
+                <div *ngIf="branches" class="col-sm-6">
                   <!-- Kreiramo mapu -->
-                  <agm-map *ngIf="branches" [latitude]="branches[0].Latitude" [longitude]="branches[0].Longitude" [zoom]="14">
+                  <agm-map  [latitude]="branches[0].Latitude" [longitude]="branches[0].Longitude" [zoom]="14">
                     
                     <div *ngFor="let branch of branches">
                     <agm-marker [latitude]="branch.Latitude" [longitude]="branch.Longitude" (markerClick)="changeSelectedBranch2(branch.Id)" [title]="branch.Id.toString()"

@@ -1,3 +1,15 @@
+<div class="well">
+        <div class="container">
+            <strong class="col-lg-2">Search: </strong>
+            <input class="col-lg-4" [(ngModel)]="editCommentContent" placeholder="Enter Model Here.." type="text">
+            <input class="col-lg-4" [(ngModel)]="editCommentContent" placeholder="Enter Manufacturer Here.." type="text">
+            <input class="col-lg-4" [(ngModel)]="editCommentContent" placeholder="Enter Year Of Production Here.." type="text">
+            <input class="col-lg-4" [(ngModel)]="editCommentContent" placeholder="Enter Comment content Here.." type="text">
+            <div class="col-lg-2">
+                <button class="col-lg-2" type="button" (click)="Search()" class="btn btn-warning">Search</button>
+            </div>
+        </div>
+    </div> 
 <app-carlist [vehicles]="vehicles"></app-carlist>
 
 <div>

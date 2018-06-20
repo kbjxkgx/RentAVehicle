@@ -17,9 +17,6 @@ namespace RentApp.Hubs
     public class NotificationHub : Hub
     {
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-        private static Timer t = new Timer();
-
-        
 
         public NotificationHub()
         {

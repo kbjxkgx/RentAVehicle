@@ -9,6 +9,7 @@ namespace RentApp.Persistance.Repository
 {
     public interface IBranchRepository:IRepository<Branch, int>
     {
+        IEnumerable<Branch> GetAllOfService(int serviceId);
 
     }
 }

@@ -13,6 +13,11 @@ namespace RentApp.Persistance.Repository
         {
         }
 
+        public IEnumerable<VehicleImage> GetAllOfVehicle(int vehicleId)
+        {
+            return RADBContext.VehicleImages.Where(vi => vi.VehicleImageVehicleId == vehicleId);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 

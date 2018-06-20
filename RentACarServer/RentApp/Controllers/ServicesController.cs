@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -30,7 +30,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
-        
+
         [AllowAnonymous]
         public IEnumerable<Service> GetServices()
         {
@@ -42,7 +42,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Services/UnconfirmedServices")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Service> GetUnconfirmedServices()
         {
             return db.Services.GetAll().Where(service => service.IsConfirmed == false);
@@ -72,7 +72,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
-        [Authorize(Roles ="Manager")]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace RentApp.Controllers
             RAIdentityUser RAUser = db.Users.Get(username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
 
-            
+
             if (service.ServiceManagerId != appUser.Id)
             {
                 return BadRequest("You are not authorized.");
@@ -125,11 +125,11 @@ namespace RentApp.Controllers
 
         [HttpPut]
         [Route("api/Services/ConfirmService/{serviceId}")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult ConfirmService(int serviceId)
         {
             Service service = db.Services.Get(serviceId);
-            
+
             if (service == null)
             {
                 return NotFound();
@@ -137,7 +137,7 @@ namespace RentApp.Controllers
 
             service.IsConfirmed = true;
             db.Complete();
-            
+
             SmtpService smtpService = new SmtpService();
             string mailBody = "Service " + service.Name + " Id:" + service.Id + " is confirmed.";
             AppUser manager = db.AppUsers.Get(service.ServiceManagerId);
@@ -161,14 +161,14 @@ namespace RentApp.Controllers
             string username = User.Identity.Name;
             RAIdentityUser RAUser = db.Users.Get(username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
-                        
+
             if (!appUser.IsManagerAllowed)
             {
                 return BadRequest("You are not allowed.");
             }
-            
+
             db.Services.Add(service);
-            
+
             db.Complete();
 
             Pricelist pricelist = new Pricelist();
@@ -189,17 +189,44 @@ namespace RentApp.Controllers
         }
 
         [HttpGet]
-        [Route("api/Services/getVehicles")]
+        [Route("api/Services/getVehicles/{Id}")]
         [ResponseType(typeof(List<Vehicle>))]
         [AllowAnonymous]
-        public HttpResponseMessage getServiceVehicles(string Id)
+        public HttpResponseMessage getServiceVehicles(int Id)
         {
+            Service service = db.Services.GetServiceWithVehiclesAndPricelists(Id);
+            List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
+
+            Pricelist actualPriceList = service.Pricelists[0];
+            foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+            {
+                if (pricelist.EndTime > actualPriceList.EndTime)
+                {
+                    actualPriceList = pricelist;
+                }
+            }
+
+            foreach (Vehicle vehicle in service.Vehicles)
+            {
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+                try
+                {
+                    Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                    vehicleDTO.PricePerHour = item.Price;
+                }
+                catch (Exception e)
+                {
+                    vehicleDTO.PricePerHour = 0;
+                }
+                vehiclesDTO.Add(vehicleDTO);
+
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, vehiclesDTO);
 
             try
             {
-                int id = Int32.Parse(Id);
-                Service service = db.Services.GetServiceWithVehicles(id);
-                return Request.CreateResponse(HttpStatusCode.OK, service.Vehicles);
+
             }
             catch (System.Exception e)
             {
@@ -277,7 +304,7 @@ namespace RentApp.Controllers
 
 
             List<Vehicle> vehicles = db.Vehicles.GetAllOfService(id).ToList();
-            
+
             foreach (Vehicle vehicle in vehicles)
             {
                 DirectoryInfo directory = new DirectoryInfo(HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/") + vehicle.Id);

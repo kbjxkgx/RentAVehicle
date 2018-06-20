@@ -13,5 +13,6 @@ namespace RentApp.Persistance.Repository
         Service GetServiceWithVehicles(int id);
         Service GetWithItemsAndPricelists(int id);
         Service GetWithPricelists(int id);
+        Service GetServiceWithVehiclesAndPricelists(int serviceId);
     }
 }

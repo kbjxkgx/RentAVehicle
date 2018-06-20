@@ -49,7 +49,7 @@ export class AppUserService {
     return this.httpClient.get(Configuration.path + 'api/AppUser/GetAppUserByUsername', { params: params }) as Observable<any>;
   }
 
-  ConfirmManager(user: AppUserModel): any {
+  ConfirmToggleManager(user: AppUserModel): any {
     let url = '';
     url = url.concat(Configuration.path + 'api/AppUser/ConfirmToggleManager/');
     url = url.concat(user.Id.toString());

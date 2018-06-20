@@ -96,6 +96,11 @@ namespace RentApp.Controllers
             }
 
 
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Services.Update(service);
 
             try
@@ -120,6 +125,7 @@ namespace RentApp.Controllers
 
         [HttpPut]
         [Route("api/Services/ConfirmService/{serviceId}")]
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult ConfirmService(int serviceId)
         {
             Service service = db.Services.Get(serviceId);
@@ -151,6 +157,15 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
             service.IsConfirmed = false;
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+                        
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
+            }
             
             db.Services.Add(service);
             
@@ -253,6 +268,13 @@ namespace RentApp.Controllers
             {
                 return BadRequest("You are not authorized.");
             }
+
+
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
 
             List<Vehicle> vehicles = db.Vehicles.GetAllOfService(id).ToList();
             

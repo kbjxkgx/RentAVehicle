@@ -192,7 +192,8 @@ namespace RentApp.Controllers
 
         [HttpPut]
         [Route("api/AppUser/ConfirmToggleManager/{managerId}")]
-        public IHttpActionResult ConfirmManager(int managerId)
+        [Authorize(Roles ="Admin")]
+        public IHttpActionResult ConfirmToggleManager(int managerId)
         {
             AppUser manager = db.AppUsers.Get(managerId);
 
@@ -202,16 +203,15 @@ namespace RentApp.Controllers
             }
 
             manager.IsManagerAllowed = !manager.IsManagerAllowed;
+            db.AppUsers.Update(manager);
             db.Complete();
-            SmtpService smtpService = new SmtpService();
-            string mailBody = "Manager " + manager.FullName + " Id:" + manager.Id + " is confirmed.";
-            RAIdentityUser RAUser = db.Users.GetByAppUserId(manager.Id);
-            smtpService.SendMail("User confirmation", mailBody, RAUser.Email);
+            
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPut]
         [Route("api/AppUser/ConfirmUser/{userId}")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult ConfirmUser(int userId)
         {
             AppUser user = db.AppUsers.Get(userId);
@@ -222,6 +222,7 @@ namespace RentApp.Controllers
             }
 
             user.IsManagerAllowed = true;
+            db.AppUsers.Update(user);
             db.Complete();
 
             SmtpService smtpService = new SmtpService();

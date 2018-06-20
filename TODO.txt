@@ -1,8 +1,6 @@
--Provjeriti da li sam menadzer za odredjene stvari da uradim
--Put metoda za usera da se zamjeni
 -Ocjena da se napravi
--Autorizacija na vehicletype kad se odradi dodavanje od strane admina
--Gardovi da se dorade
--Ne mozes napraviti rezervaciju dok se ne ulogujes
--Zasto u service kontroleru ima verify app user
--Auto moze biti nedostupno
+-Zavrsiti provjeru da li je menadzer allowed kad hoce da doda nesto ili izmjeni - trebalo bi da sam uradio sve ali moze provjera
+-Ne radi stranica za menadzere kod admina
+-Kad sam registrovao menadzera sve mu je bilo true, nisam detalno gledao kako, moze biti da nije greska, samo napominjem da pogledam posle
+-Verify account se vidi i kad se verifikujem
+-Rezervacija da se radi samo sa dostupnim autom

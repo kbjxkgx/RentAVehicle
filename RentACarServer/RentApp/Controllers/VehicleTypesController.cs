@@ -19,7 +19,7 @@ namespace RentApp.Controllers
             db = context;
         }
         
-
+        [AllowAnonymous]
         public IEnumerable<VehicleType> GetVehicleTypes()
         {
             return db.VehicleTypes.GetAll();

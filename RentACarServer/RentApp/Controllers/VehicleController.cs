@@ -169,6 +169,11 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Vehicles.Update(vehicle);
 
             try
@@ -190,6 +195,40 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [HttpPut]
+        [Route("api/Vehicle/ToggleVehicleAvailability/{vehicleId}")]
+        [Authorize(Roles = "Manager")]
+        public IHttpActionResult ToggleVehicleAvailability(int vehicleId)
+        {
+            Vehicle vehicle = db.Vehicles.Get(vehicleId);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            Service service = db.Services.Get(vehicle.VehicleServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
+            vehicle.IsAvailable = !vehicle.IsAvailable;
+            db.Vehicles.Update(vehicle);
+            db.Complete();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         // POST: api/Services
         [ResponseType(typeof(Vehicle))]
         [Authorize(Roles = "Manager")]
@@ -198,6 +237,15 @@ namespace RentApp.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+            
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
             }
 
             Vehicle vehicle = new Vehicle();
@@ -252,6 +300,11 @@ namespace RentApp.Controllers
             if (service.ServiceManagerId != appUser.Id)
             {
                 return BadRequest("You are not authorized.");
+            }
+
+            if (!appUser.IsManagerAllowed)
+            {
+                return BadRequest("You are not allowed.");
             }
 
             db.Vehicles.Remove(vehicle);

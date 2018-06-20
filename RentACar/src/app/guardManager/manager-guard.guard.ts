@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 
-export class CanActivateViaAuthGuard implements CanActivate {
-  
+export class ManagerGuard implements CanActivate {
+
   constructor(){}
 
   canActivate() {
-    return localStorage.getItem('role')=='Admin';
+    return localStorage.getItem('role')=='Manager';
   }
 
 }

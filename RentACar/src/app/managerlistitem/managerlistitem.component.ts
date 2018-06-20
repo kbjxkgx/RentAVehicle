@@ -14,8 +14,8 @@ export class ManagerlistitemComponent implements OnInit {
   ngOnInit() {
   }
 
-  ConfirmManager() {
-    this.appUserService.ConfirmManager(this.manager);
+  ConfirmToggleManager() {
+    this.appUserService.ConfirmToggleManager(this.manager);
   }
 
   Configuration() {

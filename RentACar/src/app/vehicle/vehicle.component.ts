@@ -52,4 +52,17 @@ export class VehicleComponent implements OnInit {
   Configuration() {
     return Configuration.path;
   }
+
+  ToggleVehicleAvailability() {
+    this.vehicleService.ToggleVehicleAvailability(this.vehicle.Id)
+        .subscribe(
+          data => {
+            console.log('toggle vehicle succeded...');
+            this.vehicle.IsAvailable = !this.vehicle.IsAvailable;
+          },
+          error => {
+            console.log('toggle vehicle failed...');
+          });
+  }
+
 }

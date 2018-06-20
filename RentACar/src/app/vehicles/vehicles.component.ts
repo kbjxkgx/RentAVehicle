@@ -93,6 +93,7 @@ export class VehiclesComponent implements OnInit {
         data => {
           this.vehicles = data.Vehicles;
           this.numberOfVehicles = data.Count;
+          this.pager = this.pagerService.getPager(this.numberOfVehicles, 1, 4);
           console.log('getVehiclesPageFiltered succeded');
         },
         error => {

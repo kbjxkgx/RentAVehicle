@@ -115,30 +115,34 @@ namespace RentApp.Controllers
                 return BadRequest();
             }
 
-            Comment comment = db.Comments.GetCommentOfUser(item.UserId);
+            List<Comment> comments = db.Comments.GetCommentsOfUser(item.UserId).ToList();
+            Comment comment = comments.FirstOrDefault(c => c.CommentedServiceId == item.CommentedServiceId);
             if (comment != null)
             {
                 return BadRequest("You can comment only once.");
             }
 
-            List<Reservation> reservations = db.Reservations.GetAllReservationsOfUser(appUser.Id).ToList();
-            if (reservations.Count == 0)
-            {
-                return BadRequest("You can comment only after first finished reservation.");
-            }
-
+            List<Reservation> reservations = db.Reservations.GetAllReservationsOfUserWithBranchesAndService(appUser.Id).ToList();
+            bool firstFinishedReservation = false;
             foreach (Reservation reservation in reservations)
             {
-                if (reservation.EndTime < DateTime.Now.Date)
+                if (reservation.BranchTake.BranchService.Id == item.CommentedServiceId)
                 {
-                    db.Comments.Add(item);
-                    db.Complete();
-
-                    return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
+                    if (reservation.EndTime < DateTime.Now.Date)
+                    {
+                        firstFinishedReservation = true;
+                        break;
+                    }
                 }
             }
+            if (!firstFinishedReservation)
+            {
+                return BadRequest("You can comment only after first finished reservation in this service.");
+            }
+            db.Comments.Add(item);
+            db.Complete();
 
-            return BadRequest("You can comment only after first finished reservation.");
+            return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
         }
 
         // DELETE: api/Services/5

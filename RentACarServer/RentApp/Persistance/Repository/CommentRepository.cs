@@ -13,9 +13,9 @@ namespace RentApp.Persistance.Repository
         {
         }
 
-        public Comment GetCommentOfUser(int userId)
+        public IEnumerable<Comment> GetCommentsOfUser(int userId)
         {
-            return context.Set<Comment>().FirstOrDefault(u => u.Id == userId);
+            return context.Set<Comment>().Where(c => c.UserId == userId);
         }
 
         protected RADBContext RADBContext { get { return context as RADBContext; } }

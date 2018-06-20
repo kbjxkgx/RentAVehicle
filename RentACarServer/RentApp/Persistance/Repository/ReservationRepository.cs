@@ -18,9 +18,9 @@ namespace RentApp.Persistance.Repository
             return RADBContext.Reservations.Where( r => r.ReservedVehicleId == vehicleId);
         }
 
-        public IEnumerable<Reservation> GetAllReservationsOfUser(int userId)
+        public IEnumerable<Reservation> GetAllReservationsOfUserWithBranchesAndService(int userId)
         {
-            return RADBContext.Reservations.Where(r => r.UserId == userId);
+            return context.Set<Reservation>().Include("BranchTake.BranchService").Where(r => r.UserId == userId);
         }
 
         protected RADBContext RADBContext { get { return context as RADBContext; } }

@@ -24,7 +24,7 @@
               <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}} <br /><strong>Mark: </strong>{{comment.Mark}}</div>
             </div>
               <div class="well">
-                <div class="container" *ngIf="isUser&&isLoggedIn">
+                <div class="container" *ngIf="isUser">
                   <strong class="col-lg-2">Add Comment: </strong>
                   <input class="col-lg-4" [(ngModel)]="newCommentContent" placeholder="Enter Comment content Here.." type="text">
                   <div class="row">

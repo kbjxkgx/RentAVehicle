@@ -45,15 +45,17 @@ export class ServicelistitemComponent implements OnInit {
     comment.UserId = this.data.AppUserIdSource.value;
     comment.Content = this.newCommentContent;
     comment.CommentedServiceId = this.service.Id;
-    comment.Mark=this.mark;
+    comment.Mark = this.mark;
     this.commentService.addComment(comment)
         .subscribe(
           data => {
             console.log('addComment succeded...');
-            this.service.Comments.push(comment);
+            data.User = this.data.user;
+            this.service.Comments.push(data);
           },
           error => {
             console.log(error);
+            window.alert(error.error.Message);
           });
 
   }

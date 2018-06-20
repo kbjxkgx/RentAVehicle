@@ -33,6 +33,12 @@ namespace RentApp.Persistance.Repository
             return context.Set<Vehicle>().Include("Images").OrderBy(v => v.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
 
+
+        public IEnumerable<Vehicle> GetVehiclePage(int pageIndex, int pageSize)
+        {
+            return context.Set<Vehicle>().Include("Images").OrderBy(v => v.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

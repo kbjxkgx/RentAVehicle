@@ -78,7 +78,7 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
-            if (!appUser.IsManagerAllowed)
+            if (appUser.IsManagerAllowed==false)
             {
                 return BadRequest("You are not allowed.");
             }
@@ -118,7 +118,7 @@ namespace RentApp.Controllers
             RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
                         
-            if (!appUser.IsManagerAllowed)
+            if (appUser.IsManagerAllowed==false)
             {
                 return BadRequest("You are not allowed.");
             }
@@ -189,7 +189,7 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
-            if(!appUser.IsManagerAllowed)
+            if(appUser.IsManagerAllowed==false)
             {
                 return BadRequest("You are not allowed.");
             }

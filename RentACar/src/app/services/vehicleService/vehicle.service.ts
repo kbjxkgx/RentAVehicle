@@ -57,4 +57,9 @@ export class VehicleService {
   //   return this.httpClient.delete(Configuration.path + 'api/Vehicle/DeleteVehicleWithServiceId', { params: params }) as Observable<any>;
   // }
 
+  ToggleVehicleAvailability(vehicleId: number) {
+    let params = new HttpParams().set('vehicleId', vehicleId.toString());
+    return this.httpClient.put(Configuration.path + 'api/Vehicle/ToggleVehicleAvailability/' + vehicleId, vehicleId);
+  }
+
 }

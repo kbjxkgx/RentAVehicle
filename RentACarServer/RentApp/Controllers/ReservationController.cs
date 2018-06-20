@@ -21,7 +21,7 @@ namespace RentApp.Controllers
             db = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "AppUser, Manager, Admin")]
         // GET: api/Services
         public IEnumerable<Reservation> GetReservations()
         {
@@ -30,6 +30,7 @@ namespace RentApp.Controllers
 
         // GET: api/Services/5
         [ResponseType(typeof(Reservation))]
+        [Authorize(Roles = "AppUser, Manager, Admin")]
         public IHttpActionResult GetReservation(int id)
         {
             Reservation reservation = db.Reservations.Get(id);
@@ -43,6 +44,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Reservations/GetReservationsOfVehicle/{vehicleId}")]
+        [Authorize(Roles = "AppUser, Manager, Admin")]
         public IEnumerable<Reservation> GetReservationsOfVehicle(int vehicleId)
         {
             return db.Reservations.GetAllReservationsOfVehicle(vehicleId);
@@ -50,6 +52,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult PutReservation(int id, Reservation reservation)
         {
             if (!ModelState.IsValid)
@@ -84,12 +87,20 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Reservation))]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult PostReservation(Reservation reservation)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+                      
+            Vehicle vehicle = db.Vehicles.Get(reservation.ReservedVehicleId);
+            if (vehicle.IsAvailable==false)
+            {
+                return BadRequest("Vehicle not available.");
+            }
+
             if (reservation.BeginTime > reservation.EndTime)
             {
                 return BadRequest("Begin time need to be before end time.");
@@ -127,6 +138,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Reservation))]
+        [Authorize(Roles = "AppUser, Manager, Admin")]
         public IHttpActionResult DeleteReservation(int id)
         {
             Reservation reservation = db.Reservations.Get(id);

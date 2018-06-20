@@ -55,6 +55,22 @@ namespace RentApp.Controllers
             {
                 return BadRequest();
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            Service service = db.Services.Get(item.PricelistServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Pricelists.Update(item);
 
             try
@@ -85,6 +101,16 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+            
             List<Item> items = pricelist.Items;
             pricelist.Items = null;
             db.Pricelists.Add(pricelist);
@@ -109,6 +135,22 @@ namespace RentApp.Controllers
             {
                 return NotFound();
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            Service service = db.Services.Get(item.PricelistServiceId);
+            if (service.ServiceManagerId != appUser.Id)
+            {
+                return BadRequest("You are not authorized.");
+            }
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
 
             db.Pricelists.Remove(item);
             db.Complete();

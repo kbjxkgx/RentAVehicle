@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -30,7 +30,7 @@ namespace RentApp.Controllers
         }
 
         // GET: api/Services
-        
+
         [AllowAnonymous]
         public IEnumerable<Service> GetServices()
         {
@@ -42,7 +42,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Services/UnconfirmedServices")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Service> GetUnconfirmedServices()
         {
             return db.Services.GetAll().Where(service => service.IsConfirmed == false);
@@ -72,7 +72,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
-        [Authorize(Roles ="Manager")]
+        [Authorize(Roles = "Manager")]
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -89,12 +89,17 @@ namespace RentApp.Controllers
             RAIdentityUser RAUser = db.Users.Get(username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
 
-            
+
             if (service.ServiceManagerId != appUser.Id)
             {
                 return BadRequest("You are not authorized.");
             }
 
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
 
             db.Services.Update(service);
 
@@ -120,10 +125,11 @@ namespace RentApp.Controllers
 
         [HttpPut]
         [Route("api/Services/ConfirmService/{serviceId}")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult ConfirmService(int serviceId)
         {
             Service service = db.Services.Get(serviceId);
-            
+
             if (service == null)
             {
                 return NotFound();
@@ -131,7 +137,7 @@ namespace RentApp.Controllers
 
             service.IsConfirmed = true;
             db.Complete();
-            
+
             SmtpService smtpService = new SmtpService();
             string mailBody = "Service " + service.Name + " Id:" + service.Id + " is confirmed.";
             AppUser manager = db.AppUsers.Get(service.ServiceManagerId);
@@ -151,9 +157,18 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
             service.IsConfirmed = false;
-            
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Services.Add(service);
-            
+
             db.Complete();
 
             Pricelist pricelist = new Pricelist();
@@ -176,6 +191,7 @@ namespace RentApp.Controllers
         [HttpGet]
         [Route("api/Services/getVehicles/{Id}")]
         [ResponseType(typeof(List<Vehicle>))]
+        [AllowAnonymous]
         public HttpResponseMessage getServiceVehicles(int Id)
         {
             Service service = db.Services.GetServiceWithVehiclesAndPricelists(Id);
@@ -210,7 +226,7 @@ namespace RentApp.Controllers
 
             try
             {
-                
+
             }
             catch (System.Exception e)
             {
@@ -280,18 +296,21 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
+
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
+
             List<Vehicle> vehicles = db.Vehicles.GetAllOfService(id).ToList();
-            
+
             foreach (Vehicle vehicle in vehicles)
             {
                 DirectoryInfo directory = new DirectoryInfo(HttpContext.Current.Server.MapPath("~/Content/Images/VehicleImages/") + vehicle.Id);
                 directory.Delete(true);
                 db.Vehicles.Remove(vehicle);
             }
-
-            List<Branch> branches = db.Branches.GetAllOfService(id).ToList();
-            
-
             db.Complete();
 
             db.Services.Remove(service);

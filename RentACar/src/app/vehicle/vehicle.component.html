@@ -45,7 +45,8 @@
           <div class="btn-toolbar info">
             <button *ngIf="isManager" type="button" class="btn btn-warning" (click)="Update()">Update</button>
             <button *ngIf="isManager" type="button" class="btn btn-danger" (click)="Delete()">Delete</button>
-            <button type="button" class="btn btn-warning" (click)="MakeReservation()">Make Reservation</button>
+            <button type="button" *ngIf="isManager" class="btn btn-warning" (click)="ToggleVehicleAvailability()" > {{vehicle.IsAvailable ? 'Disable' : 'Enable'}} </button>
+            <button *ngIf="isUser" type="button" class="btn btn-warning" (click)="MakeReservation()">Make Reservation</button>
           </div>
           
       </div>

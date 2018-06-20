@@ -26,7 +26,7 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { UserlistitemComponent } from './userlistitem/userlistitem.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 
-import { CanActivateViaAuthGuard } from './guard/auth.guard';
+import { CanActivateViaAdminAuthGuard } from './guardAdmin/auth.guard';
 import { ServicePageComponent } from './service-page/service-page.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationitemComponent } from './notificationitem/notificationitem.component';
@@ -42,6 +42,7 @@ import { UpdateuserComponent } from './updateuser/updateuser.component';
 import { UpdateserviceComponent } from './updateservice/updateservice.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 import { VehicleTypesComponent } from './vehicle-types/vehicle-types.component';
+import { ManagerGuard } from './guardManager/manager-guard.guard';
 
 const Routes = [
   {
@@ -52,19 +53,22 @@ const Routes = [
   {
     path: 'home',
     component: VehiclesComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'managers',
     component: ManagerlistComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: [CanActivateViaAdminAuthGuard]
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'verifyaccount',
@@ -73,63 +77,77 @@ const Routes = [
   {
     path: 'users',
     component: UserlistComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: [CanActivateViaAdminAuthGuard]
   },
   {
     path: 'servicelist',
     component: ServicelistComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'addvehicle',
     component: AddvehicleComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'addservice',
     component: AddServiceComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'vehicles',
     component: VehiclesComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'vehiclelist',
     component: CarlistComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'servicepage',
     component: ServicePageComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'updateVehicle',
     component: UpdatevehicleComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'notifications',
     component: NotificationsComponent,
+    canActivate: [CanActivateViaAdminAuthGuard]
   },
   {
     path: 'userinfo',
     component: UpdateuserComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'addbranch',
     component: AddBranchComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'addpricelist',
     component: AddPricelistComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'updateService',
     component: UpdateserviceComponent,
+    canActivate: [ManagerGuard]
   },
   {
     path: 'makereservation',
     component: MakeReservationComponent,
+    canActivate: ['CanAlwaysActivateGuard']
   },
   {
     path: 'vehicletypes',
     component: VehicleTypesComponent,
+    canActivate: [CanActivateViaAdminAuthGuard]
   }
 ];
 
@@ -174,7 +192,8 @@ const Routes = [
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [
-    CanActivateViaAuthGuard,
+    CanActivateViaAdminAuthGuard,
+    ManagerGuard,
     SocketserviceService,
     CommunicationService,
     {

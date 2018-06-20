@@ -78,6 +78,11 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Branches.Update(branch);
 
             try
@@ -108,6 +113,16 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+                        
+            if (appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
+
             db.Branches.Add(branch);
             db.Complete();
 
@@ -174,6 +189,10 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
+            if(appUser.IsManagerAllowed==false)
+            {
+                return BadRequest("You are not allowed.");
+            }
 
 
             db.Branches.Remove(branch);

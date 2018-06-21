@@ -33,4 +33,8 @@ export class BranchService {
     _formData.append('MyFile', fileToUpload);
     return this.httpClient.post(Configuration.path + 'api/Branch/UploadImage', _formData);
   }
+
+  delete(branch: BranchModel) {
+    return this.httpClient.delete(Configuration.path + 'api/Branch/' + branch.Id );
+  }
 }

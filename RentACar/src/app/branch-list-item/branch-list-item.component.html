@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="isVisible">
     <div class="map-example well">
         <div class="row">
             <div class="col-lg-6">
@@ -34,8 +34,9 @@
                 
             </div>
         </div>
-        <div class="col-lg-1 row">
+        <div class="btn-toolbar">
             <button type="button" (click)='UpdateBranch()' class="btn btn-warning">Update</button>
+            <button type="button" (click)='DeleteBranch()' class="btn btn-danger">Delete</button>
         </div>
     </div>
     </div>

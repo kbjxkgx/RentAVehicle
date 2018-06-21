@@ -40,23 +40,7 @@ export class VehiclesComponent implements OnInit {
     this.setPage(1);
   }
 
-  // getVehicles() {
-
-  //   this.vehicleService.getVehiclesCount()
-  //     .subscribe(
-  //       data => {
-  //         this.numberOfVehicles = data;
-  //         console.log('getVehiclesCount succeded');
-  //         this.setPage(1);
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       });
-  // }
-
   setPage(page: number) {
-    // get pager object from service
-
     if (this.isSearchActive)
     {
       this.vehicleService.getVehiclesPageFiltered(page, this.vehicleFilter)

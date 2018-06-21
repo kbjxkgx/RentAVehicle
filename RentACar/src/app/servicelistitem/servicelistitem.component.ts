@@ -83,7 +83,6 @@ export class ServicelistitemComponent implements OnInit {
           data => {
             console.log('Delete comment succeded...');
             this.service.Comments = this.service.Comments.filter(obj => obj.Id !== commentId);
-
           },
           error => {
             console.log(error);

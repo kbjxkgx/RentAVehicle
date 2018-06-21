@@ -210,6 +210,12 @@ namespace RentApp.Controllers
                 return BadRequest("You are not allowed.");
             }
 
+            string destinationFilePath = HttpContext.Current.Server.MapPath("~/");
+            destinationFilePath += branch.Image;
+            if (File.Exists(destinationFilePath))
+            {
+                File.Delete(destinationFilePath);
+            }
 
             db.Branches.Remove(branch);
             db.Complete();

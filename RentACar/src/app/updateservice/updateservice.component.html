@@ -38,7 +38,12 @@
             </div>
           </div>
         </div>				 	
-        
+        <div class="row">
+            <div class="col-sm-12 form-group">
+              <label for="image1">Service Image</label>
+              <input name="image1" type="file" (change)='fileChange($event)' required accept="image/*" multiple />
+            </div>
+        </div>
         <button type="submit" class="btn btn-lg btn-info" [disabled]="!f.valid">Submit</button>					
       </div>
     </form> 

@@ -200,38 +200,37 @@ namespace RentApp.Controllers
         [AllowAnonymous]
         public HttpResponseMessage getServiceVehicles(int Id)
         {
-            Service service = db.Services.GetServiceWithVehiclesAndPricelists(Id);
-            List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
-
-            Pricelist actualPriceList = service.Pricelists[0];
-            foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
-            {
-                if (pricelist.EndTime > actualPriceList.EndTime)
-                {
-                    actualPriceList = pricelist;
-                }
-            }
-
-            foreach (Vehicle vehicle in service.Vehicles)
-            {
-                VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
-                try
-                {
-                    Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
-                    vehicleDTO.PricePerHour = item.Price;
-                }
-                catch (Exception e)
-                {
-                    vehicleDTO.PricePerHour = 0;
-                }
-                vehiclesDTO.Add(vehicleDTO);
-
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, vehiclesDTO);
-
             try
             {
+                Service service = db.Services.GetServiceWithVehiclesAndPricelists(Id);
+                List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
+
+                Pricelist actualPriceList = service.Pricelists[0];
+                foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+                {
+                    if (pricelist.EndTime > actualPriceList.EndTime)
+                    {
+                        actualPriceList = pricelist;
+                    }
+                }
+
+                foreach (Vehicle vehicle in service.Vehicles)
+                {
+                    VehicleDTO vehicleDTO = new VehicleDTO(vehicle);
+                    try
+                    {
+                        Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                        vehicleDTO.PricePerHour = item.Price;
+                    }
+                    catch (Exception e)
+                    {
+                        vehicleDTO.PricePerHour = 0;
+                    }
+                    vehiclesDTO.Add(vehicleDTO);
+
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, vehiclesDTO);
 
             }
             catch (System.Exception e)

@@ -7,21 +7,41 @@
         <div class="row">
           <div class="col-sm-4 form-group">
             <label>Model</label>
-            <input type="text" name='Model' [(ngModel)]="vehicle.Model" class="form-control" ngModel>
+            <input type="text" name='Model' required [(ngModel)]="vehicle.Model" class="form-control" ngModel #namemodel="ngModel">
+            <div *ngIf="namemodel.invalid && (namemodel.dirty || namemodel.touched)" class="alert alert-danger">
+                <div *ngIf="namemodel.errors.required">
+                  Model is required.
+                </div>
+            </div>
           </div>	
           <div class="col-sm-4 form-group">
             <label>Manufacturer</label>
-            <input type="text" name='Manufacturer' [(ngModel)]="vehicle.Manufacturer" placeholder="Enter Manufacturer	 Here.." class="form-control" ngModel>
+            <input type="text" name='Manufacturer' required [(ngModel)]="vehicle.Manufacturer" placeholder="Enter Manufacturer	 Here.." class="form-control" ngModel #manuf="ngModel">
+            <div *ngIf="manuf.invalid && (manuf.dirty || manuf.touched)" class="alert alert-danger">
+                <div *ngIf="manuf.errors.required">
+                  Manufacturer is required.
+                </div>
+            </div>
           </div>	
           <div class="col-sm-4 form-group">
             <label>YearOfProduction</label>
-            <input type="number" name='YearOfProduction' [(ngModel)]="vehicle.YearOfProduction" placeholder="Enter YearOfProduction Here.." class="form-control" ngModel>
+            <input type="number" name='YearOfProduction' required [(ngModel)]="vehicle.YearOfProduction" placeholder="Enter YearOfProduction Here.." class="form-control" ngModel #year="ngModel">
+            <div *ngIf="year.invalid && (year.dirty || year.touched)" class="alert alert-danger">
+                <div *ngIf="year.errors.required">
+                  Year is required.
+                </div>
+            </div>
           </div>		
         </div>				 	
         <div class="row">
           <div class="col-sm-12 form-group">
             <label>Description</label>
-            <input type="text" name='Description' [(ngModel)]="vehicle.Description" placeholder="Enter Description Here.." class="form-control" ngModel>
+            <input type="text" name='Description' required [(ngModel)]="vehicle.Description" placeholder="Enter Description Here.." class="form-control" ngModel #descr="ngModel">
+            <div *ngIf="descr.invalid && (descr.dirty || descr.touched)" class="alert alert-danger">
+                <div *ngIf="descr.errors.required">
+                  Description is required.
+                </div>
+            </div>
           </div>
         </div>				 	
         <div class="row">

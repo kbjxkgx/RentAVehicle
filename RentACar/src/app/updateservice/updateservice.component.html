@@ -7,21 +7,39 @@
         <div class="row">
           <div class="col-sm-6 form-group">
             <label>Name</label>
-            <input type="text" name='Name' [(ngModel)]="service.Name" class="form-control" ngModel>
+            <input type="text" name='Name' [(ngModel)]="service.Name" required class="form-control" ngModel #nameservice="ngModel">
+            <div *ngIf="nameservice.invalid && (nameservice.dirty || nameservice.touched)" class="alert alert-danger">
+                <div *ngIf="nameservice.errors.required">
+                  Name is required.
+                </div>
+            </div>
           </div>	
           <div class="col-sm-6 form-group">
             <label>Email</label>
-            <input type="text" name='Email' [(ngModel)]="service.Email" class="form-control" ngModel>
+            <input type="text" name='Email' [(ngModel)]="service.Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" ngModel #emailref="ngModel">
+            <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="aler alert-danger">
+                <div *ngIf="emailref.errors.required">
+                    Email is required.
+                </div>	
+                <div [hidden]="!emailref.errors?.pattern">
+                    Invalid email
+                </div> 
+              </div>
           </div>	
         </div>				 	
         <div class="row">
           <div class="col-sm-12 form-group">
             <label>Description</label>
-            <input type="text" name='Description' [(ngModel)]="service.Description" class="form-control" ngModel>
+            <input type="text" name='Description' required [(ngModel)]="service.Description" class="form-control" ngModel #descr="ngModel">
+            <div *ngIf="descr.invalid && (descr.dirty || descr.touched)" class="alert alert-danger">
+                <div *ngIf="descr.errors.required">
+                  Description is required.
+                </div>
+            </div>
           </div>
         </div>				 	
         
-        <button type="submit" class="btn btn-lg btn-info">Submit</button>					
+        <button type="submit" class="btn btn-lg btn-info" [disabled]="!f.valid">Submit</button>					
       </div>
     </form> 
   </div>

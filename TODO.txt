@@ -1,2 +1,5 @@
--Zavrsiti provjeru da li je menadzer allowed kad hoce da doda nesto ili izmjeni - trebalo bi da sam uradio sve ali moze provjera
 -Kad sam registrovao menadzera sve mu je bilo true, nisam detalno gledao kako, moze biti da nije greska, samo napominjem da pogledam posle
+-Puca ona metoda za autorizaciju kad se ulogujem
+-Kad se izlogujem proslijedi me na pocetak
+-Confirm password od pragima
+-Pricelist nije na dobrom mjestu i ruzno izgleda

@@ -11,17 +11,35 @@
                         <form #f="ngForm" (ngSubmit)="loginSubmit(f.value, f)" id="loginForm" novalidate="novalidate">
                             <div class="form-group">
                                 <label for="username" class="control-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com" ngModel>
+                                <input type="text" class="form-control" id="username"  name="username" required  title="Please enter you username" placeholder="example@gmail.com" ngModel #model="ngModel">
+                                <div *ngIf="model.invalid && (model.dirty || model.touched)" class="alert alert-danger">
+
+                                    <div *ngIf="model.errors.required">
+                                        Username is required.
+                                    </div>
+                                    
+                                </div>
                                 <span class="help-block"></span>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="password" class="control-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password" ngModel>
+                                <input type="password" class="form-control" id="password" name="password" value="" required minlength="4" title="Please enter your password" ngModel #passmodel="ngModel">
+                                <div *ngIf="passmodel.invalid && (passmodel.dirty || passmodel.touched)" class="alert alert-danger">
+
+                                        <div *ngIf="passmodel.errors.required">
+                                            Password is required.
+                                        </div>
+                                        <div *ngIf="passmodel.errors.minlength">
+                                                Password must be at least 4 characters long.
+                                        </div>
+                                        
+                                </div>
                                 <span class="help-block"></span>
                             </div>
                             <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
                             
-                            <button type="submit" class="btn btn-success btn-block">Login</button>
+                            <button type="submit" class="btn btn-success btn-block" [disabled]="!f.valid">Login</button>
                             <a href="http://lmgtfy.com/?q=how+to+login+for+dummies" class="btn btn-default btn-block">Help to login</a>
                         </form>
                     </div>

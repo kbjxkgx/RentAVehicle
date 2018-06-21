@@ -8,25 +8,53 @@
           <div class="row">
             <div class="col-sm-4 form-group">
               <label>Full Name</label>
-              <input type="text" name='FullName' [(ngModel)]="user.FullName" class="form-control" ngModel>
+              <input type="text" name='FullName' required [(ngModel)]="user.FullName" class="form-control" ngModel #full="ngModel">
+              <div *ngIf="full.invalid && (full.dirty || full.touched)" class="alert alert-danger">
+                  <div *ngIf="full.errors.required">
+                    FullName is required.
+                  </div>
+              </div>
             </div>	
             <div class="col-sm-4 form-group">
               <label>Last Name</label>
-              <input type="text" name='LastName' [(ngModel)]="user.LastName" class="form-control" ngModel>
+              <input type="text" name='LastName' required [(ngModel)]="user.LastName" class="form-control" ngModel #lastna="ngModel">
+              <div *ngIf="lastna.invalid && (lastna.dirty || lastna.touched)" class="alert alert-danger">
+                  <div *ngIf="lastna.errors.required">
+                    LastName is required.
+                  </div>
+              </div>
             </div>	
             <div class="col-sm-4 form-group">
               <label>BirthDay</label>
-              <input type="date" name='Birthday' [(ngModel)]="user.Birthday" class="form-control" ngModel>
+              <input type="date" name='Birthday' required [(ngModel)]="user.Birthday" class="form-control" ngModel #birth="ngModel">
+              <div *ngIf="birth.invalid && (birth.dirty || birth.touched)" class="alert alert-danger">
+                  <div *ngIf="birth.errors.required">
+                    Birthday is required.
+                  </div>
+              </div>
             </div>		
           </div>				 	
           <div class="row">
               <div class="col-sm-6 form-group">
                 <label>Password</label>
-                <input type="password" name='Password' [(ngModel)]="user.Password" class="form-control" ngModel>
+                <input type="password" name='Password' required [(ngModel)]="user.Password" minlength="4" class="form-control" ngModel #pass="ngModel">
+                <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger">
+                    <div *ngIf="pass.errors.required">
+                      Password is required.
+                    </div>
+                    <div *ngIf="pass.errors.minlength">
+                        Password must contain at least 4 caracters.
+                      </div>
+                </div>
               </div>
               <div class="col-sm-6 form-group">
                 <label>Confirm Password</label>
-                <input type="password" name='ConfirmPassword' [(ngModel)]="user.ConfirmPassword" class="form-control" ngModel>
+                <input type="password" name='ConfirmPassword' required [(ngModel)]="user.ConfirmPassword" class="form-control" ngModel #confirm="ngModel">
+                <div *ngIf="confirm.invalid && (confirm.dirty || confirm.touched)" class="alert alert-danger">
+                    <div *ngIf="confirm.errors.required">
+                      Confirm password is required.
+                    </div>
+                </div>
               </div>
           </div>	
           <div class="btn-toolbar">

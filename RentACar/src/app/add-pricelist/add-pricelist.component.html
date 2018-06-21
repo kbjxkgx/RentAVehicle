@@ -13,11 +13,21 @@
       </div>
       <div class="col-sm-4 form-group">
           <label>Begin Time</label>
-          <input type="date" name='BeginTime' [(ngModel)]="pricelist.BeginTime" placeholder="Enter BeginTime Here.." class="form-control" ngModel>
+          <input type="date" name='BeginTime' [(ngModel)]="pricelist.BeginTime" placeholder="Enter BeginTime Here.." class="form-control" ngModel required #begin="ngModel">
+          <div *ngIf="begin.invalid && (begin.dirty || begin.touched)" class="alert alert-danger">
+                <div *ngIf="begin.errors.required">
+                  Begin time is required.
+                </div>
+          </div>
       </div>	
       <div class="col-sm-4 form-group">
           <label>End Time</label>
-          <input type="date" name='EndTime' [(ngModel)]="pricelist.EndTime"  placeholder="Enter EndTime Here.." class="form-control" ngModel>
+          <input type="date" name='EndTime' [(ngModel)]="pricelist.EndTime"  placeholder="Enter EndTime Here.." class="form-control" ngModel required #end="ngModel">
+          <div *ngIf="end.invalid && (end.dirty || end.touched)" class="alert alert-danger">
+                <div *ngIf="end.errors.required">
+                  End time is required.
+                </div>
+          </div>
       </div>	
       <div >
           <button type="button"  (click)='AddPricelist()' class="btn btn-warning">Add Pricelist</button>

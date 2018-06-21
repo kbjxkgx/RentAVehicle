@@ -7,26 +7,44 @@
 					<div class="row">
 						<div class="col-sm-6 form-group">
 							<label>Name</label>
-							<input type="text" name='Name' placeholder="Enter Name Here.." class="form-control" ngModel>
+							<input type="text" name='Name' required  placeholder="Enter Name Here.." class="form-control" ngModel #namemodel="ngModel">
+							<div *ngIf="namemodel.invalid && (namemodel.dirty || namemodel.touched)" class="alert alert-danger">
+									<div *ngIf="namemodel.errors.required">
+										Name is required.
+									</div>
+							</div>
 						</div>	
 						<div class="col-sm-6 form-group">
 							<label>Email</label>
-							<input type="text" name='Email' placeholder="Enter Email Here.." class="form-control" ngModel>
+							<input type="text" name='Email' required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Enter Email Here.." class="form-control" ngModel #emailref="ngModel">
+							<div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="aler alert-danger">
+									<div *ngIf="emailref.errors.required">
+											Email is required.
+									</div>	
+									<div [hidden]="!emailref.errors?.pattern">
+										  Invalid email
+									</div> 
+								</div> 
 						</div>	
 					</div>				 	
 					<div class="row">
 						<div class="col-sm-12 form-group">
 							<label>Description</label>
-							<input type="text" name='Description' placeholder="Enter Description Here.." class="form-control" ngModel>
+							<input type="text" name='Description' required placeholder="Enter Description Here.." class="form-control" ngModel #desc="ngModel">
+							<div *ngIf="desc.invalid && (desc.dirty || desc.touched)" class="alert alert-danger">
+									<div *ngIf="desc.errors.required">
+										Description is required.
+									</div>
+							</div>
 						</div>
 					</div>				 	
 					<div class="row">
 							<div class="col-sm-12 form-group">
 							  <label for="image1">Service Image</label>
-							  <input name="image1" type="file" (change)='fileChange($event)' accept="image/*" multiple />
+							  <input name="image1" type="file" (change)='fileChange($event)' required accept="image/*" multiple />
 							</div>
 						  </div>
-					<button type="submit" class="btn btn-lg btn-info">Submit</button>					
+					<button type="submit" class="btn btn-lg btn-info" [disabled]="!f.valid">Submit</button>					
 				</div>
 			</form> 
 		</div>

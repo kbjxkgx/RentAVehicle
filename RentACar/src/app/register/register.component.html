@@ -8,31 +8,71 @@
 						<div class="row">
 							<div class="col-sm-4 form-group">
 								<label>Full Name</label>
-								<input type="text" name='FullName' placeholder="Enter Full Name Here.." class="form-control" ngModel>
+								<input type="text" name='FullName' required placeholder="Enter Full Name Here.." class="form-control" ngModel #namemodel="ngModel"> 
+								<div *ngIf="namemodel.invalid && (namemodel.dirty || namemodel.touched)" class="alert alert-danger">
+										<div *ngIf="namemodel.errors.required">
+											FullName is required.
+										</div>
+								</div>
 							</div>	
 							<div class="col-sm-4 form-group">
 								<label>Last Name</label>
-								<input type="text" name='LastName' placeholder="Enter Last Name Here.." class="form-control" ngModel>
+								<input type="text" name='LastName' required placeholder="Enter Last Name Here.." class="form-control" ngModel #lastmodel="ngModel">
+								<div *ngIf="lastmodel.invalid && (lastmodel.dirty || lastmodel.touched)" class="alert alert-danger">
+										<div *ngIf="lastmodel.errors.required">
+											LastName is required.
+										</div>
+								</div>
 							</div>	
 							<div class="col-sm-4 form-group">
 								<label>BirthDay</label>
-								<input type="date" name='BirthDay' placeholder="Enter BirthDay Here.." class="form-control" ngModel>
+								<input type="date" name='BirthDay' required placeholder="Enter BirthDay Here.." class="form-control" ngModel #birthmodel="ngModel">
+								<div *ngIf="birthmodel.invalid && (birthmodel.dirty || birthmodel.touched)" class="alert alert-danger">
+										<div *ngIf="birthmodel.errors.required">
+											Birthday is required.
+										</div>
+								</div>
 							</div>		
 						</div>				 	
 						<div class="row">
 							<div class="col-sm-12 form-group">
 								<label>Email Address</label>
-								<input type="text" name='Email' placeholder="Enter Email Address Here.." class="form-control" ngModel>
+								<input type="text" name='Email' required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Enter Email Address Here.." class="form-control" ngModel #emailref="ngModel">
+								<div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="aler alert-danger">
+									<div *ngIf="emailref.errors.required">
+											Email is required.
+									</div>	
+									<div [hidden]="!emailref.errors?.pattern">
+										  Invalid email
+									</div> 
+								</div> 
 							</div>
 						</div>	
 						<div class="row">
 								<div class="col-sm-6 form-group">
 									<label>Password</label>
-									<input type="password" name='Password' placeholder="Enter Password Address Here.." class="form-control" ngModel>
+									<input type="password" required minlength="4" name='Password' placeholder="Enter Password Address Here.." class="form-control" ngModel #passmodel="ngModel">
+									<div *ngIf="passmodel.errors &&(passmodel.touched || passmodel.dirty)" class ="aler alert-danger">
+											<div *ngIf="passmodel.errors.required">
+													Password is required.
+											</div>	
+											<div *ngIf="passmodel.errors.minlength">
+													Password must be at least 4 characters long.
+											</div>
+										</div> 
+									
 								</div>
 								<div class="col-sm-6 form-group">
 									<label>Confirm Password</label>
-									<input type="password" name='ConfirmPassword' placeholder="Enter Password Address Here.." class="form-control" ngModel>
+									<input type="password" required minlength="4" name='ConfirmPassword' placeholder="Enter Password Address Here.." class="form-control" ngModel #confmodel="ngModel">
+									<div *ngIf="confmodel.errors &&(confmodel.touched || confmodel.dirty)" class ="aler alert-danger">
+											<div *ngIf="confmodel.errors.required">
+													Password is required.
+											</div>	
+											<div *ngIf="confmodel.errors.minlength">
+													Password must be at least 4 characters long.
+											</div>
+										</div> 
 								</div>
 						</div>	
 						
@@ -43,7 +83,7 @@
 								<input type="checkbox" name='IsManager' placeholder="" class="form-control" ngModel>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-lg btn-info">Register</button>					
+						<button type="submit" class="btn btn-lg btn-info" [disabled]="!f.valid">Register</button>					
 					</div>
 				</form> 
 			</div>

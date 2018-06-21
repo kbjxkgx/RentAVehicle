@@ -29,7 +29,12 @@
                   </agm-map>
                   <div class="form-group">
                     <label>Begin Time</label>
-                    <input type="date" [(ngModel)]="BeginTime" name='BeginTime' placeholder="Enter Begin Time Here.." class="form-control" ngModel>
+                    <input type="date" [(ngModel)]="BeginTime" required name='BeginTime' placeholder="Enter Begin Time Here.." class="form-control" ngModel #begin="ngModel">
+                    <div *ngIf="begin.errors &&(begin.touched || begin.dirty)" class ="aler alert-danger">
+                        <div *ngIf="begin.errors.required">
+                            Begin time is required.
+                        </div>	
+                      </div>
                   </div>
                 </div>
               </div>
@@ -57,12 +62,17 @@
                   </agm-map>
                     <div class="form-group">
                       <label>End Time</label>
-                      <input type="date" [(ngModel)]="EndTime" name='EndTime' placeholder="Enter End Time Here.." class="form-control" ngModel>
+                      <input type="date" [(ngModel)]="EndTime" required name='EndTime' placeholder="Enter End Time Here.." class="form-control" ngModel #end="ngModel">
+                      <div *ngIf="end.errors &&(end.touched || end.dirty)" class ="aler alert-danger">
+                          <div *ngIf="end.errors.required">
+                              End time is required.
+                          </div>	
+                        </div>
                     </div>
                 </div>
               </div>
             </div>		
-            <button type="submit" class="btn btn-lg btn-info">Make Reservation</button>		
+            <button type="submit" class="btn btn-lg btn-info" [disabled]="!f.valid">Make Reservation</button>		
             <h4>Selected TakeOff Branch: {{selectedBranchId1}} and DropOff Branch: {{selectedBranchId2}}</h4>
 				</form> 
 			</div>

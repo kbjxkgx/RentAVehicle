@@ -43,6 +43,7 @@ import { UpdateserviceComponent } from './updateservice/updateservice.component'
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 import { VehicleTypesComponent } from './vehicle-types/vehicle-types.component';
 import { ManagerGuard } from './guardManager/manager-guard.guard';
+import { UpdateBranchComponent } from './update-branch/update-branch.component';
 
 const Routes = [
   {
@@ -148,6 +149,10 @@ const Routes = [
     path: 'vehicletypes',
     component: VehicleTypesComponent,
     canActivate: [CanActivateViaAdminAuthGuard]
+  },
+  {
+    path: 'updatebranch',
+    component: UpdateBranchComponent
   }
 ];
 
@@ -179,7 +184,8 @@ const Routes = [
     UpdateuserComponent,
     UpdateserviceComponent,
     MakeReservationComponent,
-    VehicleTypesComponent
+    VehicleTypesComponent,
+    UpdateBranchComponent
   ],
   imports: [
     BrowserModule,

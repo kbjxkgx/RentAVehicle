@@ -35,7 +35,7 @@ export class CommunicationService {
   // for service-page
   public service: any;
   public user: any;
-  
+  public branch: any;
   constructor() {
    }
 

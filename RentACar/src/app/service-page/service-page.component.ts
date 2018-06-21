@@ -69,50 +69,6 @@ export class ServicePageComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
-  AddComment() {
-    let comment = new CommentModel();
-    comment.UserId = this.data.AppUserIdSource.value;
-    comment.Content = this.newCommentContent;
-    comment.CommentedServiceId = this.service.Id;
-    this.commentService.addComment(comment)
-        .subscribe(
-          data => {
-            console.log('addComment succeded...');
-            data.User = this.data.user;
-            this.service.Comments.push(data);
-          },
-          error => {
-            console.log(error);
-          });
-  }
-
-  EditComment() {
-    for (let comment of this.service.Comments) {
-      if(comment.UserId == this.data.AppUserIdSource.value)
-      {
-        let comm = new CommentModel();
-        comm.UserId = this.data.AppUserIdSource.value;
-        comm.Content = this.editCommentContent;
-        comm.CommentedServiceId = this.service.Id;
-        comm.Id = comment.Id;
-        this.commentService.editComment(comm)
-          .subscribe(
-            data => {
-              console.log('editComment succeded...');
-              comment.Content = comm.Content;
-              return;
-            },
-            error => {
-              console.log(error);
-              return;
-            });
-        return;
-      }
-    }
-
-    window.alert('You dont have a comment');
-  }
-
   AddBranch() {
     this.data.service = this.service;
     this.router.navigate(['/addbranch']);

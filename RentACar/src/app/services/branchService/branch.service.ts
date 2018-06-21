@@ -15,6 +15,10 @@ export class BranchService {
     return this.httpClient.post(Configuration.path + 'api/Branch', branch);
   }
 
+  updateBranch(branch: BranchModel): Observable<any> {
+    return this.httpClient.put(Configuration.path + 'api/Branch/' + branch.Id , branch);
+  }
+
   getBranches() {
     return this.httpClient.get(Configuration.path + 'api/Branch');
   }

@@ -1,0 +1,62 @@
+
+<div class="container">
+    <h1 class="well">Update Branch Id: {{branch.Id}}</h1>
+		<div class="col-lg-12 well">
+			<div class="row">
+				<form #f="ngForm" (ngSubmit)="UpdateBranch(f.value, f)" enctype='multipart/form-data'>
+					<div class="col-sm-12">	
+						<div class="row">
+                <div class="form-group container">
+                <p>
+                    <!-- Kreiramo mapu -->
+                    <agm-map [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [zoom]="14" (mapClick)="placeMarker($event)">
+                     
+                      <!-- Postavljamo markere -->
+                      <agm-marker [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [title]="mapInfo.title"
+                      [label]="mapInfo.label">
+                  
+                        <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
+                        <agm-info-window [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" >
+                  
+                          <!-- U info-window stavljamo html -->
+                          <span style="font-size: 16px;font-family:'Times New Roman'">Fakultet tehničkih nauka</span>
+                          <br/>
+                          <span style="font-family:'Times New Roman'; color:gray;"><strong>Jugodrvo</strong></span>
+                          <span style="font-family:'Times New Roman'; color:gray;">Bulevar oslobođenja 131</span>
+                          <a [href]="mapInfo.link">See the site.</a>
+                        </agm-info-window>
+                  
+                      </agm-marker>
+                    </agm-map>
+                  </p>
+                  </div>
+            </div>			
+            <div class="row">
+                <div class="col-sm-10 form-group">
+                  <label>Address</label>
+                  <input type="text" name="Address" [(ngModel)]="Address" placeholder="Enter Address Here.." class="form-control" required #addr="ngModel">
+                  <div *ngIf="addr.invalid && (addr.dirty || addr.touched)" class="alert alert-danger">
+                      <div *ngIf="addr.errors.required">
+                        Address is required.
+                      </div>
+                  </div>
+                </div>
+              </div>	
+						<div class="row">
+            </div>
+            <div class="col-sm-12">	
+                <div class="row">
+                  <div class="col-sm-12 form-group">
+                    <label for="image1">Image File</label>
+                    <input name="image1" type="file" (change)='fileChange($event)' accept="image/*"/>
+                  </div>
+                </div>					
+              </div>
+						<button type="submit" class="btn btn-lg btn-info">Update Branch</button>					
+					</div>
+				</form> 
+			</div>
+		</div>
+  </div>
+  
+

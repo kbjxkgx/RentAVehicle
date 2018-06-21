@@ -196,7 +196,7 @@ namespace RentApp.Controllers
 
         [HttpGet]
         [Route("api/Services/getVehicles/{Id}")]
-        [ResponseType(typeof(List<Vehicle>))]
+        [ResponseType(typeof(List<VehicleDTO>))]
         [AllowAnonymous]
         public HttpResponseMessage getServiceVehicles(int Id)
         {

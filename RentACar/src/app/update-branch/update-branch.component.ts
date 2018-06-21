@@ -1,66 +1,58 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import { BranchService } from '../services/branchService/branch.service';
 import { CommunicationService } from '../services/communicationservice/communication.service';
-
 import { MapInfo } from '../models/map-info.model';
-import {
-  Router,
-  ActivatedRoute
-} from '@angular/router';
+import {NgForm} from '@angular/forms';
 import { BranchModel } from '../models/BranchModel';
-
+import { BranchService } from '../services/branchService/branch.service';
 
 @Component({
-  selector: 'app-add-branch',
-  templateUrl: './add-branch.component.html',
-  styleUrls: ['./add-branch.component.css']
+  selector: 'app-update-branch',
+  templateUrl: './update-branch.component.html',
+  styleUrls: ['./update-branch.component.css']
 })
-export class AddBranchComponent implements OnInit {
-  service: any;
+export class UpdateBranchComponent implements OnInit {
+  branch: any;
   mapInfo: MapInfo;
   myFile: File;
   Address = '';
-  constructor(private router: Router, private branchService: BranchService, private data: CommunicationService) { }
+  constructor(private data: CommunicationService, private branchService: BranchService) { }
 
   ngOnInit() {
-    this.service = this.data.service;
-    this.mapInfo = new MapInfo(45.242268, 19.842954,
+    this.branch = this.data.branch;
+    this.mapInfo = new MapInfo(this.branch.Latitude, this.branch.Longitude,
       'assets/ftn.png',
-      'Jugodrvo' , '' , 'http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka');
+      this.branch.Id, '' , this.branch.Address);
   }
 
-  addBranch(account: any, form: NgForm) {
-    if(this.myFile)
-    {
+  UpdateBranch(account: any, form: NgForm) {
+    if(this.myFile) {
       let branch = new BranchModel();
+      branch.Id = this.branch.Id;
       branch.Latitude = this.mapInfo.centerLat;
       branch.Longitude = this.mapInfo.centerLong;
       branch.Address = this.Address;
-      branch.BranchServiceId = this.service.Id;
+      branch.BranchServiceId = this.branch.BranchServiceId;
       branch.Image = 'noimage';
-      this.branchService.addBranch(branch)
+      this.branchService.updateBranch(branch)
           .subscribe(
             data => {
-              this.branchService.uploadIdPhoto(this.myFile, data.Id)
+              this.branchService.uploadIdPhoto(this.myFile, this.branch.Id)
                 .subscribe(
                   dataa => {
                     console.log('uploadIdPhoto succeded...');
-                    this.data.service = this.service;
-                    this.router.navigate(['/servicepage']);
                   },
                   error => {
-                    console.log(error);
+                    console.log(error.error.Message);
                   });
               console.log('addBranch succeded...');
-              alert('Add branch succeded.'); 
+              alert('Add branch succeded.');
             },
             error => {
-              console.log(error);
+              console.log(error.error.Message);
             });
       form.reset();
     } else {
-      alert('Branch image is required.');
+      alert('Branch image is required');
     }
   }
 
@@ -76,4 +68,5 @@ export class AddBranchComponent implements OnInit {
         this.myFile = null;
       }
   }
+
 }

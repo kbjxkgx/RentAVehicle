@@ -78,6 +78,11 @@ namespace RentApp.Controllers
                 return BadRequest("You are not authorized.");
             }
 
+            if (!service.IsConfirmed)
+            {
+                return BadRequest("Service is not confirmed yet.");
+            }
+
             if (appUser.IsManagerAllowed==false)
             {
                 return BadRequest("You are not allowed.");

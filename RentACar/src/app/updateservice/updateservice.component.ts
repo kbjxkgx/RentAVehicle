@@ -20,9 +20,6 @@ export class UpdateserviceComponent implements OnInit {
   }
 
   updateService(service: any, form: NgForm) {
-
-    service.Id=this.data.service.Id;
-
     this.service.Name=service.Name;
     this.service.Description=service.Description;
     this.service.Email=service.Email;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using RentApp.Helper;
 using RentApp.Hubs;
+using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using RentApp.Services;
@@ -149,29 +150,38 @@ namespace RentApp.Controllers
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
         [Authorize]
-        public IHttpActionResult PutAppUser(int id, AppUser appUser)
+        public IHttpActionResult PutAppUser(int id, UpdateUserModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != appUser.Id)
+            if (id != model.Id)
             {
                 return BadRequest();
             }
 
             string username = User.Identity.Name;
-            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            RAIdentityUser RAUser = db.Users.Get(username);
             AppUser apUser = db.AppUsers.Get(RAUser.AppUserId);
                         
-            if (appUser.Id!= apUser.Id)
+            if (model.Id!= apUser.Id)
             {
                 return BadRequest("You are not authorized.");
             }
 
-            db.AppUsers.Update(appUser);
-           
+            AppUser user = db.AppUsers.Get(model.Id);
+
+            user.FullName = model.FullName;
+            user.LastName = model.LastName;
+            user.Birthday = model.Birthday;
+
+            RAUser.PasswordHash = RAIdentityUser.HashPassword(model.Password);
+
+            db.AppUsers.Update(user);
+            db.Users.Update(RAUser);
+
             try
             {
                 db.Complete();
@@ -222,7 +232,7 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            user.IsManagerAllowed = true;
+            user.IsUserConfirmed = true;
             db.AppUsers.Update(user);
             db.Complete();
 

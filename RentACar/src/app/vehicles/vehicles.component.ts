@@ -29,6 +29,7 @@ export class VehiclesComponent implements OnInit {
         .subscribe(
           data => {
             this.vehicleTypes = data;
+            this.vehicleTypes.push("");
             console.log('getVehicleTypes succeded');
           },
           error => {

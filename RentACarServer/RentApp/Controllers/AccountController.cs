@@ -321,7 +321,7 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            AppUser appUser = new AppUser() { FullName = model.FullName, Birthday = DateTime.Now, LastName = model.LastName };
+            AppUser appUser = new AppUser() { FullName = model.FullName, Birthday = DateTime.Now, LastName = model.LastName, IsManagerAllowed=false, IsUserConfirmed=false };
             var user = new RAIdentityUser() {Id=model.Email, UserName = model.Email, Email = model.Email, AppUser = appUser, PasswordHash = RAIdentityUser.HashPassword(model.Password) };
             
             IdentityResult result = null;

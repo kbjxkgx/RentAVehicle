@@ -109,6 +109,7 @@ export class LoginService {
         },
         err => {
           console.log('Error occured', err);
+          alert('Login failed.');
           return;
         }
       );

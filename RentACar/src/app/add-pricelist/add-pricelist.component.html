@@ -6,11 +6,22 @@
         <div *ngFor="let vehicle of vehicles">
             <app-vehicle [vehicle]="vehicle" ></app-vehicle>
             <div class="container well">
-                <strong class="col-lg-2">Enter Price: </strong>
-                <input class="col-lg-4" [(ngModel)]="vehicle.PricePerHour" placeholder="Enter Price Here.." type="text">
+                    <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label>Enter Price</label>
+                                <input  [(ngModel)]="vehicle.PricePerHour" required placeholder="Enter Price Here.." type="number" #price="ngModel">
+                                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
+                                        <div *ngIf="price.errors.required">
+                                          Price is required.
+                                        </div>
+                                  </div>
+                            </div>
+                        </div>
             </div>
+            
         </div>
       </div>
+      <div class="container well">
       <div class="col-sm-4 form-group">
           <label>Begin Time</label>
           <input type="date" name='BeginTime' [(ngModel)]="pricelist.BeginTime" placeholder="Enter BeginTime Here.." class="form-control" ngModel required #begin="ngModel">
@@ -28,9 +39,11 @@
                   End time is required.
                 </div>
           </div>
-      </div>	
-      <div >
+      </div>
+    
+      <div class="row">
           <button type="button"  (click)='AddPricelist()' class="btn btn-warning">Add Pricelist</button>
           </div>
-		</div>
+        </div>
+    </div>
 	</div>

@@ -42,10 +42,12 @@ export class AddPricelistComponent implements OnInit {
     this.pricelistService.addPricelist(this.pricelist)
           .subscribe(
             data => {
+              alert('Add pricelist succeded.');
               console.log('addPricelist succeded...');
             },
             error => {
               console.log(error);
+              alert(error.error.Message);
             });
 
   }

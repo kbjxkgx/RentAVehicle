@@ -123,6 +123,17 @@ namespace RentApp.Controllers
                 return BadRequest("You are not allowed.");
             }
 
+            Service service = db.Services.Get(branch.BranchServiceId);
+            if(service.ServiceManagerId!=appUser.Id)
+            {
+                return BadRequest("You are not authorized, not manager of this service.");
+            }
+
+            if(!service.IsConfirmed)
+            {
+                return BadRequest("Service is not confirmed yet.");
+            }
+
             db.Branches.Add(branch);
             db.Complete();
 

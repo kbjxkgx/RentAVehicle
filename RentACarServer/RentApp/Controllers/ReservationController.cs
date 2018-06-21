@@ -94,12 +94,6 @@ namespace RentApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-                      
-            Vehicle vehicle = db.Vehicles.Get(reservation.ReservedVehicleId);
-            if (vehicle.IsAvailable==false)
-            {
-                return BadRequest("Vehicle not available.");
-            }
 
             if (reservation.BeginTime > reservation.EndTime)
             {
@@ -109,6 +103,27 @@ namespace RentApp.Controllers
             if (reservation.BeginTime < DateTime.Now.Date || reservation.EndTime < DateTime.Now.Date)
             {
                 return BadRequest("Begin and end time should be after today.");
+            }
+
+            if (reservation.BranchDropOffId == -1 || reservation.BranchTakeId == -1)
+            {
+                return BadRequest("Choose valid branches.");
+
+            }
+
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            if(appUser.IsUserConfirmed==false)
+            {
+                return BadRequest("You are not confirmed.");
+            }
+
+            Vehicle vehicle = db.Vehicles.Get(reservation.ReservedVehicleId);
+            if (vehicle.IsAvailable==false)
+            {
+                return BadRequest("Vehicle not available.");
             }
 
             lock (reservationLockObject)

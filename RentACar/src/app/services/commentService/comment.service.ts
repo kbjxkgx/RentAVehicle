@@ -18,4 +18,9 @@ export class CommentService {
   editComment(comment: any): Observable<any> {
     return this.httpClient.put(Configuration.path + 'api/Comment/' + comment.Id, comment);
   }
+
+  delete(commentId: number) {
+    return this.httpClient.delete(Configuration.path + 'api/Comment/' + commentId);
+  }
+
 }

@@ -26,9 +26,9 @@
             </div>	
             <div class="col-sm-4 form-group">
               <label>BirthDay</label>
-              <input type="date" name='Birthday' required [(ngModel)]="user.Birthday" class="form-control" ngModel #birth="ngModel">
-              <div *ngIf="birth.invalid && (birth.dirty || birth.touched)" class="alert alert-danger">
-                  <div *ngIf="birth.errors.required">
+              <input type="date" name='Birthday' [(ngModel)]="user.Birthday" class="form-control" ngModel required #birthd="ngModel">
+              <div *ngIf="birthd.invalid && (birthd.dirty || birthd.touched)" class="alert alert-danger">
+                  <div *ngIf="birthd.errors.required">
                     Birthday is required.
                   </div>
               </div>
@@ -58,8 +58,7 @@
               </div>
           </div>	
           <div class="btn-toolbar">
-            <button type="submit" class="btn btn-lg btn-warning">Update</button>	
-          <button class="btn btn-lg btn-danger" (click)="Delete()">Delete</button>			
+            <button type="submit" class="btn btn-lg btn-warning" [disabled]="!f.valid">Update</button>		
           </div>
           	
         </div>

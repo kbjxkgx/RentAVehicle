@@ -21,7 +21,10 @@
                 </div>
             </div>
             <div *ngFor="let comment of service.Comments">
-              <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}} <br /><strong>Mark: </strong>{{comment.Mark}}</div>
+              <div class="well"><strong>{{comment.User.FullName}}: </strong>{{comment.Content}} <br /><strong>Mark: </strong>{{comment.Mark}}
+                <br/> <hr><button class="col-lg-2" type="button" (click)="DeleteComment(comment.Id)" class="btn btn-danger" *ngIf="comment.User.Id==userId">Delete</button>
+              </div>
+              
             </div>
               <div class="well">
                 <div class="container" *ngIf="isUser">

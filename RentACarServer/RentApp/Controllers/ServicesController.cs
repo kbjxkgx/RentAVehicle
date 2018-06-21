@@ -101,7 +101,12 @@ namespace RentApp.Controllers
                 return BadRequest("You are not allowed.");
             }
 
-            db.Services.Update(service);
+            Service serv = db.Services.Get(service.Id);
+            serv.Name = service.Name;
+            serv.Email = service.Email;
+            serv.Description = service.Description;
+
+            db.Services.Update(serv);
 
             try
             {
@@ -136,6 +141,7 @@ namespace RentApp.Controllers
             }
 
             service.IsConfirmed = true;
+            db.Services.Update(service);
             db.Complete();
 
             SmtpService smtpService = new SmtpService();

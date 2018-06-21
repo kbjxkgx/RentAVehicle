@@ -368,6 +368,7 @@
     <Compile Include="Models\Entities\VehicleType.cs" />
     <Compile Include="Models\GetVehiclesPageResult.cs" />
     <Compile Include="Models\SearchFilter.cs" />
+    <Compile Include="Models\UpdateUserModel.cs" />
     <Compile Include="Models\VehicleFilterModel.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\AppUserRepository.cs" />

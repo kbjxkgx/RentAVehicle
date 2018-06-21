@@ -145,12 +145,15 @@ namespace RentApp.Controllers
             RAIdentityUser user = db.Users.Get(name);
             IdentityRole managerRole = db.Roles.GetAll().FirstOrDefault(role => role.Name == "Manager");
             bool isManager = false;
-            foreach (IdentityUserRole userRole in user.Roles)
+            if (user != null)
             {
-                if (userRole.RoleId == managerRole.Id)
+                foreach (IdentityUserRole userRole in user.Roles)
                 {
-                    isManager = true;
-                    break;
+                    if (userRole.RoleId == managerRole.Id)
+                    {
+                        isManager = true;
+                        break;
+                    }
                 }
             }
             List<VehicleDTO> vehiclesDTO = new List<VehicleDTO>();
@@ -309,7 +312,7 @@ namespace RentApp.Controllers
             }
 
             string username = User.Identity.Name;
-            RAIdentityUser RAUser = db.Users.GetAll().First(u => u.UserName == username);
+            RAIdentityUser RAUser = db.Users.Get(username);
             AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
 
             Service service = db.Services.Get(vehicle.VehicleServiceId);
@@ -359,9 +362,15 @@ namespace RentApp.Controllers
             vehicle.VehicleServiceId = vehicleDTO.VehicleServiceId;
             vehicle.YearOfProduction = vehicleDTO.YearOfProduction;
 
+            Service service = db.Services.GetWithPricelists(vehicle.VehicleServiceId);
+            if (!service.IsConfirmed)
+            {
+                return BadRequest("Service is not confirmed yet.");
+            }
+
             Item item = new Item();
             item.ItemVehicleId = vehicle.Id;
-            Service service = db.Services.GetWithPricelists(vehicle.VehicleServiceId);
+            
             Pricelist actualPricelist = service.Pricelists[0];
             foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
             {

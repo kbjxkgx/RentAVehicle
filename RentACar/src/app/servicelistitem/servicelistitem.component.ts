@@ -24,6 +24,7 @@ export class ServicelistitemComponent implements OnInit {
    public notificationExists: boolean;
    public newCommentContent: string;
    public mark: number;
+   public userId: number;
   constructor(private servicesService: ServicesService, private commentService: CommentService,
     private router: Router, private data: CommunicationService) { }
 
@@ -32,12 +33,12 @@ export class ServicelistitemComponent implements OnInit {
     this.data.isLoggedInMessage.subscribe(message => this.isLoggedIn = message);
     this.data.isManagerMessage.subscribe(message => this.isManager = message);
     this.data.isUserMessage.subscribe(message => this.isUser = message);
+    this.userId=this.data.user.Id;
   }
 
   ConfirmService() {
     this.service.IsConfirmed = true;
     this.servicesService.ConfirmService(this.service);
-    this.router.navigate(['/admin']);
   }
 
   AddComment() {
@@ -51,7 +52,14 @@ export class ServicelistitemComponent implements OnInit {
           data => {
             console.log('addComment succeded...');
             data.User = this.data.user;
-            this.service.Comments.push(data);
+            if(this.service.Comments)
+            {
+              this.service.Comments.push(data);
+              
+            } else {
+              this.service.Comments = new Array<any>();
+              this.service.Comments.push(data);
+            }
           },
           error => {
             console.log(error);
@@ -68,4 +76,20 @@ export class ServicelistitemComponent implements OnInit {
   Configuration() {
     return Configuration.path;
   }
+
+  DeleteComment(commentId: number) {
+    this.commentService.delete(commentId)
+        .subscribe(
+          data => {
+            console.log('Delete comment succeded...');
+            this.service.Comments = this.service.Comments.filter(obj => obj.Id !== commentId);
+
+          },
+          error => {
+            console.log(error);
+            window.alert(error.error.Message);
+          });
+
+  }
+
 }

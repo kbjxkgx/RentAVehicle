@@ -45,7 +45,6 @@ export class AddBranchComponent implements OnInit {
             this.branchService.uploadIdPhoto(this.myFile, data.Id)
               .subscribe(
                 dataa => {
-                  window.alert('uploadIdPhoto succeded...');
                   console.log('uploadIdPhoto succeded...');
                   this.data.service = this.service;
                   this.router.navigate(['/servicepage']);
@@ -54,6 +53,7 @@ export class AddBranchComponent implements OnInit {
                   console.log(error);
                 });
             console.log('addBranch succeded...');
+            alert("Add branch succeded."); 
           },
           error => {
             console.log(error);

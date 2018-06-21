@@ -32,13 +32,17 @@ export class AddServiceComponent implements OnInit {
               },
               error => {
                 console.log('addVehicleImages failed');
-                console.log(error);
+                alert(error.error.Message);
               });
           },
           error => {
             console.log('addVehicle failed');
-            console.log(error);
+            alert(error.error.Message);
           });
+    }
+    else
+    {
+      window.alert('File is required.');
     }
   }
 

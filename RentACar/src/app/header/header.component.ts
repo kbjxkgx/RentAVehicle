@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit {
         this.data.changeIsLoggedIn(false);
         this.data.changeIsAdmin(false);
         this.data.changeIsManager(false);
-        this.data.changeIsUser(false);
+        this.data.changeIsUser(false); 
     }
   }
 
@@ -96,6 +96,7 @@ export class HeaderComponent implements OnInit {
     this.data.changeIsManager(false);
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
+    this.router.navigate(['/home']);
   }
 
   Login(): void {

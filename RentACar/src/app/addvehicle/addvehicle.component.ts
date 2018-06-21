@@ -24,10 +24,10 @@ export class AddvehicleComponent implements OnInit {
       .subscribe(
         data => {
           this.services = data;
-          console.log('getServices succeded');
+          console.log('getConfirmedServices succeded');
         },
         error => {
-          console.log('getServices failed');
+          console.log('getConfirmedServices failed');
           console.log(error);
         });
     this.vehicleTypesService.getVehicleTypes()
@@ -68,6 +68,10 @@ export class AddvehicleComponent implements OnInit {
             console.log('addVehicle failed');
             console.log(error);
           });
+    }
+    else
+    {
+      alert('Images are required.');      
     }
   }
 

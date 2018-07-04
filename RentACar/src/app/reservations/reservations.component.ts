@@ -33,7 +33,9 @@ export class ReservationsComponent implements OnInit {
           this.priceToPay=data.PriceToPay;
           this.reservations = data.Reservations as Array<any>;
           console.log('getReservationsOfUser succeded...');
-          this.initConfig();
+          if(this.reservations.length!=0){
+            this.initConfig();
+          }
         },
         error => {
           console.log(error);

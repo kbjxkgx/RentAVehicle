@@ -1,4 +1,6 @@
-﻿using RentApp.Models.Entities;
+﻿using RentApp.Models;
+using RentApp.Models.DTO;
+using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,86 @@ namespace RentApp.Controllers
         {
             return db.Reservations.GetAllReservationsOfVehicle(vehicleId);
         }
+
+        [HttpGet]
+        [Route("api/Reservations/GetReservationsOfUser/{userId}")]
+        [Authorize(Roles = "AppUser, Manager, Admin")]
+        public GetReservationsPageResult GetReservationsOfUser(int userId)
+        {
+            List<Reservation> reservations = db.Reservations.GetAllUnpayedReservationsOfUser(userId).ToList();
+            List<ReservationDTO> reservationsDTO = new List<ReservationDTO>();
+            double priceCount = 0;
+
+            foreach (Reservation reservation in reservations)
+            {
+                ReservationDTO rdto = new ReservationDTO(reservation);
+                double days = (reservation.EndTime - reservation.BeginTime).TotalDays;
+                Vehicle vehicle = db.Vehicles.Get(reservation.ReservedVehicleId);
+                double pricePerHour = 0;
+
+                Service service = db.Services.GetWithItemsAndPricelists(vehicle.VehicleServiceId);
+
+                Pricelist actualPriceList = service.Pricelists[0];
+                foreach (Pricelist pricelist in service.Pricelists.Where(p => p.BeginTime <= DateTime.Now.Date))
+                {
+                    if (pricelist.EndTime > actualPriceList.EndTime)
+                    {
+                        actualPriceList = pricelist;
+                    }
+                }
+
+                try
+                {
+                    Item item = actualPriceList.Items.First(i => i.ItemVehicleId == vehicle.Id);
+                    pricePerHour = item.Price;
+                }
+                catch (Exception e)
+                {
+                    pricePerHour = 0;
+                }
+
+                rdto.PriceToPay = days * 24 * pricePerHour;
+
+                priceCount += rdto.PriceToPay;
+
+                reservationsDTO.Add(rdto);
+            }
+
+            GetReservationsPageResult result = new GetReservationsPageResult();
+            result.Reservations = reservationsDTO;
+            result.PriceToPay = priceCount;
+
+            return result;
+        }
+
+        [HttpPut]
+        [Route("api/Reservations/PayedReservationsOfUser/{userId}")]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult PayedReservationsOfUser(int userId)
+        {
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
+
+            if(userId!=appUser.Id)
+            {
+                return BadRequest();
+            }
+
+            List<Reservation> reservations = db.Reservations.GetAllUnpayedReservationsOfUser(userId).ToList();
+            
+            foreach(Reservation reservation in reservations)
+            {
+     
+                reservation.Payed = true;
+                db.Reservations.Update(reservation);
+            }
+
+            db.Complete();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
@@ -145,6 +227,7 @@ namespace RentApp.Controllers
                         return BadRequest("Vehicle is reserved in this period, try different time period.");
                     }
                 }
+                reservation.Payed = false;
                 db.Reservations.Add(reservation);
                 db.Complete();
             }

@@ -348,10 +348,19 @@
     <Compile Include="Migrations\201806201803597_Final.Designer.cs">
       <DependentUpon>201806201803597_Final.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807040926312_finall.cs" />
+    <Compile Include="Migrations\201807040926312_finall.Designer.cs">
+      <DependentUpon>201807040926312_finall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807040937363_finalll.cs" />
+    <Compile Include="Migrations\201807040937363_finalll.Designer.cs">
+      <DependentUpon>201807040937363_finalll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUserBindingModels.cs" />
+    <Compile Include="Models\DTO\ReservationDTO.cs" />
     <Compile Include="Models\Entities\Branch.cs" />
     <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\Item.cs" />
@@ -366,6 +375,7 @@
     <Compile Include="Models\Entities\VehicleImage.cs" />
     <Compile Include="Models\DTO\VehicleDTO.cs" />
     <Compile Include="Models\Entities\VehicleType.cs" />
+    <Compile Include="Models\GetReservationsPageResult.cs" />
     <Compile Include="Models\GetVehiclesPageResult.cs" />
     <Compile Include="Models\SearchFilter.cs" />
     <Compile Include="Models\UpdateUserModel.cs" />
@@ -533,6 +543,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806201803597_Final.resx">
       <DependentUpon>201806201803597_Final.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807040926312_finall.resx">
+      <DependentUpon>201807040926312_finall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807040937363_finalll.resx">
+      <DependentUpon>201807040937363_finalll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

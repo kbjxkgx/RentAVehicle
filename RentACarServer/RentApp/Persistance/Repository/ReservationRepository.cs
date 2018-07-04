@@ -23,6 +23,16 @@ namespace RentApp.Persistance.Repository
             return context.Set<Reservation>().Include("BranchTake.BranchService").Where(r => r.UserId == userId);
         }
 
+        public IEnumerable<Reservation> GetAllReservationsOfUser(int userId)
+        {
+            return RADBContext.Reservations.Where(r => r.UserId == userId);
+        }
+
+        public IEnumerable<Reservation> GetAllUnpayedReservationsOfUser(int userId)
+        {
+            return RADBContext.Reservations.Where(r => r.UserId == userId && r.Payed == false);
+        }
+
         protected RADBContext RADBContext { get { return context as RADBContext; } }
     }
 }

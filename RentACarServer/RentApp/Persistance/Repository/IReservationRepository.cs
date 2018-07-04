@@ -10,6 +10,8 @@ namespace RentApp.Persistance.Repository
     public interface IReservationRepository : IRepository<Reservation, int>
     {
         IEnumerable<Reservation> GetAllReservationsOfVehicle(int vehicleId);
+        IEnumerable<Reservation> GetAllReservationsOfUser(int userId);
+        IEnumerable<Reservation> GetAllUnpayedReservationsOfUser(int userId);
         IEnumerable<Reservation> GetAllReservationsOfUserWithBranchesAndService(int userId);
     }
 }

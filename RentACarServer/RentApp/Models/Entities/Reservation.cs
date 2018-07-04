@@ -18,7 +18,7 @@ namespace RentApp.Models.Entities
         [Column("EndTime", TypeName = "datetime2")]
         public DateTime EndTime { get; set; }
 
-        [Required]
+        
         public bool Payed { get; set; }
 
         [ForeignKey("User")]

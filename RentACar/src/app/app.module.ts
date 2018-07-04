@@ -44,6 +44,8 @@ import { MakeReservationComponent } from './make-reservation/make-reservation.co
 import { VehicleTypesComponent } from './vehicle-types/vehicle-types.component';
 import { ManagerGuard } from './guardManager/manager-guard.guard';
 import { UpdateBranchComponent } from './update-branch/update-branch.component';
+import { ReservationsComponent } from './reservations/reservations.component';
+import { NgxPayPalModule } from '../../projects/ngx-paypal-lib/src/public_api';
 
 const Routes = [
   {
@@ -131,6 +133,11 @@ const Routes = [
     canActivate: [ManagerGuard]
   },
   {
+    path: 'reservations',
+    component: ReservationsComponent,
+    canActivate: ['CanAlwaysActivateGuard']
+  },
+  {
     path: 'addpricelist',
     component: AddPricelistComponent,
     canActivate: [ManagerGuard]
@@ -185,7 +192,8 @@ const Routes = [
     UpdateserviceComponent,
     MakeReservationComponent,
     VehicleTypesComponent,
-    UpdateBranchComponent
+    UpdateBranchComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,
@@ -195,7 +203,8 @@ const Routes = [
     HttpClientXsrfModule,
     FormsModule,
     ReactiveFormsModule,
-    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'}),
+    NgxPayPalModule
   ],
   providers: [
     CanActivateViaAdminAuthGuard,

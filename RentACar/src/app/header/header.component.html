@@ -11,10 +11,11 @@
         <a href="#" (click)="NotificationClick()" *ngIf="isAdmin" [routerLink]="['/notifications']">Notifications<span class="header-new-feature" *ngIf="notificationExists">new</span></a>
         <a href="#" *ngIf="isManager" [routerLink]="['/addservice']">Add Service</a>
         <a href="#" *ngIf="isManager" [routerLink]="['/addvehicle']">Add Vehicle</a>
+        <a href="#" *ngIf="isUser" [routerLink]="['/reservations']">Reservations</a>
         
       </nav>
         <div class="header-user-menu">
-            <img src="../../assets/icon.jpg" alt="User Image"/>
+            <img src="../../assets/icon.jpg" alt="User Image"/> 
             <ul>
               <li><a href="#" class="highlight" *ngIf="isLoggedIn&&!isAdmin" [routerLink]="['/verifyaccount']">Verify account </a></li>              
               <li><a href="#" class="highlight" *ngIf="isLoggedIn" (click)='Logout()' [routerLink]="['/home']">Logout </a></li>

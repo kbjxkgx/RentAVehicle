@@ -3,10 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Configuration } from '../../Constants/constants';
 import { ReservationModel } from '../../models/ReservationModel';
+import { TransactionElementModel } from '../../models/TransactionElementModel';
+import { element } from 'protractor';
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
+
+  modelelement: TransactionElementModel;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,12 +26,19 @@ export class ReservationService {
     return this.httpClient.get(Configuration.path + 'api/Reservations/GetReservationsOfUser/' + userId);
   }
 
-  payedReservations(userId: number, paymentId: string): Observable<any>{
-    let url = '';
-    url = url.concat(Configuration.path + 'api/Reservations/PayedReservationsOfUser/');
-    url = url.concat(userId.toString());
+  payedReservations(userId: number, paymentID: string): Observable<any>{
+    // let url = '';
+    // url = url.concat(Configuration.path + 'api/Reservations/PayedReservationsOfUser/');
+    // url = url.concat(userId.toString());
+    // url = url.concat(paymentID);
     
-    return this.httpClient.post(url, paymentId);
+
+    // return this.httpClient.post(url, paymentID);
+    
+    this.modelelement=new TransactionElementModel();
+    this.modelelement.userId=userId;
+    this.modelelement.paymentID=paymentID;
+    return this.httpClient.put(Configuration.path + 'api/Reservation/'+ this.modelelement.userId, this.modelelement);
   }
 
 }

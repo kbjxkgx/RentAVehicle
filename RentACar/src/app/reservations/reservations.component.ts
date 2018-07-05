@@ -5,6 +5,7 @@ import { ReservationModel } from '../models/ReservationModel';
 import { CommunicationService } from '../services/communicationservice/communication.service';
 import { AppUserModel } from '../models/appUserModel';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
+import { TransactionElementModel } from '../models/TransactionElementModel';
 
 @Component({
   selector: 'app-reservations',
@@ -14,6 +15,8 @@ import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-payp
 export class ReservationsComponent implements OnInit {
 
   public payPalConfig?: PayPalConfig;
+  
+  elementTR: TransactionElementModel;
   
   payment: string;
   isVisible: boolean;
@@ -27,7 +30,7 @@ export class ReservationsComponent implements OnInit {
   ngOnInit() {
 
     this.user = this.data.user;
-
+    
     this.reservationService.getReservationsOfUser(this.user.Id)
       .subscribe(
         data => {
@@ -56,8 +59,7 @@ export class ReservationsComponent implements OnInit {
       },
       onPaymentComplete: (data, actions) => {
         console.log('OnPaymentComplete');
-        this.payment=data.paymentID;
-        this.reservationService.payedReservations(this.user.Id, this.payment )
+        this.reservationService.payedReservations(this.user.Id, data.paymentID)
         .subscribe(
           data => {
             this.isVisible=false;

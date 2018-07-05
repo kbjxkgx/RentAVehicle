@@ -104,9 +104,9 @@ namespace RentApp.Controllers
         }
 
         [HttpPut]
-        [Route("api/Reservations/PayedReservationsOfUser/{userId}")]
+        [Route("api/Reservations/PayedReservationsOfUser/{userId}/{paymentID}")]
         [Authorize(Roles = "AppUser")]
-        public IHttpActionResult PayedReservationsOfUser(int userId, string paymentId)
+        public IHttpActionResult PayedReservationsOfUser(int userId, string paymentID)
         {
             string username = User.Identity.Name;
             RAIdentityUser RAUser = db.Users.Get(username);
@@ -123,7 +123,7 @@ namespace RentApp.Controllers
             {
      
                 reservation.Payed = true;
-                reservation.PaymentId = paymentId;
+                reservation.PaymentId = paymentID;
                 db.Reservations.Update(reservation);
             }
 
@@ -136,34 +136,28 @@ namespace RentApp.Controllers
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
         [Authorize(Roles = "AppUser")]
-        public IHttpActionResult PutReservation(int id, Reservation reservation)
+        public IHttpActionResult PutReservation(int id, TransactionElement element)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            string username = User.Identity.Name;
+            RAIdentityUser RAUser = db.Users.Get(username);
+            AppUser appUser = db.AppUsers.Get(RAUser.AppUserId);
 
-            if (id != reservation.Id)
+            if (element.userId != appUser.Id)
             {
                 return BadRequest();
             }
-            db.Reservations.Update(reservation);
 
-            try
+            List<Reservation> reservations = db.Reservations.GetAllUnpayedReservationsOfUser(element.userId).ToList();
+
+            foreach (Reservation reservation in reservations)
             {
-                db.Complete();
+
+                reservation.Payed = true;
+                reservation.PaymentId = element.paymentId;
+                db.Reservations.Update(reservation);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReservationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            db.Complete();
 
             return StatusCode(HttpStatusCode.NoContent);
         }

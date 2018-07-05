@@ -360,6 +360,10 @@
     <Compile Include="Migrations\201807041529230_finalll1.Designer.cs">
       <DependentUpon>201807041529230_finalll1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807051218282_finmallll.cs" />
+    <Compile Include="Migrations\201807051218282_finmallll.Designer.cs">
+      <DependentUpon>201807051218282_finmallll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -382,6 +386,7 @@
     <Compile Include="Models\GetReservationsPageResult.cs" />
     <Compile Include="Models\GetVehiclesPageResult.cs" />
     <Compile Include="Models\SearchFilter.cs" />
+    <Compile Include="Models\TransactionElement.cs" />
     <Compile Include="Models\UpdateUserModel.cs" />
     <Compile Include="Models\VehicleFilterModel.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
@@ -556,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807041529230_finalll1.resx">
       <DependentUpon>201807041529230_finalll1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807051218282_finmallll.resx">
+      <DependentUpon>201807051218282_finmallll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

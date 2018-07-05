@@ -106,7 +106,7 @@ namespace RentApp.Controllers
         [HttpPut]
         [Route("api/Reservations/PayedReservationsOfUser/{userId}")]
         [Authorize(Roles = "AppUser")]
-        public IHttpActionResult PayedReservationsOfUser(int userId)
+        public IHttpActionResult PayedReservationsOfUser(int userId, string paymentId)
         {
             string username = User.Identity.Name;
             RAIdentityUser RAUser = db.Users.Get(username);
@@ -123,6 +123,7 @@ namespace RentApp.Controllers
             {
      
                 reservation.Payed = true;
+                reservation.PaymentId = paymentId;
                 db.Reservations.Update(reservation);
             }
 

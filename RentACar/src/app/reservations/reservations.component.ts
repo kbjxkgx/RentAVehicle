@@ -14,7 +14,8 @@ import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-payp
 export class ReservationsComponent implements OnInit {
 
   public payPalConfig?: PayPalConfig;
-
+  
+  payment: string;
   isVisible: boolean;
   reservations: any[];
   user: AppUserModel;
@@ -55,7 +56,8 @@ export class ReservationsComponent implements OnInit {
       },
       onPaymentComplete: (data, actions) => {
         console.log('OnPaymentComplete');
-        this.reservationService.payedReservations(this.user.Id)
+        this.payment=data.paymentID;
+        this.reservationService.payedReservations(this.user.Id, this.payment )
         .subscribe(
           data => {
             this.isVisible=false;

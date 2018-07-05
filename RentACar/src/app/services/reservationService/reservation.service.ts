@@ -22,12 +22,12 @@ export class ReservationService {
     return this.httpClient.get(Configuration.path + 'api/Reservations/GetReservationsOfUser/' + userId);
   }
 
-  payedReservations(userId: number): Observable<any>{
+  payedReservations(userId: number, paymentId: string): Observable<any>{
     let url = '';
     url = url.concat(Configuration.path + 'api/Reservations/PayedReservationsOfUser/');
     url = url.concat(userId.toString());
     
-    return this.httpClient.put(url, userId);
+    return this.httpClient.post(url, paymentId);
   }
 
 }

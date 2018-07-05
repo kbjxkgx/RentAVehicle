@@ -360,6 +360,10 @@
     <Compile Include="Migrations\201807041529230_finalll1.Designer.cs">
       <DependentUpon>201807041529230_finalll1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807051205199_finallll.cs" />
+    <Compile Include="Migrations\201807051205199_finallll.Designer.cs">
+      <DependentUpon>201807051205199_finallll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -556,6 +560,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807041529230_finalll1.resx">
       <DependentUpon>201807041529230_finalll1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807051205199_finallll.resx">
+      <DependentUpon>201807051205199_finallll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

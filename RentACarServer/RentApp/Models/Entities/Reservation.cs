@@ -20,7 +20,7 @@ namespace RentApp.Models.Entities
 
         
         public bool Payed { get; set; }
-
+        
         [ForeignKey("User")]
         public int UserId { get; set; }
         public AppUser User { get; set; }
